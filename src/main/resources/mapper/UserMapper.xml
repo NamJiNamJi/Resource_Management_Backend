@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.douzone.wehago.mapper.UserMapper">
+
+    <resultMap id="UserResultMap" type="com.douzone.wehago.domain.User">
+        <id property="user_seq" column="userSeq" />
+        <result property="userId" column="userId" />
+        <result property="userPwd" column="user_pwd" />
+        <result property="userName" column="user_name" />
+        <result property="userEmail" column="user_email" />
+        <result property="userCreated" column="user_created" />
+        <result property="userUpdated" column="user_updated" />
+    </resultMap>
+
+    <!-- 회원가입 로직 -->
+    <insert id="userRegister" parameterType="com.douzone.wehago.domain.User">
+        INSERT INTO tb_users (user_id, user_pwd, user_name, user_email, user_created, user_updated)
+        VALUES (#{userId}, #{userPwd}, #{userName}, #{userEmail}, #{userCreated}, #{userUpdated})
+    </insert>
+
+    <!-- 로그인 로직 -->
+    <select id="findUser" parameterType="java.lang.String" resultMap="UserResultMap">
+        SELECT * FROM tb_users WHERE user_id = #{userId}
+    </select>
+
+</mapper>
