@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.douzone.wehago.mapper.MemberMapper">
+
+    <insert id ="save" parameterType="com.douzone.wehago.domain.Car">
+        INSERT INTO cars (car_name,car_year,car_distance,start_date,end_date,lender) values (#{carName},#{carYear},#{carDistance},#{startDate},#{endDate},#{lender})
+    </insert>
+
+    <select id ="findAll" resultType="com.douzone.wehago.dto.CarDTO">
+        select cid,car_name,car_year,car_distance,start_date,end_date,lender from members;
+    </select>
+
+    <select id = "findOne" resultType="com.douzone.wehago.dto.CarDTO">
+        select mid,member_id,member_name,password,date_of_birth from members where member_id = #{memberId};
+    </select>
+
+<!--    <update id="update" parameterType="com.douzone.wehago.dto.CarDTO">-->
+<!--        update members set member_id = #{memberId},member_name = #{memberName},password = #{password}, date_of_birth = #{dateOfBirth}-->
+<!--        where member_id = #{memberId}-->
+<!--    </update>-->
+
+<!--    <delete id="delete" parameterType="String">-->
+<!--        delete from members where member_id = #{memberId}-->
+<!--    </delete>-->
+
+</mapper>
