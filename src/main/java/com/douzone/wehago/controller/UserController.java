@@ -32,7 +32,7 @@ public class UserController {
         return ResponseEntity.ok().body("회원가입 성공!!");
     }
 
-    // todo :: user Login Controller
+    // todo :: user 로그인 Controller
     @PostMapping("/api/user/login")
     public ResponseEntity<?> userLogin(@RequestBody @Valid UserLoginDTO userLoginDTO) {
         TokenDTO tokenDTO = userService.login(userLoginDTO);
