@@ -9,13 +9,13 @@
         INSERT INTO tb_companys (cop_reg_num,cop_name,cop_admin) values (#{copRegNum},#{copName},#{copAdmin})
     </insert>
 
-<!--    <select id ="findAll" resultType="com.douzone.wehago.dto.CarDTO">-->
-<!--        select cid,car_name,car_year,car_distance,start_date,end_date,lender from members;-->
-<!--    </select>-->
+    <select id ="findAll" resultType="com.douzone.wehago.domain.Company">
+        SELECT * FROM tb_companys
+    </select>
 
-<!--    <select id = "findOne" resultType="com.douzone.wehago.dto.CarDTO">-->
-<!--        select mid,member_id,member_name,password,date_of_birth from members where member_id = #{memberId};-->
-<!--    </select>-->
+    <select id = "findOne" resultType="com.douzone.wehago.domain.Company">
+        select * from tb_companys where cop_seq = #{copSeq};
+    </select>
 
     <!--    <update id="update" parameterType="com.douzone.wehago.dto.CarDTO">-->
     <!--        update members set member_id = #{memberId},member_name = #{memberName},password = #{password}, date_of_birth = #{dateOfBirth}-->
