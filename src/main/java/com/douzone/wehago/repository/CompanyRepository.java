@@ -26,4 +26,8 @@ public class CompanyRepository {
         return sqlSession.selectOne("com.douzone.wehago.mapper.CompanyMapper.findOne", copSeq);
     }
 
+    public Integer update(Company company){
+        return sqlSession.update("com.douzone.wehago.mapper.CompanyMapper.update", company);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.douzone.wehago.service;
 
 import com.douzone.wehago.domain.Company;
+import com.douzone.wehago.domain.Member;
 import com.douzone.wehago.dto.CompanyDTO;
 import com.douzone.wehago.dto.CompanyPageResponseDTO;
 import com.douzone.wehago.dto.CompanyResponseDTO;
@@ -12,6 +13,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +72,21 @@ public class CompanyService {
         Company company = companyRepository.findOne(copSeq);
         System.out.println("단일조회" + company);
 
+
+        return getCompanyResponseDTO(company);
+    }
+
+    // 회사 수정
+    @Transactional
+    public CompanyResponseDTO updateCompany(CompanyDTO companyDTO, Integer copSeq) {
+        Company company = Company.builder()
+                .copSeq(copSeq)
+                .copRegNum(companyDTO.getCopRegNum())
+                .copName(companyDTO.getCopName())
+                .copAdmin(companyDTO.getCopAdmin())
+                .build();
+
+        companyRepository.update(company);
 
         return getCompanyResponseDTO(company);
     }

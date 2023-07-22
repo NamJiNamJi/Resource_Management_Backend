@@ -1,5 +1,6 @@
 package com.douzone.wehago.domain;
 
+import com.douzone.wehago.dto.CompanyDTO;
 import lombok.*;
 
 @Getter
@@ -12,4 +13,10 @@ public class Company {
     private String copRegNum;
     private String copName;
     private String copAdmin;
+
+    public void update(CompanyDTO companyDTO) {
+        this.copRegNum = companyDTO.getCopRegNum();
+        this.copName = companyDTO.getCopName();
+        this.copAdmin = companyDTO.getCopAdmin();
+    }
 }

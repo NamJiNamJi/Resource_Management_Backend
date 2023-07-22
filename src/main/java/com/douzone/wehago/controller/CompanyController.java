@@ -53,6 +53,13 @@ public class CompanyController {
         return new ResponseEntity<>(companyResponseDTO, HttpStatus.OK);
     }
 
+    @PutMapping("/{copSeq}")
+    public ResponseEntity<Object> updateCompany(@RequestBody CompanyDTO companyDTO, @PathVariable Integer copSeq) {
+        CompanyResponseDTO companyResponseDTO = companyService.updateCompany(companyDTO, copSeq);
+
+        return new ResponseEntity<>(companyResponseDTO, HttpStatus.OK);
+    }
+
 
 
 

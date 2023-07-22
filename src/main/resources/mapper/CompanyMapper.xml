@@ -17,10 +17,10 @@
         select * from tb_companys where cop_seq = #{copSeq};
     </select>
 
-    <!--    <update id="update" parameterType="com.douzone.wehago.dto.CarDTO">-->
-    <!--        update members set member_id = #{memberId},member_name = #{memberName},password = #{password}, date_of_birth = #{dateOfBirth}-->
-    <!--        where member_id = #{memberId}-->
-    <!--    </update>-->
+        <update id="update" parameterType="com.douzone.wehago.domain.Company">
+            UPDATE tb_companys SET cop_reg_num = #{copRegNum}, cop_name = #{copName}, cop_admin = #{copAdmin}
+            WHERE cop_seq = #{copSeq}
+        </update>
 
     <!--    <delete id="delete" parameterType="String">-->
     <!--        delete from members where member_id = #{memberId}-->
