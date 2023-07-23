@@ -1,5 +1,6 @@
 package com.douzone.wehago.controller;
 
+import com.douzone.wehago.common.Response;
 import com.douzone.wehago.dto.CompanyDTO;
 import com.douzone.wehago.dto.CompanyPageResponseDTO;
 import com.douzone.wehago.dto.CompanyResponseDTO;
@@ -11,20 +12,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/company")
 public class CompanyController {
     private final CompanyService companyService;
 
-    // 회사 생성
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody CompanyDTO companyDTO) {
         CompanyResponseDTO companyResponseDTO = companyService.save(companyDTO);
+        Response response = new Response(HttpStatus.CREATED, "회사 등록 성공", companyResponseDTO);
 
-        return new ResponseEntity<>(companyResponseDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     // 회사 전체 조회
@@ -41,31 +40,34 @@ public class CompanyController {
     @GetMapping
     public ResponseEntity<Object> findAll() {
         CompanyPageResponseDTO companyPageResponseDTO = companyService.findAll();
+        Response response = new Response(HttpStatus.OK, "회사 전체 조회 성공", companyPageResponseDTO);
 
-        return new ResponseEntity<>(companyPageResponseDTO, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
     @GetMapping("/{copSeq}")
     public ResponseEntity<Object> findOne(@PathVariable Integer copSeq) {
         CompanyResponseDTO companyResponseDTO = companyService.findOne(copSeq);
+        Response response = new Response(HttpStatus.OK, "회사 조회 성공", companyResponseDTO);
 
-        return new ResponseEntity<>(companyResponseDTO, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("/{copSeq}")
     public ResponseEntity<Object> updateCompany(@RequestBody CompanyDTO companyDTO, @PathVariable Integer copSeq) {
         CompanyResponseDTO companyResponseDTO = companyService.updateCompany(companyDTO, copSeq);
+        Response response = new Response(HttpStatus.OK, "회사 수정 성공", companyResponseDTO);
 
-        return new ResponseEntity<>(companyResponseDTO, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{copSeq}")
     public ResponseEntity<Object> deleteCompany(@PathVariable Integer copSeq) {
         companyService.deleteCompany(copSeq);
-        String message = "삭제 성공";
+        Response response = new Response(HttpStatus.OK, "회사 삭제 성공",null);
 
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
