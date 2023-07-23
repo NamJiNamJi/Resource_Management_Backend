@@ -1,5 +1,6 @@
 package com.douzone.wehago.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
