@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.douzone.wehago.mapper.CompanyMapper">
+    <insert id ="save" parameterType="com.douzone.wehago.domain.Company">
+        INSERT INTO tb_companys (cop_reg_num,cop_name,cop_admin) values (#{copRegNum},#{copName},#{copAdmin})
+    </insert>
+
+    <select id ="findAll" resultType="com.douzone.wehago.domain.Company">
+        SELECT * FROM tb_companys
+    </select>
+
+    <select id = "findOne" resultType="com.douzone.wehago.domain.Company">
+        select * from tb_companys where cop_seq = #{copSeq};
+    </select>
+
+        <update id="update" parameterType="com.douzone.wehago.domain.Company">
+            UPDATE tb_companys SET cop_reg_num = #{copRegNum}, cop_name = #{copName}, cop_admin = #{copAdmin}
+            WHERE cop_seq = #{copSeq}
+        </update>
+
+        <delete id="delete" parameterType="Integer">
+            delete from tb_companys where cop_seq = #{copSeq}
+        </delete>
+
+</mapper>
