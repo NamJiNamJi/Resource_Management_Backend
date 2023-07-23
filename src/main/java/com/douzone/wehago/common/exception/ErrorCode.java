@@ -15,7 +15,10 @@ public enum ErrorCode {
     ENTITY_NOT_FOUND(400, "ENTITY_NOT_FOUND", "개체를 찾을 수 없습니다."),
     INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR", "내부 서버 에러"),
     INVALID_TYPE_VALUE(400, "INVALID_TYPE_VALUE", "잘못된 유형 값"),
-    HANDLE_ACCESS_DENIED(403, "HANDLE_ACCESS_DENIED", "접근 권한이 없습니다.")
+    HANDLE_ACCESS_DENIED(403, "HANDLE_ACCESS_DENIED", "접근 권한이 없습니다."),
+
+    // Company
+    COMPANY_NOT_EXIST(404, "COMPANY_NOT_EXIST", "회사가 존재하지 않습니다."),
     ;
 
 
