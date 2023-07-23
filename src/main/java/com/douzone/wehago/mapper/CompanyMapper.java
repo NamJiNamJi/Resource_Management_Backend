@@ -1,7 +1,6 @@
 package com.douzone.wehago.mapper;
 
 import com.douzone.wehago.domain.Company;
-import com.douzone.wehago.domain.Member;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,4 +15,6 @@ public interface CompanyMapper {
     Company findOne();
 
     void update(Company company);
+
+    void delete(Integer copSeq);
 }

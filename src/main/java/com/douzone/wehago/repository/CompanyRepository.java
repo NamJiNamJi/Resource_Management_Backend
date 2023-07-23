@@ -30,4 +30,8 @@ public class CompanyRepository {
         return sqlSession.update("com.douzone.wehago.mapper.CompanyMapper.update", company);
     }
 
+    public void delete(Integer copSeq){
+        sqlSession.delete("com.douzone.wehago.mapper.CompanyMapper.delete", copSeq);
+    }
+
 }

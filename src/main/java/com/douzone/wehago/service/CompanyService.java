@@ -1,7 +1,6 @@
 package com.douzone.wehago.service;
 
 import com.douzone.wehago.domain.Company;
-import com.douzone.wehago.domain.Member;
 import com.douzone.wehago.dto.CompanyDTO;
 import com.douzone.wehago.dto.CompanyPageResponseDTO;
 import com.douzone.wehago.dto.CompanyResponseDTO;
@@ -89,6 +88,11 @@ public class CompanyService {
         companyRepository.update(company);
 
         return getCompanyResponseDTO(company);
+    }
+
+    // 회사 삭제
+    public void deleteCompany(Integer copSeq) {
+        companyRepository.delete(copSeq);
     }
 
 

@@ -22,8 +22,8 @@
             WHERE cop_seq = #{copSeq}
         </update>
 
-    <!--    <delete id="delete" parameterType="String">-->
-    <!--        delete from members where member_id = #{memberId}-->
-    <!--    </delete>-->
+        <delete id="delete" parameterType="Integer">
+            delete from tb_companys where cop_seq = #{copSeq}
+        </delete>
 
 </mapper>

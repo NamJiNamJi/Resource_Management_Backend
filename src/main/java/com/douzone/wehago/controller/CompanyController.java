@@ -60,6 +60,14 @@ public class CompanyController {
         return new ResponseEntity<>(companyResponseDTO, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{copSeq}")
+    public ResponseEntity<Object> deleteCompany(@PathVariable Integer copSeq) {
+        companyService.deleteCompany(copSeq);
+        String message = "삭제 성공";
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
 
 
 
