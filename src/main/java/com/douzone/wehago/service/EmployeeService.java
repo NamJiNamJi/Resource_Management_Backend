@@ -1,6 +1,5 @@
 package com.douzone.wehago.service;
 
-import com.douzone.wehago.domain.Company;
 import com.douzone.wehago.domain.Employee;
 import com.douzone.wehago.dto.*;
 import com.douzone.wehago.repository.EmployeeRepository;
@@ -51,6 +50,21 @@ public class EmployeeService {
     @Transactional(readOnly = true)
     public EmployeeResponseDTO findOne(Integer empSeq) {
         Employee employee = employeeRepository.findOne(empSeq);
+
+        return getEmployeeResponseDTO(employee);
+    }
+
+    @Transactional
+    public EmployeeResponseDTO updateEmployee(EmployeeDTO employeeDTO, Integer empSeq) {
+        Employee employee = Employee.builder()
+                .empSeq(empSeq)
+                .empId(employeeDTO.getEmpId())
+                .empName(employeeDTO.getEmpName())
+                .copSeq(employeeDTO.getCopSeq())
+                .rscAdmin(employeeDTO.getRscAdmin())
+                .build();
+
+        employeeRepository.update(employee);
 
         return getEmployeeResponseDTO(employee);
     }
