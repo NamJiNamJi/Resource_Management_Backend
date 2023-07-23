@@ -69,6 +69,10 @@ public class EmployeeService {
         return getEmployeeResponseDTO(employee);
     }
 
+    public void deleteEmployee(Integer empSeq) {
+        employeeRepository.delete(empSeq);
+    }
+
 
 
 
@@ -81,6 +85,5 @@ public class EmployeeService {
                 .rscAdmin(employee.getRscAdmin())
                 .build();
     }
-
 
 }

@@ -43,5 +43,13 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeResponseDTO, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{empSeq}")
+    public ResponseEntity<Object> deleteEmployee(@PathVariable Integer empSeq) {
+        employeeService.deleteEmployee(empSeq);
+        String message = "삭제 성공";
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
 
 }
