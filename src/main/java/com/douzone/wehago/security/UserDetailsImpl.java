@@ -21,18 +21,18 @@ public class UserDetailsImpl implements UserDetails {
         this.user = user;
     }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        SimpleGrantedAuthority GrantedAuthority = new SimpleGrantedAuthority("ROLE_USER"); // todo :: 임의로 해둔거..
-//        Collection<GrantedAuthority> collection = new ArrayList<>();
-//        collection.add(GrantedAuthority);
-//        return collection;
-//    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        SimpleGrantedAuthority GrantedAuthority = new SimpleGrantedAuthority("ROLE_USER"); // todo :: 임의로 해둔거..
+        Collection<GrantedAuthority> collection = new ArrayList<>();
+        collection.add(GrantedAuthority);
+        return collection;
     }
+
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return null;
+//    }
 
     @Override
     public String getPassword() {

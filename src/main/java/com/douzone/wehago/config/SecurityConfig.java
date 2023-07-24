@@ -85,9 +85,11 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeRequests() // 인증없이 사용가능한 api
-                .antMatchers("/api/*").permitAll(); // 일단 api 전부 열어둠
-
-                //.anyRequest().authenticated();
+                .antMatchers("/*").permitAll();
+//                .antMatchers("/api/user/login").permitAll()
+//                .antMatchers("/api/user/signup").permitAll() // api 전부 열어둠
+//
+//                .anyRequest().authenticated();
 
         return http.build();
     }

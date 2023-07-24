@@ -58,8 +58,8 @@ public class TokenProvider {
 
         // claims token 본문 커스텀
         Map<String ,String> claims = new HashMap<>();
-        claims.put("UserId", user.getUserId()); // 유저 아이디
-        claims.put("UserName", user.getUserName()); // 유저 이름
+        claims.put("userId", user.getUserId()); // 유저 아이디
+        claims.put("userName", user.getUserName()); // 유저 이름
 
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
 
@@ -79,8 +79,8 @@ public class TokenProvider {
     // 현재 사용자 정보 가져오기
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
-        String userName = (String) claims.get("userName");
-        UserDetails principal = userDetailsService.loadUserByUsername(userName);
+        String userId = (String) claims.get("userId");
+        UserDetails principal = userDetailsService.loadUserByUsername(userId);
         return new UsernamePasswordAuthenticationToken(principal, "", null);
     }
 

@@ -27,6 +27,7 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // request에서 토큰 뽑아오기
         String jwt = resolveToken(request);
+
         // 적합한 토큰이라면 authentication 에 추가
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
             // 토큰으로부터 Authenication 객체 얻어오기
