@@ -41,9 +41,8 @@ public class FacilityController {
 
     @GetMapping("/FacilitySaveModal")
     @ResponseBody
-    public List<Facility> findAll(@RequestBody FacilityDTO facilityDTO) {
+    public List<Facility> findAll() {
 
-        facilityService.findAll();
-        return "읽기";
+        return facilityService.findAll();
     }
 }
