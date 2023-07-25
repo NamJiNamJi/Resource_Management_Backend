@@ -2,6 +2,7 @@ package com.douzone.wehago.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -20,5 +21,12 @@ public class WebConfig implements WebMvcConfigurer {
                 //.allowCredentials(true); // .allowedOriginPatterns("*") 이렇게 와일드 카드로 설정하면 이거 쓰면 에러남 ( 실행 조차  X )
             }
         };
+    }
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("UTF-8"); // 인코딩 설정
+        resolver.setMaxUploadSizePerFile(10 * 1024 * 1024); // 파일당 업로드 제한 크기 설정 (10MB로 설정)
+        return resolver;
     }
 }
