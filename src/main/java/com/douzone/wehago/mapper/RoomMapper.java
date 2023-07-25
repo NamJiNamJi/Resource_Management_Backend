@@ -2,6 +2,7 @@ package com.douzone.wehago.mapper;
 
 import com.douzone.wehago.domain.Car;
 import com.douzone.wehago.domain.Room;
+import com.douzone.wehago.dto.RoomDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,13 +10,13 @@ import java.util.List;
 @Mapper
 public interface RoomMapper {
 
-    void save(Room room);
+    void insertRoom(RoomDTO room);
 
-    List<Room> findAll();
+    RoomDTO selectRoomById(Long spcSeq);
 
-//    Member findOne(String memberId);
+    List<RoomDTO> selectAllRooms();
 
-//    void update(Member member);
+    void updateRoom(RoomDTO room);
 
-//    void delete(String memberId);
+    void deleteRoom(Long spcSeq);
 }
