@@ -17,7 +17,6 @@ public class CarController {
         log.info("{}",car);
         CarSaveResponse carSaveResponse = CarSaveResponse.builder()
                 .ok("ok")
-                .message("차량 예약에 성공했습니다.")
                 .build();
         return carSaveResponse;
     }
