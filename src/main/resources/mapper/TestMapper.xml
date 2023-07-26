@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.douzone.wehago.mapper.TestMapper">
+    <insert id ="save" parameterType="com.douzone.wehago.domain.Test">
+        INSERT INTO tb_tests (test_data1,test_data2,test_data3,imgurl) values (#{testData1},#{testData2},#{testData3},#{imgUrl})
+    </insert>
+</mapper>

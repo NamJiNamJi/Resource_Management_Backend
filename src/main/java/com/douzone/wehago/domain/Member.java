@@ -19,5 +19,5 @@ public class Member {
     private String userEmail;
     private LocalDateTime userCreated;
     private LocalDateTime userUpdated;
-
+  
 }

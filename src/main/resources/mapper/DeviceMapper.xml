@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.douzone.wehago.mapper.DeviceMapper">
+
+    <insert id="insertDevice" parameterType="com.douzone.wehago.dto.DeviceDTO">
+        INSERT INTO tb_devices (dvc_name, dvc_serial, dvc_buy, dvc_explan, dvc_created, dvc_updated)
+        VALUES (#{dvcName}, #{dvcSerial}, #{dvcBuy}, #{dvcExplan}, #{dvcCreated}, #{dvcUpdated})
+    </insert>
+
+    <select id ="findAll" resultType="com.douzone.wehago.dto.DeviceDTO">
+        SELECT * FROM tb_devices;
+    </select>
+
+    <select id="selectDeviceById" resultType="com.douzone.wehago.dto.DeviceDTO">
+        SELECT * FROM tb_devices WHERE dvc_seq = #{dvcSeq}
+    </select>
+
+    <update id="updateDevice" parameterType="com.douzone.wehago.dto.DeviceDTO">
+       UPDATE tb_devices
+        SET dvc_name = #{dvcName},
+            dvc_serial = #{dvcSerial},
+            dvc_buy = #{dvcBuy},
+            dvc_explan = #{dvcExplan},
+            dvc_created = #{dvcCreated},
+            dvc_updated = #{dvcUpdated}
+        WHERE dvc_seq = #{dvcSeq}
+    </update>
+
+    <delete id="deleteDevice" parameterType="long">
+        DELETE FROM tb_devices WHERE dvc_seq = #{dvcSeq}
+    </delete>
+</mapper>

@@ -3,6 +3,7 @@ package com.douzone.wehago.repository;
 import com.douzone.wehago.domain.Car;
 import com.douzone.wehago.domain.Member;
 import com.douzone.wehago.domain.Room;
+import com.douzone.wehago.dto.RoomDTO;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -14,22 +15,25 @@ import java.util.List;
 public class RoomRepository {
 
     private final SqlSession sqlSession;
-    public void save(Room room){
-        sqlSession.insert("com.douzone.wehago.mapper.RoomMapper.save", room);
-    }
-    public List<Member> findAll(){
-        return sqlSession.selectList("com.douzone.wehago.mapper.RoomMapper.findAll");
+
+    public void insertRoom(RoomDTO room){
+        sqlSession.insert("com.douzone.wehago.mapper.RoomMapper.insertRoom", room);
     }
 
-//    public Member findOne(String memberId){
-//        return sqlSession.selectOne("com.douzone.wehago.mapper.MemberMapper.findOne", memberId);
-//    }
-//
-//    public Integer update(Member member){
-//        return sqlSession.update("com.douzone.wehago.mapper.MemberMapper.update", member);
-//    }
-//
-//    public void delete(String memberId){
-//        sqlSession.delete("com.douzone.wehago.mapper.MemberMapper.delete", memberId);
-//    }
+    public RoomDTO selectRoomById(Long spcSeq){
+        return sqlSession.selectOne("com.douzone.wehago.mapper.RoomMapper.selectRoomById", spcSeq);
+    }
+
+    public List<RoomDTO> selectAllRooms(){
+        return sqlSession.selectList("com.douzone.wehago.mapper.RoomMapper.selectAllRooms");
+    }
+
+    public void updateRoom(RoomDTO room){
+        sqlSession.update("com.douzone.wehago.mapper.RoomMapper.updateRoom" ,room);
+    }
+
+    public void deleteRoom(Long spcSeq){
+        sqlSession.delete("com.douzone.wehago.mapper.RoomMapper.deleteRoom", spcSeq);
+    }
+
 }

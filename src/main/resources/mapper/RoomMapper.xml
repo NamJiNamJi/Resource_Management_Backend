@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.douzone.wehago.mapper.RoomMapper">
+
+    <insert id="insertRoom" parameterType="com.douzone.wehago.dto.RoomDTO">
+        INSERT INTO tb_spaces (spc_name, spc_cap, spc_explan, spc_created, spc_updated)
+        VALUES (#{spcName}, #{spcCap}, #{spcExplan}, #{spcCreated},#{spcUpdated})
+    </insert>
+
+    <select id ="selectAllRooms" resultType="com.douzone.wehago.dto.RoomDTO">
+        SELECT * FROM tb_spaces;
+    </select>
+
+    <select id="selectRoomById" resultType="com.douzone.wehago.dto.RoomDTO">
+        SELECT * FROM tb_spaces WHERE spc_seq = #{spcSeq}
+    </select>
+
+    <update id="updateRoom" parameterType="com.douzone.wehago.dto.RoomDTO">
+        UPDATE tb_spaces
+        SET spc_name = #{spcName},
+            spc_cap = #{spcCap},
+            spc_explan = #{spcExplan},
+            spc_created = #{spcCreated},
+            spc_updated = #{spcUpdated}
+            WHERE spc_seq = #{spcSeq}
+    </update>
+
+    <delete id="deleteRoom" parameterType="long">
+        DELETE FROM tb_spaces WHERE spc_seq = #{spcSeq}
+    </delete>
+</mapper>
