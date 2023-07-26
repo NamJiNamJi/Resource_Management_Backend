@@ -14,13 +14,20 @@ import java.util.Date;
 @Setter
 @ToString
 public class Room {
-    private String lender;
-    private Integer roomNumber;
-    private Integer participant;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate reserveDate;
-    @DateTimeFormat(pattern = "HH:mm")
-    private LocalTime startTime;
-    @DateTimeFormat(pattern = "HH:mm")
-    private LocalTime endTime;
+
+//     private String title;
+//     @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
+//     private TIMESTAMP rsvStart;
+//     @DateTimeFormat(pattern = "YYY-Mm-DD-HH:mm")
+//     private TIMESTAMP rsvEnd;
+//     private String rsvName;
+//     private Integer spcCap;
+
+    /*
+     private String Title;
+    private String rsvName;
+    private Integer rsvParti;
+    private String spcName;
+    private String spcAdress;
+     */
 }

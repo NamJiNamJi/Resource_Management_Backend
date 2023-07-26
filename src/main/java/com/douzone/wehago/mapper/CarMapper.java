@@ -1,6 +1,7 @@
 package com.douzone.wehago.mapper;
 
 import com.douzone.wehago.domain.Car;
+import com.douzone.wehago.domain.Member;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,4 +23,5 @@ public interface CarMapper {
 
     /* 차량 정보 삭제 Delete */
     void delete(int car_seq);
+
 }

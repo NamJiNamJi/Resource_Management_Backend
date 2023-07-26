@@ -6,7 +6,6 @@ import com.douzone.wehago.mapper.MemberMapper;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-
 import java.math.BigInteger;
 import java.util.List;
 
@@ -15,6 +14,7 @@ import java.util.List;
 public class CarRepository {
 
     private final SqlSession sqlSession;
+  
     public void save(Car car){
         sqlSession.insert("com.douzone.wehago.mapper.carMapper.save", car);
     }
@@ -34,4 +34,5 @@ public class CarRepository {
     public void delete(int car_seq){
         sqlSession.delete("com.douzone.wehago.mapper.MemberMapper.delete", car_seq);
     }
+
 }
