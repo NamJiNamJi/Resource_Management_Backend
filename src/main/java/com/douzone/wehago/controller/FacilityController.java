@@ -1,48 +1,38 @@
 package com.douzone.wehago.controller;
 
-import com.douzone.wehago.domain.Facility;
+import com.douzone.wehago.common.Response;
 import com.douzone.wehago.dto.FacilityDTO;
-import com.douzone.wehago.mapper.FacilityMapper;
+import com.douzone.wehago.dto.FacilityPageResponseDTO;
+import com.douzone.wehago.dto.FacilityResponseDTO;
 import com.douzone.wehago.service.FacilityService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Base64;
-import java.util.List;
 
 @Slf4j
 @RestController
+@AllArgsConstructor
+@RequestMapping("/api/car")
 public class FacilityController {
 
-    @Autowired
     private FacilityService facilityService;
 
-    @ResponseBody
-    @PostMapping("/FacilitySaveModal")
-    public String saveFacility(@RequestBody FacilityDTO facilityDTO) {
-        Facility facility = new Facility();
-        // FacilityDTO에서 Facility로 변환하여 저장
-        facility.setCarName(facilityDTO.getCarName());
-        facility.setCarNumber(facilityDTO.getCarNumber());
-        facility.setCarDistance(facilityDTO.getCarDistance());
-        facility.setCarYear(facilityDTO.getCarYear());
-        facility.setCarExplan(facilityDTO.getCarExplan());
-//        // 이미지 데이터를 디코딩하여 byte 배열로 변환
-//        byte[] carImage = Base64.getDecoder().decode(facilityDTO.getCarImage());
-//        facility.setCarImage(carImage);
+    @PostMapping
+    public ResponseEntity<Object> save(@RequestBody FacilityDTO facilityDTO) {
 
-        facilityService.save(facility);
+        FacilityResponseDTO facilityResponseDTO = facilityService.save(facilityDTO);
+        Response response = new Response(HttpStatus.CREATED, "차량 자원 등록 성공", facilityResponseDTO);
 
-        return "입력";
+        return  new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/FacilitySaveModal")
-    @ResponseBody
-    public List<Facility> findAll() {
+    @GetMapping
+    public ResponseEntity<Object> findAll () {
 
-        return facilityService.findAll();
+        FacilityPageResponseDTO facilityPageResponseDTO = facilityService.findAll();
+
+        return new ResponseEntity<>(facilityPageResponseDTO, HttpStatus.OK);
     }
 }

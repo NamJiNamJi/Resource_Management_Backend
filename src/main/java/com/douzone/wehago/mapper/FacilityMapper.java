@@ -9,7 +9,7 @@ import java.util.List;
 public interface FacilityMapper {
 
     /* 차량 자원 등록 Insert */
-    void save (Facility facility);
+    void save(Facility facility);
 
     /* 차량 자원 전체 조회 Select */
     List<Facility> findAll();
