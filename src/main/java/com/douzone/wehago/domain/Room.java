@@ -3,7 +3,6 @@ package com.douzone.wehago.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import oracle.sql.TIMESTAMP;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
