@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.douzone.wehago.mapper.UserMapper">
+
+    <resultMap id="UserResultMap" type="com.douzone.wehago.domain.User">
+        <result property="userId" column="user_id" />
+        <result property="userPwd" column="user_pwd" />
+        <result property="userName" column="user_name" />
+        <result property="userEmail" column="user_email" />
+        <result property="userCreated" column="user_created" />
+        <result property="userUpdated" column="user_updated" />
+    </resultMap>
+
+    <!-- 회원가입 로직 -->
+    <insert id="userRegister" parameterType="com.douzone.wehago.domain.User">
+        INSERT INTO tb_users (user_id, user_pwd, user_name, user_email, user_created, user_updated)
+        VALUES (#{userId}, #{userPwd}, #{userName}, #{userEmail}, #{userCreated}, #{userUpdated})
+    </insert>
+
+    <!-- 로그인 로직 -->
+    <select id="findUser" parameterType="java.lang.String" resultType="com.douzone.wehago.domain.User">
+        SELECT * FROM tb_users WHERE user_id = #{userId}
+    </select>
+
+    <!-- 전체 회원찾기 로직 -->
+    <select id="findAllUsers" resultType="com.douzone.wehago.domain.User">
+        SELECT user_id, user_name, user_email FROM tb_users
+    </select>
+
+    <!-- 검색으로 회원찾기 로직 -->
+    <select id="findSearchUsers" parameterType="java.lang.String" resultType="com.douzone.wehago.domain.User">
+        SELECT user_seq, user_id, user_name, user_email FROM tb_users WHERE user_id LIKE CONCAT('%', #{text}, '%')
+                                                                         OR user_name LIKE CONCAT('%', #{text}, '%')
+                                                                         OR user_email LIKE CONCAT('%', #{text}, '%')
+    </select>
+
+    <!-- 회원 업데이트 -->
+    <update id="updateUser" parameterType="com.douzone.wehago.dto.UserDTO">
+        UPDATE tb_users SET user_pwd = #{userPwd}, user_email = #{userEmail}, user_updated = #{userUpdated} WHERE user_id = #{userId}
+    </update>
+
+    <!-- 회원가입시 유저 아이디 중복검사 -->
+    <select id="duplicationUserId" parameterType="java.lang.String" resultType="int">
+        SELECT count(user_id) FROM tb_users WHERE user_id = #{userId}
+    </select>
+
+</mapper>

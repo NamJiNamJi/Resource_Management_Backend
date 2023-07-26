@@ -19,4 +19,5 @@ public interface RoomMapper {
     void updateRoom(RoomDTO room);
 
     void deleteRoom(Long spcSeq);
+
 }

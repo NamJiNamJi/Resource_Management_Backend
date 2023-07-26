@@ -15,13 +15,14 @@ import java.util.Date;
 @Setter
 @ToString
 public class Room {
-    private String title;
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
-    private TIMESTAMP rsvStart;
-    @DateTimeFormat(pattern = "YYY-Mm-DD-HH:mm")
-    private TIMESTAMP rsvEnd;
-    private String rsvName;
-    private Integer spcCap;
+
+//     private String title;
+//     @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
+//     private TIMESTAMP rsvStart;
+//     @DateTimeFormat(pattern = "YYY-Mm-DD-HH:mm")
+//     private TIMESTAMP rsvEnd;
+//     private String rsvName;
+//     private Integer spcCap;
 
     /*
      private String Title;

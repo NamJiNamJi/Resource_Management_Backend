@@ -1,3 +1,6 @@
+jwt:
+  secret : gkrdpebdnjsejwhserpcnldjqdusrPtndjqchlwhdvmfhwprxm10dnjfdlqtkdPwjdqnxdmausakfdlwldy=
+
 mybatis:
   configuration:
     multiple-result-sets-enabled: false
@@ -7,9 +10,11 @@ mybatis:
     default-fetch-size: 500
   mapper-locations:
     - classpath:mapper/*.xml
+
 spring:
   servlet:
     multipart:
       enabled: true
       max-file-size: 10MB
       max-request-size: 10MB
+
