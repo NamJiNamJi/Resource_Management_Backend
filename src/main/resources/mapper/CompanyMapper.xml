@@ -6,7 +6,7 @@
 
 <mapper namespace="com.douzone.wehago.mapper.CompanyMapper">
     <insert id ="save" parameterType="com.douzone.wehago.domain.Company">
-        INSERT INTO tb_companys (cop_reg_num,cop_name,cop_admin) values (#{copRegNum},#{copName},#{copAdmin})
+        INSERT INTO tb_companys (cop_reg_num, cop_name, cop_state) values (#{copRegNum},#{copName},#{copState})
     </insert>
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Company">
@@ -18,7 +18,7 @@
     </select>
 
         <update id="update" parameterType="com.douzone.wehago.domain.Company">
-            UPDATE tb_companys SET cop_reg_num = #{copRegNum}, cop_name = #{copName}, cop_admin = #{copAdmin}
+            UPDATE tb_companys SET cop_reg_num = #{copRegNum}, cop_name = #{copName}, cop_state = #{copState}, cop_updated = #{copUpdated}
             WHERE cop_seq = #{copSeq}
         </update>
 
