@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class EmployeeDTO {
-    private String empId;
+    private String emp;
     private String empName;
     private Integer copSeq;
     private Boolean rscAdmin;
