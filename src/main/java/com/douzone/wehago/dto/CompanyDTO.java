@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class CompanyDTO {
     private String copRegNum;
     private String copName;
-    private String copAdmin;
+    private Boolean copState;
 }
