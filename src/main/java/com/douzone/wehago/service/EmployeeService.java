@@ -1,12 +1,17 @@
 package com.douzone.wehago.service;
 
+import com.douzone.wehago.common.S3Uploader;
 import com.douzone.wehago.domain.Employee;
-import com.douzone.wehago.dto.*;
+import com.douzone.wehago.dto.employee.EmployeeDTO;
+import com.douzone.wehago.dto.employee.EmployeePageResponseDTO;
+import com.douzone.wehago.dto.employee.EmployeeResponseDTO;
 import com.douzone.wehago.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,14 +20,18 @@ import java.util.List;
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final S3Uploader s3Uploader;
 
     @Transactional
-    public EmployeeResponseDTO saveEmployee(EmployeeDTO employeeDTO) {
+    public EmployeeResponseDTO saveEmployee(EmployeeDTO employeeDTO, MultipartFile image) throws IOException {
+        String imageUrl = s3Uploader.upload(image, "employee/image");
+
         Employee employee = Employee.builder()
-                .empId(employeeDTO.getEmpId())
                 .empName(employeeDTO.getEmpName())
+                .empImage(imageUrl)
                 .copSeq(employeeDTO.getCopSeq())
-                .rscAdmin(employeeDTO.getRscAdmin())
+                .userSeq(employeeDTO.getUserSeq())
+                .authLevel(employeeDTO.getAuthLevel())
                 .build();
 
         employeeRepository.save(employee);
@@ -55,13 +64,24 @@ public class EmployeeService {
     }
 
     @Transactional
-    public EmployeeResponseDTO updateEmployee(EmployeeDTO employeeDTO, Integer empSeq) {
-        Employee employee = Employee.builder()
+    public EmployeeResponseDTO updateEmployee(EmployeeDTO employeeDTO, MultipartFile image, Integer empSeq) throws IOException {
+
+        Employee employee = employeeRepository.findOne(empSeq);
+        String imageUrl = employee.getEmpImage();
+
+        // 이미지가 수정된 경우만 이미지 삭제 후 업로드
+        if (imageUrl != null) {
+            s3Uploader.deleteImage(imageUrl, "employee/image");
+            imageUrl = s3Uploader.upload(image, "employee/image");
+        }
+
+         employee = Employee.builder()
                 .empSeq(empSeq)
-                .empId(employeeDTO.getEmpId())
                 .empName(employeeDTO.getEmpName())
+                .empImage(imageUrl)
                 .copSeq(employeeDTO.getCopSeq())
-                .rscAdmin(employeeDTO.getRscAdmin())
+                .userSeq(employeeDTO.getUserSeq())
+                .authLevel(employeeDTO.getAuthLevel())
                 .build();
 
         employeeRepository.update(employee);
@@ -79,10 +99,12 @@ public class EmployeeService {
     EmployeeResponseDTO getEmployeeResponseDTO(Employee employee) {
         return EmployeeResponseDTO.builder()
                 .empSeq(employee.getEmpSeq())
-                .empId(employee.getEmpId())
                 .empName(employee.getEmpName())
+                .empImage(employee.getEmpImage())
                 .copSeq(employee.getCopSeq())
-                .rscAdmin(employee.getRscAdmin())
+                .userSeq(employee.getUserSeq())
+                .empState(employee.getEmpState())
+                .authLevel(employee.getAuthLevel())
                 .build();
     }
 

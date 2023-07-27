@@ -7,8 +7,10 @@ import lombok.Getter;
 @Getter
 public class Employee {
     private Integer empSeq;
-    private String empId;
     private String empName;
+    private String empImage;
     private Integer copSeq;
-    private Boolean rscAdmin;
+    private Integer userSeq;
+    private AuthLevel authLevel;
+    private Boolean empState;
 }

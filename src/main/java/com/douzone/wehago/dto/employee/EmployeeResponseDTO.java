@@ -1,5 +1,6 @@
-package com.douzone.wehago.dto;
+package com.douzone.wehago.dto.employee;
 
+import com.douzone.wehago.domain.AuthLevel;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -7,8 +8,10 @@ import lombok.Getter;
 @Getter
 public class EmployeeResponseDTO {
     private Integer empSeq;
-    private String empId;
     private String empName;
+    private String empImage;
     private Integer copSeq;
-    private Boolean rscAdmin;
+    private Integer userSeq;
+    private Boolean empState;
+    private AuthLevel authLevel;
 }
