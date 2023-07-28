@@ -28,6 +28,7 @@ public class CarController {
         Response response = new Response(HttpStatus.CREATED, "등록 성공", carResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+
     }
 
     @GetMapping
@@ -37,5 +38,28 @@ public class CarController {
 
         return new ResponseEntity<>(carPageResponseDTO, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/{carSeq}")
+    public ResponseEntity<Object> findOneCar(@PathVariable Integer carSeq) {
+        CarResponseDTO carResponseDTO = carService.findOneCar(carSeq);
+
+        return  new ResponseEntity<>(carResponseDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/{carSeq}")
+    public ResponseEntity<Object> updateCar (@RequestBody CarDTO carDTO,
+                                             @PathVariable Integer carSeq) {
+        CarResponseDTO carResponseDTO = carService.updateCar(carDTO, carSeq);
+
+        return new ResponseEntity<>(carResponseDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{carSeq}")
+    public ResponseEntity<Object> deleteCar(@PathVariable Integer carSeq) {
+        carService.deleteCar(carSeq);
+        String message = "삭제 성공";
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

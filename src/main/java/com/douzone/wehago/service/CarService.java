@@ -58,6 +58,33 @@ public class CarService {
                 .build();
     }
 
+    @Transactional
+    public CarResponseDTO findOneCar (Integer carSeq) {
+        Car car = carRepository.findOne(carSeq);
+
+        return getCarResponseDTO(car);
+    }
+
+    @Transactional
+    public CarResponseDTO updateCar (CarDTO carDTO, Integer carSeq) {
+        Car car = Car.builder()
+                .carSeq(carSeq)
+                .carName(carDTO.getCarName())
+                .carNumber(carDTO.getCarNumber())
+                .carDistance(carDTO.getCarDistance())
+                .carYear(carDTO.getCarYear())
+                .carExplain((carDTO.getCarExplain()))
+                .build();
+
+        carRepository.update(car);
+
+        return getCarResponseDTO(car);
+    }
+
+    public void deleteCar(Integer carSeq) {
+        carRepository.delete(carSeq);
+    }
+
     private CarResponseDTO getCarResponseDTO (Car car) {
         return CarResponseDTO.builder()
                 .carSeq(car.getCarSeq())

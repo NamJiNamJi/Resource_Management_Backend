@@ -8,26 +8,26 @@
 
     <insert id ="save" parameterType="com.douzone.wehago.domain.Car">
         INSERT INTO tb_cars (car_name, car_number, car_distance, car_year, car_image, car_explain, cop_seq, rsc_seq)
-        values (#{carName}, #{carNumber}, #{carDistance}, #{carYear}, #{carImage}, #{carExplain}, #{copSeq}, #{rscSeq});
+        VALUES (#{carName}, #{carNumber}, #{carDistance}, #{carYear}, #{carImage}, #{carExplain}, #{copSeq}, #{rscSeq});
     </insert>
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Car">
-        select * from tb_cars
+        SELECT * FROM tb_cars
     </select>
 
-    <select id = "findOne" resultType="com.douzone.wehago.dto.CarDTO">
-        select car_seq, car_number, car_type, car_year, car_distance
-        from tb_cars
-        where car_seq = #{carSeq};
+    <select id = "findOne" resultType="com.douzone.wehago.domain.Car">
+        SELECT car_seq, car_name, car_number, car_distance, car_year, car_explain, car_image
+        FROM tb_cars
+        WHERE car_seq = #{carSeq};
     </select>
 
-    <update id="update" parameterType="com.douzone.wehago.dto.CarDTO">
-        update tb_cars set car_seq = #{carSeq}, car_number = #{carNumber}, car_type = #{carType},
-                           car_image = #{carImage}, car_year = #{carYear}, car_distance = #{carDistance};
+    <update id="update" parameterType="com.douzone.wehago.domain.Car">
+        UPDATE tb_cars SET car_name = #{carName}, car_number = #{carNumber}, car_distance = #{carDistance}, car_year = #{carYear}, car_explain = #{carExplain}
+        WHERE car_seq = #{carSeq};
     </update>
 
     <delete id="delete" parameterType="String">
-        delete from tb_cars where car_seq = #{carSeq};
+        DELETE FROM tb_cars WHERE car_seq = #{carSeq};
     </delete>
 
 </mapper>

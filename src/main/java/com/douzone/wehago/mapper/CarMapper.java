@@ -15,7 +15,7 @@ public interface CarMapper {
     List<Car> findAll();
 
     /* 선택 차량 조회 Select */
-    Car findOne(int car_number);
+    Car findOne(Integer car_seq);
 
     /* 차량 정보 수정 Update */
     void update(Car car);
