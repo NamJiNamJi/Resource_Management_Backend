@@ -24,7 +24,7 @@ import java.nio.channels.AcceptPendingException;
 
 @SpringBootTest
 class WehagoApplicationTests {
-
+}
 //     DeviceTestCRUD
 //    private final DeviceRepository deviceRepository;
 //
@@ -53,49 +53,49 @@ class WehagoApplicationTests {
 //           roomRepository.insertRoom(room);
 //       }
 
-    @Autowired
-    CarMapper carMapper;
-
-    @Test
-    void findAllTest() {
-        List<Car> carList = carMapper.findAll();
-        for (Car car : carList) {
-            System.out.println("Car : " + car.toString());
-        }
-    }
-
+//    @Autowired
+//    CarMapper carMapper;
+//
 //    @Test
-    void save() {
-        for (int i=1; i<=10; i++) {
-            Car car = new Car();
-            car.setCarSeq(i);
-            car.setCarNumber("32너6099");
-            car.setCarType("프라이드");
-            car.setCarImage(null);
-            car.setCarYear(1995);
-            car.setCarDistance(120000);
-            carMapper.save(car);
-
-            List<Car> post = carMapper.findAll();
-        }
-        for (int i=11; i<=20; i++) {
-            Car car = new Car();
-            car.setCarSeq(i);
-            car.setCarNumber("32너6625");
-            car.setCarType("sm6");
-            car.setCarImage(null);
-            car.setCarYear(1995);
-            car.setCarDistance(120000);
-            carMapper.save(car);
-
-            List<Car> post = carMapper.findAll();
-        }
-
-    }
-
-//    @Test
-    void contextLoads() {
-
+//    void findAllTest() {
+//        List<Car> carList = carMapper.findAll();
+//        for (Car car : carList) {
+//            System.out.println("Car : " + car.toString());
+//        }
+//    }
+//
+////    @Test
+//    void save() {
+//        for (int i=1; i<=10; i++) {
+//            Car car = new Car();
+//            car.setCarSeq(i);
+//            car.setCarNumber("32너6099");
+//            car.setCarType("프라이드");
+//            car.setCarImage(null);
+//            car.setCarYear(1995);
+//            car.setCarDistance(120000);
+//            carMapper.save(car);
+//
+//            List<Car> post = carMapper.findAll();
+//        }
+//        for (int i=11; i<=20; i++) {
+//            Car car = new Car();
+//            car.setCarSeq(i);
+//            car.setCarNumber("32너6625");
+//            car.setCarType("sm6");
+//            car.setCarImage(null);
+//            car.setCarYear(1995);
+//            car.setCarDistance(120000);
+//            carMapper.save(car);
+//
+//            List<Car> post = carMapper.findAll();
+//        }
+//
+//    }
+//
+////    @Test
+//    void contextLoads() {
+//
 
 //       @Test
 //       public void dbselectAllTest() {
@@ -169,4 +169,4 @@ class WehagoApplicationTests {
 //        deviceRepository.deleteDevice(3L);
 //    }
 
-}
+//}

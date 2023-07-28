@@ -49,6 +49,7 @@ public class UserService {
         return userRepository.duplicationUserId(userId);
     }
 
+
     // todo :: user 로그인 service
     public UserResponseDTO userLogin(UserLoginDTO userLoginDTO) {
 
@@ -78,6 +79,7 @@ public class UserService {
                             .userId(user.getUserId())
                             .userName(user.getUserName())
                             .userEmail(user.getUserEmail())
+                            .userImage(user.getUserImage())
                             .build())
                     .build();
 
@@ -118,6 +120,7 @@ public class UserService {
             int result = userRepository.updateUser(userDTO);
             if (result > 0) {
                 return UserResponseDTO.builder().message("회원정보가 정상적으로 수정되었습니다.").build();
+
             }
         }
         return UserResponseDTO.builder().message("회원정보 수정에 실패하였습니다.").build();

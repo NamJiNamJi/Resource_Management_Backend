@@ -17,10 +17,13 @@
 
     <!-- 회원가입 로직 -->
     <insert id="userRegister" parameterType="com.douzone.wehago.domain.User">
-        INSERT INTO tb_users (user_id, user_pwd, user_name, user_email, user_created, user_updated)
-        VALUES (#{userId}, #{userPwd}, #{userName}, #{userEmail}, #{userCreated}, #{userUpdated})
+        INSERT INTO tb_users (user_id, user_pwd, user_name, user_email, user_created,user_image, user_updated)
+        VALUES (#{userId}, #{userPwd}, #{userName}, #{userEmail}, #{userCreated},#{userImage}, #{userUpdated})
     </insert>
-
+    <!-- 비밀번호 찾기 -->
+    <select id = "findPwd" parameterType="java.lang.String" resultType="com.douzone.wehago.domain.User">
+        select * from tb_users where user_pwd = #{userPwd};
+    </select>
     <!-- 로그인 로직 -->
     <select id="findUser" parameterType="java.lang.String" resultType="com.douzone.wehago.domain.User">
         SELECT * FROM tb_users WHERE user_id = #{userId}
@@ -28,7 +31,7 @@
 
     <!-- 전체 회원찾기 로직 -->
     <select id="findAllUsers" resultType="com.douzone.wehago.domain.User">
-        SELECT user_id, user_name, user_email FROM tb_users
+        SELECT user_id,user_pwd, user_name, user_email ,user_image FROM tb_users
     </select>
 
     <!-- 검색으로 회원찾기 로직 -->
@@ -40,12 +43,13 @@
 
     <!-- 회원 업데이트 -->
     <update id="updateUser" parameterType="com.douzone.wehago.dto.UserDTO">
-        UPDATE tb_users SET user_pwd = #{userPwd}, user_email = #{userEmail}, user_updated = #{userUpdated} WHERE user_id = #{userId}
+        UPDATE tb_users SET user_pwd = #{userPwd}, user_email = #{userEmail}, user_updated = #{userUpdated},user_image = #{userImage} WHERE user_id = #{userId}
     </update>
 
     <!-- 회원가입시 유저 아이디 중복검사 -->
     <select id="duplicationUserId" parameterType="java.lang.String" resultType="int">
         SELECT count(user_id) FROM tb_users WHERE user_id = #{userId}
     </select>
+
 
 </mapper>

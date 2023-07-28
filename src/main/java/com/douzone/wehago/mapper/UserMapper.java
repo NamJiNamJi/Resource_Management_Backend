@@ -12,6 +12,8 @@ import java.util.List;
 public interface UserMapper {
     void userRegister(User user);
     User findUser(String userId);
+
+
     List<User> findAllUsers();
     List<User> findSearchUsers(String text);
     int updateUser(UserDTO userDTO); // MyBatis update 행 갯수 return, 0 이면 update 가 되지 않은 것.

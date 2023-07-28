@@ -16,6 +16,7 @@ public class User {
     private String userPwd;
     private String userName;
     private String userEmail;
+    private String userImage;
     private Timestamp userCreated;
     private Timestamp userUpdated;
 
