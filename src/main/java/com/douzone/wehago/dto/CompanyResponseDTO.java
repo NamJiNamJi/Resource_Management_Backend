@@ -9,6 +9,6 @@ public class CompanyResponseDTO {
     private Integer copSeq;
     private String copRegNum;
     private String copName;
-    private String copAdmin;
+    private Boolean copState;
 
 }
