@@ -14,25 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/car")
+@RequestMapping()
 public class FacilityController {
 
-    private FacilityService facilityService;
 
-    @PostMapping
-    public ResponseEntity<Object> save(@RequestBody FacilityDTO facilityDTO) {
-
-        FacilityResponseDTO facilityResponseDTO = facilityService.save(facilityDTO);
-        Response response = new Response(HttpStatus.CREATED, "차량 자원 등록 성공", facilityResponseDTO);
-
-        return  new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
-    @GetMapping
-    public ResponseEntity<Object> findAll () {
-
-        FacilityPageResponseDTO facilityPageResponseDTO = facilityService.findAll();
-
-        return new ResponseEntity<>(facilityPageResponseDTO, HttpStatus.OK);
-    }
 }

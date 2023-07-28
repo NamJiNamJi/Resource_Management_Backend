@@ -1,6 +1,5 @@
 package com.douzone.wehago.jwt;
 
-import com.douzone.wehago.domain.Member;
 import com.douzone.wehago.domain.User;
 import com.douzone.wehago.security.PrincipalDetailsService;
 import com.douzone.wehago.security.UserDetailsImpl;

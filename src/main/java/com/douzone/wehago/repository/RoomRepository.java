@@ -1,8 +1,5 @@
 package com.douzone.wehago.repository;
 
-import com.douzone.wehago.domain.Car;
-import com.douzone.wehago.domain.Member;
-import com.douzone.wehago.domain.Room;
 import com.douzone.wehago.dto.RoomDTO;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;

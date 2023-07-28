@@ -1,14 +1,13 @@
-package com.douzone.wehago.domain;
+package com.douzone.wehago.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+
 import java.time.LocalDate;
 
 @Builder
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Car {
+public class CarResponseDTO {
     private Integer carSeq;
     private String carName;
     private String carNumber;
@@ -21,6 +20,4 @@ public class Car {
     private Boolean carState;
     private LocalDate carCreated;
     private LocalDate carUpdated;
-
 }
-
