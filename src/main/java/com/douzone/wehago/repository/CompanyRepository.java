@@ -1,7 +1,6 @@
 package com.douzone.wehago.repository;
 
 import com.douzone.wehago.domain.Company;
-import com.douzone.wehago.domain.Member;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;

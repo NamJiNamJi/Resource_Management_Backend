@@ -6,13 +6,13 @@
 
 <mapper namespace="com.douzone.wehago.mapper.CarMapper">
 
-    <insert id ="save" parameterType="com.douzone.wehago.dto.CarDTO">
-        INSERT INTO tb_cars (car_seq, car_number, car_type, car_image, car_year, car_distance)
-        values (#{carSeq}, #{carNumber}, #{carType}, #{carImage}, #{carYear}, #{carDistance});
+    <insert id ="save" parameterType="com.douzone.wehago.domain.Car">
+        INSERT INTO tb_cars (car_name, car_number, car_distance, car_year, car_image, car_explain, cop_seq, rsc_seq)
+        values (#{carName}, #{carNumber}, #{carDistance}, #{carYear}, #{carImage}, #{carExplain}, #{copSeq}, #{rscSeq});
     </insert>
 
-    <select id ="findAll" resultType="com.douzone.wehago.dto.CarDTO">
-        select * from tb_cars where car_seq = #{car_seq};
+    <select id ="findAll" resultType="com.douzone.wehago.domain.Car">
+        select * from tb_cars
     </select>
 
     <select id = "findOne" resultType="com.douzone.wehago.dto.CarDTO">
