@@ -1,15 +1,14 @@
 package com.douzone.wehago.repository;
 
-import com.douzone.wehago.domain.Car;
 import com.douzone.wehago.domain.Facility;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class FacilityRepository {
 
     private final SqlSession sqlSession;

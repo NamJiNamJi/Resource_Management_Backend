@@ -1,18 +1,23 @@
 package com.douzone.wehago.controller;
 
+import com.douzone.wehago.common.Response;
 import com.douzone.wehago.domain.User;
 import com.douzone.wehago.dto.UserDTO;
 import com.douzone.wehago.dto.UserLoginDTO;
 import com.douzone.wehago.dto.UserRegisterDTO;
+import com.douzone.wehago.dto.UserResponseDTO;
 import com.douzone.wehago.security.UserDetailsImpl;
 import com.douzone.wehago.service.UserService;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.sql.Timestamp;
@@ -45,7 +50,17 @@ public class UserController {
     public ResponseEntity<?> userLogin(@RequestBody @Valid UserLoginDTO userLoginDTO) {
         return ResponseEntity.ok().body(userService.userLogin(userLoginDTO));
     }
+    @PostMapping("/api/updatePwd")
+    public ResponseEntity<Object> updatePwd(@RequestPart(value = "data")UserLoginDTO userLoginDTO){
+        System.out.println("UserController "+ userLoginDTO.getUserId());
+        System.out.println("UserController "+ userLoginDTO.getUserPwd());
 
+        return ResponseEntity.ok().body(userService.updatePwd(userLoginDTO));
+    }
+    @PostMapping("/api/SelectPwd")
+    public ResponseEntity<Object> selectPwd(@RequestPart(value = "data")UserLoginDTO userLoginDTO){
+        return ResponseEntity.ok().body(userService.userPwd(userLoginDTO));
+    }
     // todo :: 모든 회원 조회 (사원 x) Controller, 지금은 토큰값 없이도 되게.. (error 처리 로직 작성 안됨)
     @PostMapping("/api/user/all")
     public ResponseEntity<?> userFindAll() { // 나중에는 @AuthenticationPrincipal
@@ -65,6 +80,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.userUpdate(userDTO, userDetails));
     }
 
+
     // todo :: axios 를 통해 accessToken 전달시 userDetails 가 잘 들어가는지..
     @PostMapping("/api/header/test")
     public ResponseEntity<?> testUserDetails(@AuthenticationPrincipal UserDetails userDetails) {
@@ -75,6 +91,18 @@ public class UserController {
         System.out.println(user.getUserEmail());
         return null;
     }
+
+    @PostMapping("/api/MyPageImageTest")
+    public ResponseEntity<Object> imageUpdate(@RequestPart(value = "data")UserDTO userDTO,
+                                              @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
+//        return ResponseEntity.ok().body(userService.(image));
+        System.out.println("result : " + image);
+        System.out.println("result : " + userDTO.getUserId());
+       UserResponseDTO userResponseDTO = userService.ImageUpdate(userDTO,image);
+       Response response = new Response(HttpStatus.CREATED,"등록 성공", userResponseDTO);
+       return  new ResponseEntity<>(response,HttpStatus.CREATED);
+    }
+
 //    public void userRegister(UserRegisterDTO userRegisterDTO) {
 //        // todo :: 회원가입시 비밀번호, 비밀번호 확인 로직은 현재 구현되어있지 않음, 프론트 백 둘다하면 제일 좋지만 시간없다면 한곳에서만 진행해도 됨
 //        // 비밀번호 암호화

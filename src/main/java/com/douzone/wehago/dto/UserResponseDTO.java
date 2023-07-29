@@ -13,7 +13,6 @@ public class UserResponseDTO {
     private TokenDTO tokenDTO;
     private int statusCode;
     private String message;
-
     private UserDTO userDTO;
 
 }

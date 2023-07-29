@@ -74,8 +74,6 @@ public class EmployeeService {
     }
 
 
-
-
     EmployeeResponseDTO getEmployeeResponseDTO(Employee employee) {
         return EmployeeResponseDTO.builder()
                 .empSeq(employee.getEmpSeq())

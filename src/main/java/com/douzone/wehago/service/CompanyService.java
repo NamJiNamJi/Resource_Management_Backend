@@ -12,6 +12,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,32 +28,20 @@ public class CompanyService {
         Company company = Company.builder()
                 .copRegNum(companyDTO.getCopRegNum())
                 .copName(companyDTO.getCopName())
-                .copAdmin(companyDTO.getCopAdmin())
+                .copState(companyDTO.getCopState())
                 .build();
         companyRepository.save(company);
+
+//        company = companyRepository.findOne(company.getCopSeq());
 
         return getCompanyResponseDTO(company);
     }
 
-//    @Transactional(readOnly = true)
-//    public CompanyResponseDTO findAll(int pageNum, int pageSize) {
-//    public void findAll(int pageNum, int pageSize) {
-//
-//        PageHelper.startPage(pageNum, pageSize);
-//
-//        List<Company> companyList = companyRepository.findAll(pageNum, pageSize);
-//        PageInfo.of(companyList);
-//        log.info(PageInfo.of(companyList));
-
-//        CompanyResponseDTO companyResponseDTO = CompanyResponseDTO.builder()
-
-//    }
-
     @Transactional(readOnly = true)
     public CompanyPageResponseDTO findAll() {
         List<Company> companyList = companyRepository.findAll();
-        System.out.println(companyList.toString());
-        System.out.println(companyList.get(1));
+//        System.out.println(companyList.toString());
+//        System.out.println(companyList.get(1));
 
         List<CompanyResponseDTO> companyResponseDTOList = new ArrayList<>();
 
@@ -68,8 +57,6 @@ public class CompanyService {
     @Transactional(readOnly = true)
     public CompanyResponseDTO findOne(Integer copSeq) {
         Company company = companyRepository.findOne(copSeq);
-        System.out.println("단일조회" + company);
-
 
         return getCompanyResponseDTO(company);
     }
@@ -81,7 +68,8 @@ public class CompanyService {
                 .copSeq(copSeq)
                 .copRegNum(companyDTO.getCopRegNum())
                 .copName(companyDTO.getCopName())
-                .copAdmin(companyDTO.getCopAdmin())
+                .copState(companyDTO.getCopState())
+                .copUpdated(new Timestamp(System.currentTimeMillis()))
                 .build();
 
         companyRepository.update(company);
@@ -103,7 +91,7 @@ public class CompanyService {
                 .copSeq(company.getCopSeq())
                 .copRegNum(company.getCopRegNum())
                 .copName(company.getCopName())
-                .copAdmin(company.getCopAdmin())
+                .copState(company.getCopState())
                 .build();
     }
 
