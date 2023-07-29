@@ -20,16 +20,16 @@ public class CarRepository {
         return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.findAll");
     }
 
-    public Car findOne(String car_number) {
-        return sqlSession.selectOne("com.douzone.wehago.mapper.CarMapper.findOne", car_number);
+    public Car findOne(Integer car_seq) {
+        return sqlSession.selectOne("com.douzone.wehago.mapper.CarMapper.findOne", car_seq);
     }
 
     public int update(Car car){
         return sqlSession.update("com.douzone.wehago.mapper.CarMapper.update", car);
     }
 
-    public void delete(String car_number) {
-        sqlSession.delete("com.douzone.wehago.mapper.CarMapper.delete", car_number);
+    public void delete(Integer car_seq) {
+        sqlSession.delete("com.douzone.wehago.mapper.CarMapper.delete", car_seq);
     }
 
 }
