@@ -5,6 +5,11 @@ create table tb_users (
                           user_pwd VARCHAR(100) not null,
                           user_name VARCHAR(100) not null,
                           user_email VARCHAR(100) not null,
+<<<<<<< HEAD
+                          user_image varchar(255) not null,
+                          user_created TIMESTAMP default now(),
+                          user_updated TIMESTAMP default now()
+=======
                           user_created TIMESTAMP not null,
                           user_updated TIMESTAMP not null
 );
@@ -55,4 +60,5 @@ CREATE TABLE tb_spaces
     spc_state   BOOLEAN      not null,
     cop_seq     INTEGER      not null,
     rsc_seq     INTEGER      not null
+>>>>>>> a3ad25de1b3fbdc16434e4a2039a62315a382a22
 );
