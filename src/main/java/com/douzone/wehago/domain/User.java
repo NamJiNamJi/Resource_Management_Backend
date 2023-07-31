@@ -17,6 +17,10 @@ public class User {
     private String userName;
     private String userEmail;
     private String userImage;
+    private String userPhone;
+    private String userGender;
+    private String userAddress;
+    private Integer copSeq;
     private Timestamp userCreated;
     private Timestamp userUpdated;
 

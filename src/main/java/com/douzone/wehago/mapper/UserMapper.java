@@ -1,10 +1,8 @@
 package com.douzone.wehago.mapper;
 
 import com.douzone.wehago.domain.User;
-import com.douzone.wehago.dto.UserDTO;
-import com.douzone.wehago.dto.UserLoginDTO;
+import com.douzone.wehago.dto.user.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

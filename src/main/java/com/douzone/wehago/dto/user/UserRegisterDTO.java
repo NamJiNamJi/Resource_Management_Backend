@@ -1,4 +1,4 @@
-package com.douzone.wehago.dto;
+package com.douzone.wehago.dto.user;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -26,13 +26,15 @@ public class UserRegisterDTO {
     @Email // pattern 으로 변경해서 써야할 수도..?
     private String userEmail;
 
-    private Timestamp userCreated;
-    private Timestamp userUpdated;
+    @NotBlank
+    private String userPhone;
+    @NotBlank
+    private String userGender;
+    @NotBlank
+    private String userAddress;
 
-    public void beforeRegisterUpdate(String password, Timestamp userCreated, Timestamp userUpdated) {
+    public void beforeRegisterUpdate(String password) {
         this.userPwd = password;
-        this.userCreated = userCreated;
-        this.userUpdated = userUpdated;
     }
 
 }

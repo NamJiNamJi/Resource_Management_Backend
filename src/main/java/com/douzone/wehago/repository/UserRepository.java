@@ -1,8 +1,7 @@
 package com.douzone.wehago.repository;
 
 import com.douzone.wehago.domain.User;
-import com.douzone.wehago.dto.UserDTO;
-import com.douzone.wehago.dto.UserLoginDTO;
+import com.douzone.wehago.dto.user.UserDTO;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -36,6 +35,7 @@ public class UserRepository {
 
         return sqlSession.update("com.douzone.wehago.mapper.UserMapper.updatePwd", user);
     }
+
     public int updateUser(UserDTO userDTO) {
         return sqlSession.update("com.douzone.wehago.mapper.UserMapper.updateUser", userDTO);
     }
