@@ -2,10 +2,10 @@ package com.douzone.wehago.controller;
 
 import com.douzone.wehago.common.Response;
 import com.douzone.wehago.domain.User;
-import com.douzone.wehago.dto.UserDTO;
-import com.douzone.wehago.dto.UserLoginDTO;
-import com.douzone.wehago.dto.UserRegisterDTO;
-import com.douzone.wehago.dto.UserResponseDTO;
+import com.douzone.wehago.dto.user.UserDTO;
+import com.douzone.wehago.dto.user.UserLoginDTO;
+import com.douzone.wehago.dto.user.UserRegisterDTO;
+import com.douzone.wehago.dto.user.UserResponseDTO;
 import com.douzone.wehago.security.UserDetailsImpl;
 import com.douzone.wehago.service.UserService;
 import java.io.IOException;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.sql.Timestamp;
 
 @Slf4j
 @Validated
@@ -35,8 +34,7 @@ public class UserController {
     // todo :: user 회원가입 Controller
     @PostMapping("/api/user/signup")
     public ResponseEntity<?> userSignUp(@RequestBody @Valid UserRegisterDTO userRegisterDTO) {
-        userService.userRegister(userRegisterDTO);
-        return ResponseEntity.ok().body("회원가입 성공!!");
+        return ResponseEntity.ok().body(userService.userRegister(userRegisterDTO));
     }
 
     // todo :: user 회원가입 id check Controller
