@@ -39,7 +39,9 @@ public class CompanyService {
 
     @Transactional(readOnly = true)
     public CompanyPageResponseDTO findAll() {
-        List<Company> companyList = companyRepository.findAll();
+        // 회사 상태가 true인 값만 조회
+        Boolean state = true;
+        List<Company> companyList = companyRepository.findAll(state);
 //        System.out.println(companyList.toString());
 //        System.out.println(companyList.get(1));
 
@@ -78,9 +80,30 @@ public class CompanyService {
     }
 
     // 회사 삭제
-    public void deleteCompany(Integer copSeq) {
-        companyRepository.delete(copSeq);
+    @Transactional
+    public CompanyResponseDTO deleteCompany(CompanyDTO companyDTO, Integer copSeq) {
+        Company company = Company.builder()
+                .copSeq(copSeq)
+                .copRegNum(companyDTO.getCopRegNum())
+                .copName(companyDTO.getCopName())
+                .copState(companyDTO.getCopState())
+                .copUpdated(new Timestamp(System.currentTimeMillis()))
+                .build();
+
+        companyRepository.updateState(company);
+
+        return getCompanyResponseDTO(company);
     }
+
+
+
+
+
+    // 회사 삭제
+//    @Transactional
+//    public void deleteCompany(Integer copSeq) {
+//        companyRepository.delete(copSeq);
+//    }
 
 
 

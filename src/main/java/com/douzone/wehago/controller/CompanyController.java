@@ -62,13 +62,22 @@ public class CompanyController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{copSeq}")
-    public ResponseEntity<Object> deleteCompany(@PathVariable Integer copSeq) {
-        companyService.deleteCompany(copSeq);
+    // 삭제 로직(회사 상태 값만 변경)
+    @PutMapping("/del/{copSeq}")
+    public ResponseEntity<Object> deleteCompany(@RequestBody CompanyDTO companyDTO, @PathVariable Integer copSeq) {
+        companyService.deleteCompany(companyDTO, copSeq);
         Response response = new Response(HttpStatus.OK, "회사 삭제 성공",null);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+//    @DeleteMapping("/{copSeq}")
+//    public ResponseEntity<Object> deleteCompany(@PathVariable Integer copSeq) {
+//        companyService.deleteCompany(copSeq);
+//        Response response = new Response(HttpStatus.OK, "회사 삭제 성공",null);
+//
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
 
 

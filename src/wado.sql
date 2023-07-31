@@ -5,13 +5,9 @@ create table tb_users (
                           user_pwd VARCHAR(100) not null,
                           user_name VARCHAR(100) not null,
                           user_email VARCHAR(100) not null,
-<<<<<<< HEAD
                           user_image varchar(255) not null,
                           user_created TIMESTAMP default now(),
                           user_updated TIMESTAMP default now()
-=======
-                          user_created TIMESTAMP not null,
-                          user_updated TIMESTAMP not null
 );
 
 /* 차량 자원 테이블 생성 */
@@ -60,5 +56,39 @@ CREATE TABLE tb_spaces
     spc_state   BOOLEAN      not null,
     cop_seq     INTEGER      not null,
     rsc_seq     INTEGER      not null
->>>>>>> a3ad25de1b3fbdc16434e4a2039a62315a382a22
+);
+
+/* 회사 테이블 생성 */
+CREATE TABLE tb_companys(
+    cop_seq SERIAL PRIMARY KEY,
+    cop_reg_num VARCHAR(100) NOT NULL,
+    cop_name VARCHAR(100) NOT NULL,
+    cop_state BOOLEAN DEFAULT TRUE,
+    cop_created TIMESTAMP DEFAULT now(),
+    cop_updated TIMESTAMP DEFAULT now()
+);
+
+/* 사원 테이블 생성 */
+CREATE TABLE tb_employees(
+     emp_seq SERIAL PRIMARY KEY,
+     emp_name VARCHAR(100) NOT NULL,
+     emp_image VARCHAR(255),
+     cop_seq INTEGER NOT NULL,
+     auth_level VARCHAR(100),
+     user_seq INTEGER NOT NULL,
+     emp_state BOOLEAN DEFAULT TRUE,
+     emp_created TIMESTAMP DEFAULT now(),
+     emp_updated TIMESTAMP DEFAULT now()
+);
+
+/* 테스트 테이블 생성 */
+CREATE TABLE tb_tests(
+     test_seq SERIAL PRIMARY KEY,
+     test_data1 VARCHAR(100) NOT NULL,
+     test_data2 VARCHAR(100) NOT NULL,
+     test_data3 VARCHAR(100) NOT NULL,
+     imgUrl VARCHAR(255) NOT NULL,
+     test_created TIMESTAMP DEFAULT now(),
+     test_updated TIMESTAMP DEFAULT now()
+
 );
