@@ -6,9 +6,9 @@ import lombok.Getter;
 @Getter
 public class EmployeeDTO {
     private String empName;
+    private String empPosition;
     private Integer copSeq;
     private Integer userSeq;
-    private Boolean empState;
     private AuthLevel authLevel;
-
+    private Boolean empState;
 }
