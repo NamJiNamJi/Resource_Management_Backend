@@ -52,8 +52,7 @@ public class UserController {
     }
     @PostMapping("/api/updatePwd")
     public ResponseEntity<Object> updatePwd(@RequestPart(value = "data")UserLoginDTO userLoginDTO){
-        System.out.println("UserController "+ userLoginDTO.getUserId());
-        System.out.println("UserController "+ userLoginDTO.getUserPwd());
+
 
         return ResponseEntity.ok().body(userService.updatePwd(userLoginDTO));
     }
