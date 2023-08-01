@@ -16,5 +16,9 @@ public interface EmployeeMapper {
 
     void update(Employee employee);
 
-    void delete(Integer empSeq);
+//    void updateState(Employee employee);
+
+    void delete(Employee employee);
+
+//    void delete(Integer empSeq);
 }

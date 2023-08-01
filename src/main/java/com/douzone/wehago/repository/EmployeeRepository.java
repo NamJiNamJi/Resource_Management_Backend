@@ -29,8 +29,8 @@ public class EmployeeRepository {
         return sqlSession.update("com.douzone.wehago.mapper.EmployeeMapper.update", employee);
     }
 
-    public void delete(Integer empSeq){
-        sqlSession.delete("com.douzone.wehago.mapper.EmployeeMapper.delete", empSeq);
+    public void delete(Employee employee){
+        sqlSession.delete("com.douzone.wehago.mapper.EmployeeMapper.delete", employee);
     }
 
 
