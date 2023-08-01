@@ -11,8 +11,8 @@ create table tb_users (
                           user_state boolean default true not null,
                           user_image varchar(255) null,
                           cop_seq Integer null,
-                          user_created timestamp not null,
-                          user_updated timestamp not null
+                          user_created timestamp default now() not null,
+                          user_updated timestamp default now() not null
 );
 
 /* 차량 자원 테이블 생성 */

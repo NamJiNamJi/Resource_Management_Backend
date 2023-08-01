@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class User {
 
-    private Long userSeq;
+    private Integer userSeq;
     private String userId;
     private String userPwd;
     private String userName;
