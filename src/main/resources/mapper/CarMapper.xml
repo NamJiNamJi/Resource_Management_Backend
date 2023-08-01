@@ -16,17 +16,30 @@
     </select>
 
     <select id = "findOne" resultType="com.douzone.wehago.domain.Car">
-        SELECT car_seq, car_name, car_number, car_distance, car_year, car_explain, car_image
-        FROM tb_cars
-        WHERE car_seq = #{carSeq};
+        SELECT
+            car_seq,
+            car_name,
+            car_number,
+            car_distance,
+            car_year,
+            car_explain,
+            car_image
+        FROM tb_cars WHERE car_seq = #{carSeq};
     </select>
 
     <update id="update" parameterType="com.douzone.wehago.domain.Car">
-        UPDATE tb_cars SET car_name = #{carName}, car_number = #{carNumber}, car_distance = #{carDistance}, car_year = #{carYear}, car_explain = #{carExplain}
+        UPDATE tb_cars
+        SET
+            car_name = #{carName},
+            car_number = #{carNumber},
+            car_distance = #{carDistance},
+            car_year = #{carYear},
+            car_explain = #{carExplain},
+            car_image = #{carImage}
         WHERE car_seq = #{carSeq};
     </update>
 
-    <delete id="delete" parameterType="String">
+    <delete id="delete" parameterType="Integer">
         DELETE FROM tb_cars WHERE car_seq = #{carSeq};
     </delete>
 
