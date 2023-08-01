@@ -1,13 +1,18 @@
 /* 유저 테이블 생성 */
 create table tb_users (
-                          user_seq SERIAL primary key,
-                          user_id VARCHAR(100) not null,
-                          user_pwd VARCHAR(100) not null,
-                          user_name VARCHAR(100) not null,
-                          user_email VARCHAR(100) not null,
-                          user_image varchar(255) not null,
-                          user_created TIMESTAMP default now(),
-                          user_updated TIMESTAMP default now()
+                          user_seq serial primary key,
+                          user_id varchar(100) not null,
+                          user_pwd varchar(100) not null,
+                          user_name varchar(100) not null,
+                          user_email varchar(255) not null,
+                          user_phone varchar(100) not null,
+                          user_gender varchar(100) not null,
+                          user_address varchar(255) not null,
+                          user_state boolean default true not null,
+                          user_image varchar(255) null,
+                          cop_seq Integer null,
+                          user_created timestamp not null,
+                          user_updated timestamp not null
 );
 
 /* 차량 자원 테이블 생성 */

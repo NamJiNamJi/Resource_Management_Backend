@@ -17,8 +17,8 @@
 
     <!-- 회원가입 로직 -->
     <insert id="userRegister" parameterType="com.douzone.wehago.domain.User">
-        INSERT INTO tb_users (user_id, user_pwd, user_name, user_email, user_created,user_image, user_updated)
-        VALUES (#{userId}, #{userPwd}, #{userName}, #{userEmail}, #{userCreated},#{userImage}, #{userUpdated})
+        INSERT INTO tb_users (user_id, user_pwd, user_name, user_email, user_phone, user_gender, user_address)
+        VALUES (#{userId}, #{userPwd}, #{userName}, #{userEmail}, #{userPhone}, #{userGender}, #{userAddress})
     </insert>
     <!-- 비밀번호 찾기 -->
     <select id = "findPwd" parameterType="java.lang.String" resultType="com.douzone.wehago.domain.User">
@@ -48,7 +48,7 @@
     </select>
 
     <!-- 회원 업데이트 -->
-    <update id="updateUser" parameterType="com.douzone.wehago.dto.UserDTO">
+    <update id="updateUser" parameterType="com.douzone.wehago.dto.user.UserDTO">
         UPDATE tb_users SET user_pwd = #{userPwd}, user_email = #{userEmail}, user_updated = #{userUpdated},user_image = #{userImage} WHERE user_id = #{userId}
     </update>
 

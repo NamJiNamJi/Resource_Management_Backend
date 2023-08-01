@@ -6,7 +6,8 @@
 
 <mapper namespace="com.douzone.wehago.mapper.EmployeeMapper">
     <insert id ="save" parameterType="com.douzone.wehago.domain.Employee">
-        INSERT INTO tb_employees (emp_id,emp_name,cop_seq,rsc_admin) values (#{empId},#{empName},#{copSeq},#{rscAdmin})
+        INSERT INTO tb_employees (emp_name, emp_image, cop_seq, user_seq, auth_level)
+        values (#{empName}, #{empImage}, #{copSeq}, #{userSeq}, #{authLevel})
     </insert>
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Employee">
@@ -18,7 +19,7 @@
     </select>
 
     <update id="update" parameterType="com.douzone.wehago.domain.Employee">
-        UPDATE tb_employees SET emp_id = #{empId}, emp_name = #{empName}, cop_seq = #{copSeq}, rsc_admin = #{rscAdmin}
+        UPDATE tb_employees SET emp_name = #{empName}, emp_image = #{empImage}, cop_seq = #{copSeq}, user_seq = #{userSeq}, auth_level = #{authLevel}
         WHERE emp_seq = #{empSeq}
     </update>
 
