@@ -7,6 +7,7 @@ import lombok.Getter;
 public class EmployeeDTO {
     private String empName;
     private String empPosition;
+    private String empImage;
     private Integer copSeq;
     private Integer userSeq;
     private AuthLevel authLevel;

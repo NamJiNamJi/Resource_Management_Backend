@@ -72,10 +72,11 @@ CREATE TABLE tb_companys(
 CREATE TABLE tb_employees(
      emp_seq SERIAL PRIMARY KEY,
      emp_name VARCHAR(100) NOT NULL,
+     emp_position VARCHAR(100),
      emp_image VARCHAR(255),
      cop_seq INTEGER NOT NULL,
-     auth_level VARCHAR(100),
      user_seq INTEGER NOT NULL,
+     auth_level VARCHAR(100),
      emp_state BOOLEAN DEFAULT TRUE,
      emp_created TIMESTAMP DEFAULT now(),
      emp_updated TIMESTAMP DEFAULT now()
