@@ -90,6 +90,7 @@ public class DeviceService {
 
     private DeviceResponseDTO getDeivceResponseDTO (Device device) {
         return DeviceResponseDTO.builder()
+                .dvcSeq(device.getDvcSeq())
                 .dvcName(device.getDvcName())
                 .dvcSerial(device.getDvcSerial())
                 .dvcImage(device.getDvcImage())
