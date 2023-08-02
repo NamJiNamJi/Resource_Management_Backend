@@ -6,7 +6,8 @@
 
 <mapper namespace="com.douzone.wehago.mapper.EmployeeMapper">
     <insert id ="save" parameterType="com.douzone.wehago.domain.Employee">
-        INSERT INTO tb_employees (emp_id,emp_name,cop_seq,rsc_admin) values (#{empId},#{empName},#{copSeq},#{rscAdmin})
+        INSERT INTO tb_employees (emp_name, emp_position, cop_seq, user_seq, auth_level)
+        VALUES (#{empName}, #{empPosition}, #{copSeq}, #{userSeq}, #{authLevel})
     </insert>
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Employee">
@@ -14,16 +15,21 @@
     </select>
 
     <select id = "findOne" resultType="com.douzone.wehago.domain.Employee">
-        select * from tb_employees where emp_seq = #{empSeq};
+        SELECT * FROM tb_employees WHERE emp_seq = #{empSeq};
     </select>
 
     <update id="update" parameterType="com.douzone.wehago.domain.Employee">
-        UPDATE tb_employees SET emp_id = #{empId}, emp_name = #{empName}, cop_seq = #{copSeq}, rsc_admin = #{rscAdmin}
+        UPDATE tb_employees SET emp_name = #{empName}, emp_position = #{empPosition}, emp_image = #{empImage}, cop_seq = #{copSeq}, user_seq = #{userSeq}, auth_level = #{authLevel}
         WHERE emp_seq = #{empSeq}
     </update>
 
-    <delete id="delete" parameterType="Integer">
-        delete from tb_employees where emp_seq = #{empSeq}
-    </delete>
+    <update id="delete" parameterType="com.douzone.wehago.domain.Employee">
+        UPDATE tb_employees SET emp_state = #{empState}, emp_updated = #{empUpdated}
+        WHERE emp_seq = #{empSeq}
+    </update>
+
+<!--    <delete id="delete" parameterType="Integer">-->
+<!--        DELETE FROM tb_employees WHERE emp_seq = #{empSeq}-->
+<!--    </delete>-->
 
 </mapper>

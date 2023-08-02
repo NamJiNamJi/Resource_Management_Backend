@@ -1,12 +1,18 @@
 package com.douzone.wehago.service;
 
+import com.douzone.wehago.common.S3Uploader;
 import com.douzone.wehago.domain.Employee;
-import com.douzone.wehago.dto.*;
+import com.douzone.wehago.dto.employee.EmployeeDTO;
+import com.douzone.wehago.dto.employee.EmployeePageResponseDTO;
+import com.douzone.wehago.dto.employee.EmployeeResponseDTO;
 import com.douzone.wehago.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,19 +21,22 @@ import java.util.List;
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final S3Uploader s3Uploader;
 
     @Transactional
     public EmployeeResponseDTO saveEmployee(EmployeeDTO employeeDTO) {
+
         Employee employee = Employee.builder()
-                .empId(employeeDTO.getEmpId())
                 .empName(employeeDTO.getEmpName())
+                .empPosition(employeeDTO.getEmpPosition())
+//                .empImage('')
                 .copSeq(employeeDTO.getCopSeq())
-                .rscAdmin(employeeDTO.getRscAdmin())
+                .userSeq(employeeDTO.getUserSeq())
+                .authLevel(employeeDTO.getAuthLevel())
                 .build();
 
         employeeRepository.save(employee);
 
-        // 조회 메서드 추가하면 응답 id 까지 넣을 수 있음
 
         return getEmployeeResponseDTO(employee);
     }
@@ -55,13 +64,26 @@ public class EmployeeService {
     }
 
     @Transactional
-    public EmployeeResponseDTO updateEmployee(EmployeeDTO employeeDTO, Integer empSeq) {
-        Employee employee = Employee.builder()
+    public EmployeeResponseDTO updateEmployee(EmployeeDTO employeeDTO, MultipartFile image, Integer empSeq) throws IOException {
+
+        Employee employee = employeeRepository.findOne(empSeq);
+        String imageUrl = employee.getEmpImage();
+
+        // 이미지가 수정된 경우만 이미지 삭제 후 업로드
+        if (imageUrl != null) {
+            s3Uploader.deleteImage(imageUrl, "employee/image");
+            imageUrl = s3Uploader.upload(image, "employee/image");
+        }
+
+         employee = Employee.builder()
                 .empSeq(empSeq)
-                .empId(employeeDTO.getEmpId())
                 .empName(employeeDTO.getEmpName())
+                .empPosition(employeeDTO.getEmpPosition())
+                .empImage(imageUrl)
                 .copSeq(employeeDTO.getCopSeq())
-                .rscAdmin(employeeDTO.getRscAdmin())
+                .userSeq(employeeDTO.getUserSeq())
+                .authLevel(employeeDTO.getAuthLevel())
+                .empUpdated(new Timestamp(System.currentTimeMillis()))
                 .build();
 
         employeeRepository.update(employee);
@@ -69,18 +91,29 @@ public class EmployeeService {
         return getEmployeeResponseDTO(employee);
     }
 
+    @Transactional
     public void deleteEmployee(Integer empSeq) {
-        employeeRepository.delete(empSeq);
+
+        Employee employee = Employee.builder()
+               .empSeq(empSeq)
+               .empState(false)
+               .empUpdated(new Timestamp(System.currentTimeMillis()))
+               .build();
+
+        employeeRepository.delete(employee);
     }
 
 
     EmployeeResponseDTO getEmployeeResponseDTO(Employee employee) {
         return EmployeeResponseDTO.builder()
                 .empSeq(employee.getEmpSeq())
-                .empId(employee.getEmpId())
                 .empName(employee.getEmpName())
+                .empPosition(employee.getEmpPosition())
+                .empImage(employee.getEmpImage())
                 .copSeq(employee.getCopSeq())
-                .rscAdmin(employee.getRscAdmin())
+                .userSeq(employee.getUserSeq())
+                .empState(employee.getEmpState())
+                .authLevel(employee.getAuthLevel())
                 .build();
     }
 

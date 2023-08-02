@@ -1,10 +1,12 @@
 package com.douzone.wehago.service;
 
+import com.douzone.wehago.common.Response;
+import com.douzone.wehago.common.S3Uploader;
 import com.douzone.wehago.domain.User;
-import com.douzone.wehago.dto.UserDTO;
-import com.douzone.wehago.dto.UserLoginDTO;
-import com.douzone.wehago.dto.UserRegisterDTO;
-import com.douzone.wehago.dto.UserResponseDTO;
+import com.douzone.wehago.dto.user.UserDTO;
+import com.douzone.wehago.dto.user.UserLoginDTO;
+import com.douzone.wehago.dto.user.UserRegisterDTO;
+import com.douzone.wehago.dto.user.UserResponseDTO;
 import com.douzone.wehago.jwt.TokenDTO;
 import com.douzone.wehago.jwt.TokenProvider;
 import com.douzone.wehago.repository.UserRepository;
@@ -12,12 +14,15 @@ import com.douzone.wehago.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -32,22 +37,69 @@ public class UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+    private final S3Uploader s3Uploader;
 
     // todo :: user 회원가입 service
-    public void userRegister(UserRegisterDTO userRegisterDTO) {
+    public Response userRegister(UserRegisterDTO userRegisterDTO) {
         // todo :: 회원가입시 비밀번호, 비밀번호 확인 로직은 현재 구현되어있지 않음, 프론트 백 둘다하면 제일 좋지만 시간없다면 한곳에서만 진행해도 됨
         // 비밀번호 암호화
         String password = passwordEncoder.encode(userRegisterDTO.getUserPwd());
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        userRegisterDTO.beforeRegisterUpdate(password, timestamp, timestamp);
+        userRegisterDTO.beforeRegisterUpdate(password);
         User user = modelMapper.map(userRegisterDTO, User.class);
         userRepository.save(user);
-    }
 
+        return new Response(HttpStatus.OK, "회원가입을 축하합니다!", null);
+    }
+    public UserResponseDTO updatePwd(UserLoginDTO userLoginDTO){
+        System.out.println("UserService "+ userLoginDTO.getUserId());
+        System.out.println("UserService "+ userLoginDTO.getUserPwd());
+
+        String userId = userLoginDTO.getUserId();
+          String password = passwordEncoder.encode(userLoginDTO.getUserPwd());
+        System.out.println("UserId "+ userId);
+        System.out.println("Userpassword" + password);
+
+        userLoginDTO.setUserId(userId);
+          userLoginDTO.setUserPwd(password);
+          User user = User.builder()
+                  .userPwd(userLoginDTO.getUserPwd())
+                  .userId(userLoginDTO.getUserId())
+                  .build();
+        System.out.println("UserService2 "+ user.getUserId());
+        System.out.println("UserService2 "+ user.getUserPwd());
+
+        int result = userRepository.updatePwd(user);
+
+            if (result > 0) {
+                return UserResponseDTO.builder().message("회원정보가 정상적으로 수정되었습니다.").build();
+            }
+        return UserResponseDTO.builder().message("오류요..").build();
+
+    }
+    public UserResponseDTO userPwd(UserLoginDTO userLoginDTO) {
+        String userId = userLoginDTO.getUserId();
+        try {
+            User user = Optional.ofNullable(userRepository.findUser(userId))
+                    .orElseThrow(() -> new IllegalArgumentException("아이디를 다시 한번 확인해주세요."));
+          if (!passwordEncoder.matches(userLoginDTO.getUserPwd(), user.getUserPwd())) {
+                throw new IllegalArgumentException("아이디나 비밀번호를 다시 한번 확인해주세요.");
+            }
+            return UserResponseDTO.builder()
+                    .statusCode(200)
+                    .build();
+
+        }catch (IllegalArgumentException le) {
+            log.info("아이디나 비밀번호가 일치하지 않습니다.");
+            return UserResponseDTO.builder()
+                    .statusCode(401)
+                    .build();
+        }
+    }
     // todo :: user 회원가입 유저 Id 중복검사
     public int userIdCheck(String userId) {
         return userRepository.duplicationUserId(userId);
     }
+
 
     // todo :: user 로그인 service
     public UserResponseDTO userLogin(UserLoginDTO userLoginDTO) {
@@ -59,7 +111,6 @@ public class UserService {
         try {
             User user = Optional.ofNullable(userRepository.findUser(userId))
                     .orElseThrow(() -> new IllegalArgumentException("아이디를 다시 한번 확인해주세요."));
-
             if (!passwordEncoder.matches(userLoginDTO.getUserPwd(), user.getUserPwd())) {
                 throw new IllegalArgumentException("아이디나 비밀번호를 다시 한번 확인해주세요.");
             }
@@ -78,6 +129,7 @@ public class UserService {
                             .userId(user.getUserId())
                             .userName(user.getUserName())
                             .userEmail(user.getUserEmail())
+                            .userImage(user.getUserImage())
                             .build())
                     .build();
 
@@ -117,10 +169,25 @@ public class UserService {
             userDTO.setUserPwd(passwordEncoder.encode(userDTO.getUserPwd()));
             int result = userRepository.updateUser(userDTO);
             if (result > 0) {
-                return UserResponseDTO.builder().message("회원정보가 정상적으로 수정되었습니다.").build();
+                              return UserResponseDTO.builder().message("회원정보가 정상적으로 수정되었습니다.").build();
+
             }
         }
         return UserResponseDTO.builder().message("회원정보 수정에 실패하였습니다.").build();
     }
+    public UserResponseDTO ImageUpdate(UserDTO userDTO, MultipartFile image) throws IOException {
+        String imageUrl = s3Uploader.upload(image, "user/image");
+        userDTO.setUserImage(imageUrl);
+        User user = User.builder()
+                .userId(userDTO.getUserId())
+                .userImage(userDTO.getUserImage())
+                .build();
+        int result = userRepository.updateImage(user);
 
+        if (result > 0) {
+            return UserResponseDTO.builder().message("정상적으로 수정되었습니다.").build();
+        }
+        return UserResponseDTO.builder().message("회원정보가 정상적으로 수정되었습니다.").build();
+
+    }
 }

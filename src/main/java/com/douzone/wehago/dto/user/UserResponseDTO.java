@@ -1,4 +1,4 @@
-package com.douzone.wehago.dto;
+package com.douzone.wehago.dto.user;
 
 import com.douzone.wehago.jwt.TokenDTO;
 import lombok.*;
@@ -13,7 +13,6 @@ public class UserResponseDTO {
     private TokenDTO tokenDTO;
     private int statusCode;
     private String message;
-
     private UserDTO userDTO;
 
 }

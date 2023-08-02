@@ -17,8 +17,8 @@ public class CompanyRepository {
         sqlSession.insert("com.douzone.wehago.mapper.CompanyMapper.save", company);
     }
 
-    public List<Company> findAll() {
-        return sqlSession.selectList("com.douzone.wehago.mapper.CompanyMapper.findAll");
+    public List<Company> findAll(Boolean state) {
+        return sqlSession.selectList("com.douzone.wehago.mapper.CompanyMapper.findAll", state);
     }
 
     public Company findOne(Integer copSeq){
@@ -29,8 +29,8 @@ public class CompanyRepository {
         return sqlSession.update("com.douzone.wehago.mapper.CompanyMapper.update", company);
     }
 
-    public void delete(Integer copSeq){
-        sqlSession.delete("com.douzone.wehago.mapper.CompanyMapper.delete", copSeq);
+    public void updateState(Company company){
+        sqlSession.update("com.douzone.wehago.mapper.CompanyMapper.updateState", company);
     }
 
 }

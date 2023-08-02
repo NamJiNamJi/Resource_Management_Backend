@@ -1,4 +1,4 @@
-package com.douzone.wehago.dto;
+package com.douzone.wehago.dto.user;
 
 import lombok.*;
 
@@ -13,5 +13,5 @@ public class UserDTO {
     private String userPwd;
     private String userName;
     private String userEmail;
-
+    private String userImage;
 }

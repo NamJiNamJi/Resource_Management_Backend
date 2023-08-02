@@ -1,5 +1,6 @@
-package com.douzone.wehago.domain;
+package com.douzone.wehago.dto.employee;
 
+import com.douzone.wehago.domain.AuthLevel;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -7,7 +8,7 @@ import java.sql.Timestamp;
 
 @Builder
 @Getter
-public class Employee {
+public class EmployeeResponseDTO {
     private Integer empSeq;
     private String empName;
     private String empPosition;

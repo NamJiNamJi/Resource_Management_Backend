@@ -1,4 +1,4 @@
-package com.douzone.wehago.dto;
+package com.douzone.wehago.dto.employee;
 
 import lombok.Builder;
 import lombok.Getter;
