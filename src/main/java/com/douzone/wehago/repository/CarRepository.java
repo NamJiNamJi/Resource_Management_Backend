@@ -24,7 +24,7 @@ public class CarRepository {
         return sqlSession.selectOne("com.douzone.wehago.mapper.CarMapper.findOne", car_seq);
     }
 
-    public int update(Car car){
+    public Integer update(Car car){
         return sqlSession.update("com.douzone.wehago.mapper.CarMapper.update", car);
     }
 

@@ -66,14 +66,17 @@ public class CarService {
     }
 
     @Transactional
-    public CarResponseDTO updateCar (CarDTO carDTO, Integer carSeq) {
+    public CarResponseDTO updateCar (CarDTO carDTO, MultipartFile image, Integer carSeq) throws IOException {
+
+        String imageUrl = s3Uploader.upload(image, "car/image");
         Car car = Car.builder()
                 .carSeq(carSeq)
                 .carName(carDTO.getCarName())
                 .carNumber(carDTO.getCarNumber())
                 .carDistance(carDTO.getCarDistance())
                 .carYear(carDTO.getCarYear())
-                .carExplain((carDTO.getCarExplain()))
+                .carImage(imageUrl)
+                .carExplain(carDTO.getCarExplain())
                 .build();
 
         carRepository.update(car);

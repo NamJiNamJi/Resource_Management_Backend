@@ -41,9 +41,9 @@ CREATE TABLE tb_devices
     dvc_image   VARCHAR(255) null,
     dvc_explain VARCHAR(255) null,
     dvc_buy     TIMESTAMP    not null,
-    dvc_created TIMESTAMP    not null,
-    dvc_updated TIMESTAMP    not null,
-    dvc_state   BOOLEAN      not null,
+    dvc_created TIMESTAMP    default now(),
+    dvc_updated TIMESTAMP    default now(),
+    dvc_state   BOOLEAN      default true,
     cop_seq     INTEGER      not null,
     rsc_seq     INTEGER      not null
 );
@@ -53,12 +53,12 @@ CREATE TABLE tb_spaces
 (
     spc_seq     SERIAL primary key,
     spc_name    VARCHAR(100) not null,
-    spc_cap     INTEGER      not null,
+    spc_cap     VARCHAR(50)  not null,
     spc_explain VARCHAR(255) null,
     spc_image   VARCHAR(255) null,
-    spc_created TIMESTAMP    not null,
-    spc_updated TIMESTAMP    not null,
-    spc_state   BOOLEAN      not null,
+    spc_created TIMESTAMP default now(),
+    spc_updated TIMESTAMP default now(),
+    spc_state   BOOLEAN   default true,
     cop_seq     INTEGER      not null,
     rsc_seq     INTEGER      not null
 );

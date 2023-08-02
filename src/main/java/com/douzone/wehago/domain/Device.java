@@ -22,7 +22,7 @@ public class Device {
     private String dvcSerial;
     private String dvcImage;
     private LocalDate dvcBuy;
-    private String Explain;
+    private String dvcExplain;
     private Integer copSeq;
     private Integer rscSeq;
     private Boolean dvcState;

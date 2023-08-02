@@ -1,21 +1,20 @@
 package com.douzone.wehago.mapper;
 
-import com.douzone.wehago.dto.DeviceDTO;
-import org.apache.ibatis.annotations.Insert;
+import com.douzone.wehago.domain.Device;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
 public interface DeviceMapper {
 
-    void insertDevice(DeviceDTO device);
-    DeviceDTO selectDeviceById(Long dvcSeq);
+    void save(Device device);
 
-    List<DeviceDTO> selectAllDevices();
+    List<Device> findAll();
 
-    void updateDevice(DeviceDTO device);
+    Device findOne(Integer dvc_seq);
 
-    void deleteDevice(Long dvcSeq);
+    void update (Device device);
+
+    void delete(Integer dvc_seq);
 }

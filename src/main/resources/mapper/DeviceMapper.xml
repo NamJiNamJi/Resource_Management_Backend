@@ -6,31 +6,36 @@
 
 <mapper namespace="com.douzone.wehago.mapper.DeviceMapper">
 
-    <insert id="insertDevice" parameterType="com.douzone.wehago.dto.DeviceDTO">
-        INSERT INTO tb_devices (dvc_name, dvc_serial, dvc_buy, dvc_explan, dvc_created, dvc_updated)
-        VALUES (#{dvcName}, #{dvcSerial}, #{dvcBuy}, #{dvcExplan}, #{dvcCreated}, #{dvcUpdated})
+    <insert id="save" parameterType="com.douzone.wehago.domain.Device">
+        INSERT INTO tb_devices (dvc_name, dvc_serial, dvc_image, dvc_buy, dvc_explain, cop_seq, rsc_seq)
+        VALUES (#{dvcName}, #{dvcSerial}, #{dvcImage}, #{dvcBuy}, #{dvcExplain}, #{copSeq}, #{rscSeq})
     </insert>
 
-    <select id ="findAll" resultType="com.douzone.wehago.dto.DeviceDTO">
+    <select id ="findAll" resultType="com.douzone.wehago.domain.Device">
         SELECT * FROM tb_devices;
     </select>
 
-    <select id="selectDeviceById" resultType="com.douzone.wehago.dto.DeviceDTO">
-        SELECT * FROM tb_devices WHERE dvc_seq = #{dvcSeq}
+    <select id="findOne" resultType="com.douzone.wehago.domain.Device">
+        SELECT
+            dvc_name,
+            dvc_serial,
+            dvc_image,
+            dvc_buy,
+            dvc_explain
+        FROM tb_devices WHERE dvc_seq = #{dvcSeq}
     </select>
 
-    <update id="updateDevice" parameterType="com.douzone.wehago.dto.DeviceDTO">
+    <update id="update" parameterType="com.douzone.wehago.domain.Device">
        UPDATE tb_devices
         SET dvc_name = #{dvcName},
             dvc_serial = #{dvcSerial},
             dvc_buy = #{dvcBuy},
-            dvc_explan = #{dvcExplan},
-            dvc_created = #{dvcCreated},
-            dvc_updated = #{dvcUpdated}
+            dvc_explain = #{dvcExplain},
+            dvc_image = #{dvcImage}
         WHERE dvc_seq = #{dvcSeq}
     </update>
 
-    <delete id="deleteDevice" parameterType="long">
+    <delete id="delete" parameterType="Integer">
         DELETE FROM tb_devices WHERE dvc_seq = #{dvcSeq}
     </delete>
 </mapper>
