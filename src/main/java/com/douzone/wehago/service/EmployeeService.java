@@ -6,12 +6,15 @@ import com.douzone.wehago.dto.employee.EmployeeDTO;
 import com.douzone.wehago.dto.employee.EmployeePageResponseDTO;
 import com.douzone.wehago.dto.employee.EmployeeResponseDTO;
 import com.douzone.wehago.repository.EmployeeRepository;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +26,12 @@ public class EmployeeService {
     private final S3Uploader s3Uploader;
 
     @Transactional
-    public EmployeeResponseDTO saveEmployee(EmployeeDTO employeeDTO, MultipartFile image) throws IOException {
-        String imageUrl = s3Uploader.upload(image, "employee/image");
+    public EmployeeResponseDTO saveEmployee(EmployeeDTO employeeDTO) {
 
         Employee employee = Employee.builder()
                 .empName(employeeDTO.getEmpName())
-                .empImage(imageUrl)
+                .empPosition(employeeDTO.getEmpPosition())
+//                .empImage('')
                 .copSeq(employeeDTO.getCopSeq())
                 .userSeq(employeeDTO.getUserSeq())
                 .authLevel(employeeDTO.getAuthLevel())
@@ -36,14 +39,13 @@ public class EmployeeService {
 
         employeeRepository.save(employee);
 
-        // 조회 메서드 추가하면 응답 id 까지 넣을 수 있음
 
         return getEmployeeResponseDTO(employee);
     }
 
     @Transactional(readOnly = true)
-    public EmployeePageResponseDTO findAll() {
-        List<Employee> employeeList = employeeRepository.findAll();
+    public EmployeePageResponseDTO findAll(int pageNo , int pageSize) {
+        List<Employee> employeeList = employeeRepository.findAll(pageNo,pageSize);
 
         List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
 
@@ -78,10 +80,12 @@ public class EmployeeService {
          employee = Employee.builder()
                 .empSeq(empSeq)
                 .empName(employeeDTO.getEmpName())
+                .empPosition(employeeDTO.getEmpPosition())
                 .empImage(imageUrl)
                 .copSeq(employeeDTO.getCopSeq())
                 .userSeq(employeeDTO.getUserSeq())
                 .authLevel(employeeDTO.getAuthLevel())
+                .empUpdated(new Timestamp(System.currentTimeMillis()))
                 .build();
 
         employeeRepository.update(employee);
@@ -89,8 +93,16 @@ public class EmployeeService {
         return getEmployeeResponseDTO(employee);
     }
 
+    @Transactional
     public void deleteEmployee(Integer empSeq) {
-        employeeRepository.delete(empSeq);
+
+        Employee employee = Employee.builder()
+               .empSeq(empSeq)
+               .empState(false)
+               .empUpdated(new Timestamp(System.currentTimeMillis()))
+               .build();
+
+        employeeRepository.delete(employee);
     }
 
 
@@ -98,6 +110,7 @@ public class EmployeeService {
         return EmployeeResponseDTO.builder()
                 .empSeq(employee.getEmpSeq())
                 .empName(employee.getEmpName())
+                .empPosition(employee.getEmpPosition())
                 .empImage(employee.getEmpImage())
                 .copSeq(employee.getCopSeq())
                 .userSeq(employee.getUserSeq())
@@ -105,5 +118,4 @@ public class EmployeeService {
                 .authLevel(employee.getAuthLevel())
                 .build();
     }
-
 }

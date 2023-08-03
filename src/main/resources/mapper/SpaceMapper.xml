@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.douzone.wehago.mapper.SpaceMapper">
+
+    <insert id ="save" parameterType="com.douzone.wehago.domain.Space">
+        INSERT INTO tb_spaces (spc_name, spc_cap, spc_image, spc_explain, cop_seq, rsc_seq)
+        VALUES (#{spcName}, #{spcCap}, #{spcImage}, #{spcExplain}, #{copSeq}, #{rscSeq});
+    </insert>
+
+    <select id ="findAll" resultType="com.douzone.wehago.domain.Space">
+        SELECT * FROM tb_spaces
+    </select>
+
+    <select id = "findOne" resultType="com.douzone.wehago.domain.Space">
+        SELECT
+            spc_seq,
+            spc_name,
+            spc_cap,
+            spc_image,
+            spc_explain
+        FROM tb_spaces WHERE spc_seq = #{spcSeq};
+    </select>
+
+    <update id="update" parameterType="com.douzone.wehago.domain.Space">
+        UPDATE tb_spaces
+        SET
+            spc_name = #{spcName},
+            spc_cap = #{spcCap},
+            spc_iamge = #{spcImage},
+            spc_explain = #{spcExplain}
+        WHERE spc_seq = #{spcSeq};
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM tb_spaces WHERE spc_seq = #{spcSeq};
+    </delete>
+
+</mapper>

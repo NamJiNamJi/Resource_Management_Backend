@@ -11,8 +11,8 @@ create table tb_users (
                           user_state boolean default true not null,
                           user_image varchar(255) null,
                           cop_seq Integer null,
-                          user_created timestamp not null,
-                          user_updated timestamp not null
+                          user_created timestamp default now() not null,
+                          user_updated timestamp default now() not null
 );
 
 /* 차량 자원 테이블 생성 */
@@ -41,9 +41,9 @@ CREATE TABLE tb_devices
     dvc_image   VARCHAR(255) null,
     dvc_explain VARCHAR(255) null,
     dvc_buy     TIMESTAMP    not null,
-    dvc_created TIMESTAMP    not null,
-    dvc_updated TIMESTAMP    not null,
-    dvc_state   BOOLEAN      not null,
+    dvc_created TIMESTAMP    default now(),
+    dvc_updated TIMESTAMP    default now(),
+    dvc_state   BOOLEAN      default true,
     cop_seq     INTEGER      not null,
     rsc_seq     INTEGER      not null
 );
@@ -53,12 +53,12 @@ CREATE TABLE tb_spaces
 (
     spc_seq     SERIAL primary key,
     spc_name    VARCHAR(100) not null,
-    spc_cap     INTEGER      not null,
+    spc_cap     VARCHAR(50)  not null,
     spc_explain VARCHAR(255) null,
     spc_image   VARCHAR(255) null,
-    spc_created TIMESTAMP    not null,
-    spc_updated TIMESTAMP    not null,
-    spc_state   BOOLEAN      not null,
+    spc_created TIMESTAMP default now(),
+    spc_updated TIMESTAMP default now(),
+    spc_state   BOOLEAN   default true,
     cop_seq     INTEGER      not null,
     rsc_seq     INTEGER      not null
 );
@@ -77,10 +77,11 @@ CREATE TABLE tb_companys(
 CREATE TABLE tb_employees(
      emp_seq SERIAL PRIMARY KEY,
      emp_name VARCHAR(100) NOT NULL,
+     emp_position VARCHAR(100),
      emp_image VARCHAR(255),
      cop_seq INTEGER NOT NULL,
-     auth_level VARCHAR(100),
      user_seq INTEGER NOT NULL,
+     auth_level VARCHAR(100),
      emp_state BOOLEAN DEFAULT TRUE,
      emp_created TIMESTAMP DEFAULT now(),
      emp_updated TIMESTAMP DEFAULT now()

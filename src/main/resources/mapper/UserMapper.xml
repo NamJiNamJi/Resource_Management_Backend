@@ -17,19 +17,36 @@
 
     <!-- 회원가입 로직 -->
     <insert id="userRegister" parameterType="com.douzone.wehago.domain.User">
-        INSERT INTO tb_users (user_id, user_pwd, user_name, user_email, user_phone, user_gender, user_address)
-        VALUES (#{userId}, #{userPwd}, #{userName}, #{userEmail}, #{userPhone}, #{userGender}, #{userAddress})
+        INSERT INTO tb_users (user_id, user_pwd, user_name, user_email, user_phone, user_gender, user_address, cop_seq)
+        VALUES (#{userId}, #{userPwd}, #{userName}, #{userEmail}, #{userPhone}, #{userGender}, #{userAddress}, 4)
     </insert>
     <!-- 비밀번호 찾기 -->
     <select id = "findPwd" parameterType="java.lang.String" resultType="com.douzone.wehago.domain.User">
         select * from tb_users where user_pwd = #{userPwd}
     </select>
-    <update id="updatePwd" parameterType="com.douzone.wehago.domain.User">
-        UPDATE tb_users set user_pwd = #{userPwd} where user_id = #{userId}
+    <!-- 비밀번호 업데이트 -->
+    <update id="updatePwd" parameterType="com.douzone.wehago.dto.user.UpdatePasswordDTO">
+        UPDATE tb_users set user_pwd = #{userPwd} where user_seq = #{userSeq}
     </update>
     <!-- 로그인 로직 -->
     <select id="findUser" parameterType="java.lang.String" resultType="com.douzone.wehago.domain.User">
         SELECT * FROM tb_users WHERE user_id = #{userId}
+    </select>
+    <!-- 로그인시 데이터 가져오기 -->
+    <select id="getUserData" parameterType="java.lang.Integer" resultType="com.douzone.wehago.dto.user.UserDTO">
+        select cop_seq, cop_reg_num, cop_name, uc.user_seq, user_id, user_name, user_email, user_image, emp_position, emp_image, auth_level from
+            (select c.cop_seq, cop_reg_num, cop_name, user_seq, user_id, user_name, user_email, user_image from
+                (select user_seq, user_id, user_name, user_email, user_image, cop_seq
+                 from tb_users where user_state = true) as u
+                    inner join
+                (select cop_seq, cop_reg_num, cop_name
+                 from tb_companys where cop_state = true) as c
+                on u.cop_seq = c.cop_seq) as uc
+                inner join
+            (select user_seq, emp_position, emp_image, auth_level
+             from tb_employees where emp_state = true) as e
+            on uc.user_seq = e.user_seq
+        where uc.user_seq = #{userSeq};
     </select>
     <!-- 이미지 수정 -->
     <update id="updateImage" parameterType="com.douzone.wehago.domain.User">

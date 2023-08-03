@@ -2,6 +2,7 @@ package com.douzone.wehago.mapper;
 
 import com.douzone.wehago.domain.User;
 import com.douzone.wehago.dto.user.UserDTO;
+import com.douzone.wehago.dto.user.UserResponseDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 public interface UserMapper {
     void userRegister(User user);
     User findUser(String userId);
+    UserResponseDTO getUserData(Integer userSeq);
 
 
     List<User> findAllUsers();

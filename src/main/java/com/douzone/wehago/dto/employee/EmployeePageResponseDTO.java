@@ -9,4 +9,6 @@ import java.util.List;
 @Getter
 public class EmployeePageResponseDTO {
     List<EmployeeResponseDTO> employeeList;
+    private Integer pageNum;
+    private Integer pageSize;
 }

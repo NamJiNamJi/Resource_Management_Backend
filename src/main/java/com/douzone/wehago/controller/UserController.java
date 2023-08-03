@@ -2,10 +2,7 @@ package com.douzone.wehago.controller;
 
 import com.douzone.wehago.common.Response;
 import com.douzone.wehago.domain.User;
-import com.douzone.wehago.dto.user.UserDTO;
-import com.douzone.wehago.dto.user.UserLoginDTO;
-import com.douzone.wehago.dto.user.UserRegisterDTO;
-import com.douzone.wehago.dto.user.UserResponseDTO;
+import com.douzone.wehago.dto.user.*;
 import com.douzone.wehago.security.UserDetailsImpl;
 import com.douzone.wehago.service.UserService;
 import java.io.IOException;
@@ -48,48 +45,49 @@ public class UserController {
     public ResponseEntity<?> userLogin(@RequestBody @Valid UserLoginDTO userLoginDTO) {
         return ResponseEntity.ok().body(userService.userLogin(userLoginDTO));
     }
-    @PostMapping("/api/updatePwd")
-    public ResponseEntity<Object> updatePwd(@RequestPart(value = "data")UserLoginDTO userLoginDTO){
 
-
-        return ResponseEntity.ok().body(userService.updatePwd(userLoginDTO));
+    @PostMapping("/api/pwd/update")
+    public ResponseEntity<Object> updatePwd(@RequestPart(value = "data") UpdatePasswordDTO updatePasswordDTO){
+        return ResponseEntity.ok().body(userService.updatePwd(updatePasswordDTO));
     }
-    @PostMapping("/api/SelectPwd")
-    public ResponseEntity<Object> selectPwd(@RequestPart(value = "data")UserLoginDTO userLoginDTO){
+
+    @PostMapping("/api/pwd/check")
+    public ResponseEntity<Object> selectPwd(@RequestPart(value = "data") UserLoginDTO userLoginDTO) {
         return ResponseEntity.ok().body(userService.userPwd(userLoginDTO));
     }
-    // todo :: 모든 회원 조회 (사원 x) Controller, 지금은 토큰값 없이도 되게.. (error 처리 로직 작성 안됨)
-    @PostMapping("/api/user/all")
-    public ResponseEntity<?> userFindAll() { // 나중에는 @AuthenticationPrincipal
-        return ResponseEntity.ok().body(userService.findAllUsers());
-    }
 
-    // todo :: 검색으로 특정회원 조회 (사원 x) full text 사용하지않고 일단 like 로 작성, 지금은 토큰값 없이도 되게.. (error 처리 로직 작성 안됨)
-    @PostMapping("/api/user/search")
-    public ResponseEntity<?> userSearch(@RequestParam String searchText) {
-        return ResponseEntity.ok().body(userService.findSearchUsers(searchText));
-    }
-
-    // todo :: 유저 정보 update .. custom Exception 만들어지면 jwt exception 도 추가로 넣어야 클라이언트로 오류 메시지 반환할 수 있을 듯..
-    @GetMapping("/api/user/update")
-    public ResponseEntity<?> userUpdate(@RequestBody UserDTO userDTO,
-                                        @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok().body(userService.userUpdate(userDTO, userDetails));
-    }
-
-
-    // todo :: axios 를 통해 accessToken 전달시 userDetails 가 잘 들어가는지..
-    @PostMapping("/api/header/test")
-    public ResponseEntity<?> testUserDetails(@AuthenticationPrincipal UserDetails userDetails) {
-        System.out.println(userDetails);
-        User user = ((UserDetailsImpl) userDetails).getUser();
-        System.out.println(user.getUserId());
-        System.out.println(user.getUserName());
-        System.out.println(user.getUserEmail());
-        return null;
-    }
-
-    @PostMapping("/api/MyPageImageTest")
+//    // todo :: 모든 회원 조회 (사원 x) Controller, 지금은 토큰값 없이도 되게.. (error 처리 로직 작성 안됨)
+//    @PostMapping("/api/user/all")
+//    public ResponseEntity<?> userFindAll() { // 나중에는 @AuthenticationPrincipal
+//        return ResponseEntity.ok().body(userService.findAllUsers());
+//    }
+//
+//    // todo :: 검색으로 특정회원 조회 (사원 x) full text 사용하지않고 일단 like 로 작성, 지금은 토큰값 없이도 되게.. (error 처리 로직 작성 안됨)
+//    @PostMapping("/api/user/search")
+//    public ResponseEntity<?> userSearch(@RequestParam String searchText) {
+//        return ResponseEntity.ok().body(userService.findSearchUsers(searchText));
+//    }
+//
+//    // todo :: 유저 정보 update .. custom Exception 만들어지면 jwt exception 도 추가로 넣어야 클라이언트로 오류 메시지 반환할 수 있을 듯..
+//    @GetMapping("/api/user/update")
+//    public ResponseEntity<?> userUpdate(@RequestBody UserDTO userDTO,
+//                                        @AuthenticationPrincipal UserDetails userDetails) {
+//        return ResponseEntity.ok().body(userService.userUpdate(userDTO, userDetails));
+//    }
+//
+//
+//    // todo :: axios 를 통해 accessToken 전달시 userDetails 가 잘 들어가는지..
+//    @PostMapping("/api/header/test")
+//    public ResponseEntity<?> testUserDetails(@AuthenticationPrincipal UserDetails userDetails) {
+//        System.out.println(userDetails);
+//        User user = ((UserDetailsImpl) userDetails).getUser();
+//        System.out.println(user.getUserId());
+//        System.out.println(user.getUserName());
+//        System.out.println(user.getUserEmail());
+//        return null;
+//    }
+//
+    @PostMapping("/api/mypage/image/update")
     public ResponseEntity<Object> imageUpdate(@RequestPart(value = "data")UserDTO userDTO,
                                               @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
 //        return ResponseEntity.ok().body(userService.(image));
