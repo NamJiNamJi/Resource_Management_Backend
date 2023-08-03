@@ -13,7 +13,6 @@
     <select id ="findAll" resultType="com.douzone.wehago.domain.Employee">
         SELECT * FROM tb_employees
     </select>
-
     <select id = "findOne" resultType="com.douzone.wehago.domain.Employee">
         SELECT * FROM tb_employees WHERE emp_seq = #{empSeq};
     </select>
@@ -27,7 +26,6 @@
         UPDATE tb_employees SET emp_state = #{empState}, emp_updated = #{empUpdated}
         WHERE emp_seq = #{empSeq}
     </update>
-
 <!--    <delete id="delete" parameterType="Integer">-->
 <!--        DELETE FROM tb_employees WHERE emp_seq = #{empSeq}-->
 <!--    </delete>-->
