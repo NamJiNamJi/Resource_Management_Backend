@@ -15,6 +15,11 @@
         SELECT * FROM tb_cars
     </select>
 
+    <select id="searchCar" parameterType="hashMap" resultType="com.douzone.wehago.domain.Car">
+        SELECT * FROM tb_cars
+        WHERE  ${queryType} LIKE CONCAT('%', #{searchString}, '%')
+    </select>
+
     <select id = "findOne" resultType="com.douzone.wehago.domain.Car">
         SELECT
             car_seq,
@@ -39,8 +44,15 @@
         WHERE car_seq = #{carSeq};
     </update>
 
-    <delete id="delete" parameterType="Integer">
-        DELETE FROM tb_cars WHERE car_seq = #{carSeq};
-    </delete>
+    <update id="delete" parameterType="com.douzone.wehago.domain.Car">
+        UPDATE tb_cars
+        SET
+            car_state = #{carState},
+            car_updated = #{carUpdated}
+        WHERE car_seq = #{carSeq}
+    </update>
+<!--    <delete id="delete" parameterType="Integer">-->
+<!--        DELETE FROM tb_cars WHERE car_seq = #{carSeq};-->
+<!--    </delete>-->
 
 </mapper>

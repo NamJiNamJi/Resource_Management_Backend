@@ -2,9 +2,9 @@ package com.douzone.wehago.service;
 
 import com.douzone.wehago.common.S3Uploader;
 import com.douzone.wehago.domain.Device;
-import com.douzone.wehago.dto.DeviceDTO;
-import com.douzone.wehago.dto.DevicePageResponseDTO;
-import com.douzone.wehago.dto.DeviceResponseDTO;
+import com.douzone.wehago.dto.device.DeviceDTO;
+import com.douzone.wehago.dto.device.DevicePageResponseDTO;
+import com.douzone.wehago.dto.device.DeviceResponseDTO;
 import com.douzone.wehago.repository.DeviceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

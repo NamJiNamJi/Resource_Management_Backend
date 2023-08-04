@@ -1,7 +1,9 @@
 package com.douzone.wehago.controller;
 
 import com.douzone.wehago.common.Response;
-import com.douzone.wehago.dto.*;
+import com.douzone.wehago.dto.device.DeviceDTO;
+import com.douzone.wehago.dto.device.DevicePageResponseDTO;
+import com.douzone.wehago.dto.device.DeviceResponseDTO;
 import com.douzone.wehago.service.DeviceService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

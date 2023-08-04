@@ -1,6 +1,8 @@
 package com.douzone.wehago.domain;
 
 import lombok.*;
+
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Builder
@@ -19,8 +21,8 @@ public class Car {
     private Integer copSeq;
     private Integer rscSeq;
     private Boolean carState;
-    private LocalDate carCreated;
-    private LocalDate carUpdated;
+    private Timestamp carCreated;
+    private Timestamp carUpdated;
 
 }
 

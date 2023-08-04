@@ -1,26 +1,7 @@
 <<<<<<< HEAD
 package com.douzone.wehago;
 
-import com.douzone.wehago.dto.DeviceDTO;
-import com.douzone.wehago.dto.RoomDTO;
-import com.douzone.wehago.repository.DeviceRepository;
-import com.douzone.wehago.repository.RoomRepository;
-import org.assertj.core.api.Assertions;
-import com.douzone.wehago.domain.Car;
-import com.douzone.wehago.dto.CarDTO;
-import com.douzone.wehago.mapper.CarMapper;
-import com.douzone.wehago.repository.CarRepository;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.nio.channels.AcceptPendingException;
 
 
 @SpringBootTest
@@ -124,13 +105,13 @@ class WehagoApplicationTests {
 =======
 //package com.douzone.wehago;
 //
-//import com.douzone.wehago.dto.DeviceDTO;
+//import com.douzone.wehago.dto.device.DeviceDTO;
 //import com.douzone.wehago.dto.RoomDTO;
 //import com.douzone.wehago.repository.DeviceRepository;
 //import com.douzone.wehago.repository.RoomRepository;
 //import org.assertj.core.api.Assertions;
 //import com.douzone.wehago.domain.Car;
-//import com.douzone.wehago.dto.CarDTO;
+//import com.douzone.wehago.dto.car.CarDTO;
 //import com.douzone.wehago.mapper.CarMapper;
 //import com.douzone.wehago.repository.CarRepository;
 //import org.junit.jupiter.api.Test;

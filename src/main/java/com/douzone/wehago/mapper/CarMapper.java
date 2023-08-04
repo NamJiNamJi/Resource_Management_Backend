@@ -4,6 +4,7 @@ import com.douzone.wehago.domain.Car;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface CarMapper {
@@ -17,10 +18,16 @@ public interface CarMapper {
     /* 선택 차량 조회 Select */
     Car findOne(Integer car_seq);
 
+//    차량 검색
+    List<Car> searchCar(Map<String, Object> dataValues);
+
     /* 차량 정보 수정 Update */
     void update(Car car);
 
     /* 차량 정보 삭제 Delete */
-    void delete(Integer car_seq);
+    void delete(Car car);
+
+//    /* 차량 정보 삭제 Delete */
+//    void delete(Integer car_seq);
 
 }

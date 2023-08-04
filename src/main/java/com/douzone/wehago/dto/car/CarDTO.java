@@ -1,4 +1,4 @@
-package com.douzone.wehago.dto;
+package com.douzone.wehago.dto.car;
 
 import lombok.Getter;
 import java.time.LocalDate;

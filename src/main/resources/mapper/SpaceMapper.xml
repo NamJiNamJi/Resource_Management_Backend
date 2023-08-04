@@ -30,7 +30,7 @@
         SET
             spc_name = #{spcName},
             spc_cap = #{spcCap},
-            spc_iamge = #{spcImage},
+            spc_image = #{spcImage},
             spc_explain = #{spcExplain}
         WHERE spc_seq = #{spcSeq};
     </update>

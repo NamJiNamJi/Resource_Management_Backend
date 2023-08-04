@@ -2,9 +2,9 @@ package com.douzone.wehago.service;
 
 import com.douzone.wehago.common.S3Uploader;
 import com.douzone.wehago.domain.Space;
-import com.douzone.wehago.dto.SpaceDTO;
-import com.douzone.wehago.dto.SpacePageResponseDTO;
-import com.douzone.wehago.dto.SpaceResponseDTO;
+import com.douzone.wehago.dto.space.SpaceDTO;
+import com.douzone.wehago.dto.space.SpacePageResponseDTO;
+import com.douzone.wehago.dto.space.SpaceResponseDTO;
 import com.douzone.wehago.repository.SpaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
