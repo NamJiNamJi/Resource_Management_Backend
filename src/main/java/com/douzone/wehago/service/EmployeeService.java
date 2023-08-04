@@ -46,7 +46,7 @@ public class EmployeeService {
     @Transactional(readOnly = true)
     public EmployeePageResponseDTO findAll(int pageNo , int pageSize) {
         List<Employee> employeeList = employeeRepository.findAll(pageNo,pageSize);
-
+        Object total =((Page) employeeList).getPages();
         List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
 
         for(Employee employee : employeeList) {
@@ -55,6 +55,7 @@ public class EmployeeService {
 
         return EmployeePageResponseDTO.builder()
                 .employeeList(employeeResponseDTOList)
+                .total(total)
                 .build();
     }
 
