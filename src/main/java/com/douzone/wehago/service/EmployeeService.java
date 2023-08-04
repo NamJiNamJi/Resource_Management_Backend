@@ -6,6 +6,8 @@ import com.douzone.wehago.dto.employee.EmployeeDTO;
 import com.douzone.wehago.dto.employee.EmployeePageResponseDTO;
 import com.douzone.wehago.dto.employee.EmployeeResponseDTO;
 import com.douzone.wehago.repository.EmployeeRepository;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -45,9 +47,9 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true)
-    public EmployeePageResponseDTO findAll() {
-        List<Employee> employeeList = employeeRepository.findAll();
-
+    public EmployeePageResponseDTO findAll(int pageNo , int pageSize) {
+        List<Employee> employeeList = employeeRepository.findAll(pageNo,pageSize);
+        Object total =((Page) employeeList).getPages();
         List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
 
         for(Employee employee : employeeList) {
@@ -56,6 +58,7 @@ public class EmployeeService {
 
         return EmployeePageResponseDTO.builder()
                 .employeeList(employeeResponseDTOList)
+                .total(total)
                 .build();
     }
 
@@ -135,5 +138,4 @@ public class EmployeeService {
                 .authLevel(employee.getAuthLevel())
                 .build();
     }
-
 }

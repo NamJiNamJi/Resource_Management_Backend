@@ -1,5 +1,6 @@
 package com.douzone.wehago.dto.employee;
 
+import com.github.pagehelper.Page;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,4 +12,5 @@ public class EmployeePageResponseDTO {
     List<EmployeeResponseDTO> employeeList;
     private Integer pageNum;
     private Integer sizeNum;
+    private Integer pageSize;
 }

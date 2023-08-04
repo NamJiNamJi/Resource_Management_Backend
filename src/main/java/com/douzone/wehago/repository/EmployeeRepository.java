@@ -2,6 +2,8 @@ package com.douzone.wehago.repository;
 
 import com.douzone.wehago.domain.Employee;
 import com.douzone.wehago.dto.employee.EmployeeDTO;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -16,12 +18,12 @@ public class EmployeeRepository {
 
     private final SqlSession sqlSession;
 
-
     public Employee save(Employee employee){
         return sqlSession.selectOne("com.douzone.wehago.mapper.EmployeeMapper.save", employee);
     }
 
-    public List<Employee> findAll() {
+    public List<Employee> findAll(Integer pageNo, Integer pageSize) {
+        PageHelper.startPage(pageNo,pageSize);
         return sqlSession.selectList("com.douzone.wehago.mapper.EmployeeMapper.findAll");
     }
 
@@ -33,15 +35,15 @@ public class EmployeeRepository {
         return sqlSession.selectList("com.douzone.wehago.mapper.EmployeeMapper.searchEmployee", map);
     }
 
-    public Employee findOne(Integer empSeq){
+    public Employee findOne(Integer empSeq) {
         return sqlSession.selectOne("com.douzone.wehago.mapper.EmployeeMapper.findOne", empSeq);
     }
 
-    public Integer update(Employee employee){
+    public Integer update(Employee employee) {
         return sqlSession.update("com.douzone.wehago.mapper.EmployeeMapper.update", employee);
     }
 
-    public void delete(Employee employee){
+    public void delete(Employee employee) {
         sqlSession.delete("com.douzone.wehago.mapper.EmployeeMapper.delete", employee);
     }
 
