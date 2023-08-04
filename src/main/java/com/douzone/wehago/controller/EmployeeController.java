@@ -45,6 +45,20 @@ public class EmployeeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+
+    // 회사 검색
+    @GetMapping("/search")
+    public ResponseEntity<Object> searchEmployee(@RequestParam(value = "type") String type,
+                                                 @RequestParam(value = "keyword") String keyword) {
+        log.info(type + keyword);
+        EmployeePageResponseDTO employeePageResponseDTO = employeeService.searchEmployee(type, keyword);
+        Response response = new Response(HttpStatus.OK, "사원 검색 성공", employeePageResponseDTO);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+
     @GetMapping("/{empSeq}")
     public ResponseEntity<Object> findOne(@PathVariable Integer empSeq) {
         EmployeeResponseDTO employeeResponseDTO = employeeService.findOne(empSeq);

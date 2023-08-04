@@ -11,7 +11,6 @@ import java.util.List;
 public class EmployeePageResponseDTO {
     List<EmployeeResponseDTO> employeeList;
     private Integer pageNum;
+    private Integer sizeNum;
     private Integer pageSize;
-    private Object total;
-
 }

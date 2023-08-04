@@ -9,8 +9,10 @@ import com.douzone.wehago.repository.EmployeeRepository;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class EmployeeService {
@@ -25,20 +28,20 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final S3Uploader s3Uploader;
 
+    // 사원 등록
     @Transactional
     public EmployeeResponseDTO saveEmployee(EmployeeDTO employeeDTO) {
 
         Employee employee = Employee.builder()
                 .empName(employeeDTO.getEmpName())
                 .empPosition(employeeDTO.getEmpPosition())
-//                .empImage('')
-                .copSeq(employeeDTO.getCopSeq())
-                .userSeq(employeeDTO.getUserSeq())
+                .copSeq(employeeDTO.getCopSeq()) // 프론트단에서 회사 관리자 회사값 가져와서 임의로 넣어줘야함
+                .userSeq(employeeDTO.getUserSeq()) // 먼저 회원 insert 하고 seq 가져와야함
                 .authLevel(employeeDTO.getAuthLevel())
                 .build();
 
-        employeeRepository.save(employee);
-
+        Employee test = employeeRepository.save(employee);
+        log.info("사원 일련번호 : " + test.getEmpSeq());
 
         return getEmployeeResponseDTO(employee);
     }
@@ -56,6 +59,22 @@ public class EmployeeService {
         return EmployeePageResponseDTO.builder()
                 .employeeList(employeeResponseDTOList)
                 .total(total)
+                .build();
+    }
+
+
+    // 사원 검색
+    @Transactional(readOnly = true)
+    public EmployeePageResponseDTO searchEmployee(String type, String keyword) {
+        List<Employee> employeeList = employeeRepository.searchEmployee(type, keyword);
+        List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
+
+        for(Employee employee : employeeList) {
+            employeeResponseDTOList.add(getEmployeeResponseDTO(employee));
+        }
+
+        return EmployeePageResponseDTO.builder()
+                .employeeList(employeeResponseDTOList)
                 .build();
     }
 
