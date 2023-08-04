@@ -6,6 +6,7 @@ import com.douzone.wehago.dto.employee.EmployeeDTO;
 import com.douzone.wehago.dto.employee.EmployeePageResponseDTO;
 import com.douzone.wehago.dto.employee.EmployeeResponseDTO;
 import com.douzone.wehago.service.EmployeeService;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,9 +36,10 @@ public class EmployeeController {
 
     @GetMapping
     public ResponseEntity<Object> findAll(@RequestParam(defaultValue = "1") Integer pageNum,
-                                         @RequestParam(defaultValue = "3") Integer pageSize){
+                                          @RequestParam(defaultValue = "3") Integer pageSize){
 
         EmployeePageResponseDTO employeePageResponseDTO = employeeService.findAll(pageNum,pageSize);
+
         Response response = new Response(HttpStatus.OK, "사원 전체 조회 성공", employeePageResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
