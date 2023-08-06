@@ -10,20 +10,33 @@ import com.github.pagehelper.PageInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/company")
 public class CompanyController {
+
     private final CompanyService companyService;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody CompanyDTO companyDTO) {
-        CompanyResponseDTO companyResponseDTO = companyService.save(companyDTO);
-        Response response = new Response(HttpStatus.CREATED, "회사 등록 성공", companyResponseDTO);
+    public ResponseEntity<?> save(@RequestBody CompanyDTO companyDTO,
+                                       @AuthenticationPrincipal UserDetails userDetails) {
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        Response result = companyService.save(companyDTO, userDetails); // 회사 등록 후 회사 시퀀스 값을 가져옴
+
+        Map<String, Object> resultBody = new HashMap<>();
+        resultBody.put("key", result.getData());
+
+//        Response response = new Response(HttpStatus.CREATED, "회사 등록 성공", companyResponseDTO);
+//
+//        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return ResponseEntity.status(result.getStatus()).body(resultBody);
     }
 
     // 회사 전체 조회
@@ -71,6 +84,7 @@ public class CompanyController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    // 데이터베이스에서 진짜 삭제
 //    @DeleteMapping("/{copSeq}")
 //    public ResponseEntity<Object> deleteCompany(@PathVariable Integer copSeq) {
 //        companyService.deleteCompany(copSeq);
