@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!--<body>-->
+
+<div style='margin:20px;'>
+    <div align='center' style='border:1px solid black; font-family:verdana' ;>
+
+            <table align="center" border="0" cellpadding="0" cellspacing="0"
+                   style="max-width:698px;width:100%;-webkit-text-size-adjust:100%;" width="100%">
+                <tbody>
+                <tr>
+                    <td style="padding: 0 5.702%">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tbody>
+                            <tr>
+                                <td align="center" style="padding: 60px 0 50px; line-height: 0;">
+                                    <a href="https://localhost:3000" target="_blank" rel="noreferrer noopener">
+                                        <img src="https://kimsky.s3.ap-northeast-2.amazonaws.com//wehago_logo.png"
+                                             alt="WEHAGO" width="170" height="55" border="0"
+                                             style="vertical-align: top;" loading="lazy">
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <table border="0" cellpadding="0" cellspacing="0"
+                               style="font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', Dotum, sans-serif;">
+                            <tbody>
+                            <tr>
+                                <td align="left"
+                                    style="font-size: 34px; color: #222; line-height: 40px; letter-spacing: -0.5px; font-weight: bold; word-break: break-word; word-wrap: break-word; padding-bottom: 60px;">
+                                    <span style="color: #1a83ff;">{회사명 넣기}</span> 구성원으로 추가되었습니다.</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p
+                                            style="font-size: 14px; color: #222; line-height: 22px; padding: 0; margin: 0; word-break: break-word; word-wrap: break-word;">
+                                        <span style="font-weight: bold;"><span style="color: #1a83ff;" th:text="${empName}" />님의 계정과 임시비밀번호가 생성되었습니다.</span>
+                                    </p>
+                                    <p
+                                            style="font-size: 14px; color: #222; line-height: 22px; padding: 0; margin: 0; word-break: keep-all; word-wrap: break-word; margin-top: 22px;">
+                                        아래 '서비스 로그인하기'를 클릭해 발급된 계정과 임시 비밀번호 정보로 로그인할 수 있습니다.<br>계정 도용을 방지하고자 임시
+                                        비밀번호로 로그인하면 새 비밀번호 등록 화면이 연결되니,<br> 안전한 비밀번호로 변경 후 서비스를 이용해주세요.<br>임시
+                                        비밀번호는 메일 발송일로부터 <span style="color: #1a83ff;">30일</span>(<span
+                                            style="color: #1a83ff;">2023. 9. 1.까지</span>)간 유효하며,<br>만료 시 회사/단체의
+                                        WEHAGO 관리자에게 문의해 다시 발급받을 수 있습니다.
+                                    </p>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td style="height: 25px;line-height:0;padding:0;margin:0;"></td>
+                            </tr>
+                            <tr>
+                                <td
+                                        style="border-bottom: 1px solid #222;height:0;padding: 0;margin:0;line-height:0;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 20px;line-height:0;padding:0;margin:0;"></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <dl style="padding: 0; margin: 0; line-height: 21px;">
+                                        <dt style="font-size: 14px; line-height: 17px; font-weight: bold;">이름</dt>
+                                        <dd style="word-break: break-all; word-wrap: break-word;margin: 0; padding-top: 6px; font-size: 18px; line-height: 21px;" th:text="${empName}"/>
+
+                                        <dt style="padding-top: 25px; font-size: 14px; line-height: 17px; font-weight: bold;">권한</dt>
+                                        <dd style="word-break: break-all; word-wrap: break-word;margin: 0; padding-top: 6px; font-size: 18px; line-height: 21px;" th:text="${empPosition}"/>
+
+                                        <dt style="padding-top: 25px; font-size: 14px; line-height: 17px; font-weight: bold;">이메일</dt>
+                                        <dd style="word-break: break-all; word-wrap: break-word;margin: 0; padding-top: 6px; font-size: 18px; line-height: 21px;" th:text="${empEmail}"/>
+                                    </dl>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="height: 20px;line-height:0;padding:0;margin:0;"></td>
+                            </tr>
+                            <tr>
+                                <td style="border-bottom: 1px solid #222;height:0;padding: 0;margin:0;line-height:0;"></td>
+                            </tr>
+                            <tr>
+                                <td style="height: 60px;line-height:0;padding:0;margin:0;"></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <p style="font-size: 14px; color: #222; line-height: 22px; padding: 0; margin: 0; word-break: keep-all; word-wrap: break-word; text-align: center;">
+                                        PC앱, 모바일앱을 사용하면 언제 어디서나 빠르게 사용할 수 있습니다.</p>
+                                    <div style="margin-top: 20px; text-align: center;">
+                                        <a href="http://localhost:3000"
+                                           style="text-decoration: none;" rel="noreferrer noopener"
+                                           target="_blank">
+                                                    <span style="display: inline-block; min-width:193px; background-color: #1a83ff; height: 40px; padding: 0 40px; line-height: 40px; color: #fff; font-size: 14px; font-weight: bold; border-radius: 2px; margin: 15px 3px 0 3px; box-sizing: border-box; vertical-align: top; width: 200px; height: 44px; margin: 0; padding: 0; line-height: 44px;">서비스 시작하기</span>
+                                        </a>
+                                    </div>
+                                    <div style="margin-top: 15px; text-align: center;">
+<!--                                        <a href="https://guide.worksmobile.com/start/sign-in-with-created-account/#sign-in-with-created-account"-->
+                                        <a href="#"
+                                           style="text-decoration: none;" rel="noreferrer noopener"
+                                           target="_blank">
+                                                    <span
+                                                            style="display: inline-block; min-width:193px; border: 1px solid #1a83ff; height: 40px; padding: 0 40px; line-height: 40px; color: #1a83ff; font-size: 14px; font-weight: bold; border-radius: 2px; margin: 15px 3px 0 3px; box-sizing: border-box; vertical-align: top; width: 200px; height: 44px; margin: 0; padding: 0; line-height: 42px;">로그인
+                                                        방법 확인하기</span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 60px;line-height:0;padding:0;margin:0;"></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <p style="margin:0; border-top: 1px solid #d8d8d8; height: 60px;"></p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <p
+                                            style="font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', Dotum, sans-serif; margin: 0; font-size: 24px; color: #222; line-height: 29px; font-weight: bold; text-align: center; word-break: keep-all; word-wrap: break-word;">
+                                        제공하는 서비스를 살펴보세요!</p>
+                                    <p
+                                            style="font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', Dotum, sans-serif; margin: 12px 0 0 0; font-size: 14px; color: #222; line-height: 22px; text-align: center; word-break: keep-all; word-wrap: break-word;">
+                                        WEHAGO 제공하는 기능별 사용법을 안내해 드립니다.</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="height: 30px;line-height:0;padding:0;margin:0;"></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div
+                                            style="display: inline-block; text-align: center; font-size: 0; margin-right: -20px;">
+                                        <div
+                                                style="display: inline-block; width: 186px; margin: 0 20px 20px 0;">
+                                            <a href="https://deeplink.worksmobile.com/redirect?link=https%3A%2F%2Fnaver.worksmobile.com%2Fmessage%3Fversion%3D18&amp;ofl=https%3A%2F%2Ftalk.worksmobile.com"
+                                               style="text-decoration: none!important"
+                                               rel="noreferrer noopener" target="_blank">
+                                                <table border="0" cellpadding="0" cellspacing="0"
+                                                       style="border: 1px solid #eaeaea; height: 74px; width: 186px">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td
+                                                                style="vertical-align: middle; width: 58px; text-align: center; padding-top: 4px; padding-left: 2px;">
+                                                            <img alt="메시지" height="34"
+                                                                 src="https://static.worksmobile.net/static/wm/dm/welcome/btn_more_message_220222.png"
+                                                                 width="34" loading="lazy"></td>
+                                                        <td
+                                                                style="vertical-align: middle; font-size: 13px; line-height: 20px; color: #000; text-align: left;">
+                                                            원활한 협업의 시작<br>업무용 메신저</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </a>
+                                        </div>
+
+                                        <div
+                                                style="display: inline-block; width: 186px; margin: 0 20px 20px 0;">
+                                            <a href="https://deeplink.worksmobile.com/redirect?link=https%3A%2F%2Fnaver.worksmobile.com%2Fboard%3Fversion%3D18&amp;ofl=https%3A%2F%2Fboard.worksmobile.com"
+                                               style="text-decoration: none!important"
+                                               rel="noreferrer noopener" target="_blank">
+                                                <table border="0" cellpadding="0" cellspacing="0"
+                                                       style="border: 1px solid #eaeaea; height: 74px; width: 186px">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td
+                                                                style="vertical-align: middle; width: 58px; text-align: center; padding-top: 4px; padding-left: 2px;">
+                                                            <img alt="게시판" height="34"
+                                                                 src="https://static.worksmobile.net/static/wm/dm/welcome/btn_more_board_220222.png"
+                                                                 width="34" loading="lazy"></td>
+                                                        <td
+                                                                style="vertical-align: middle; font-size: 13px; line-height: 20px; color: #000; text-align: left;letter-spacing: -1px">
+                                                            사내 소식과 정보를<br>공유하는 공간</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </a>
+                                        </div>
+
+                                        <div
+                                                style="display: inline-block; width: 186px; margin: 0 20px 20px 0;">
+                                            <a href="https://deeplink.worksmobile.com/redirect?link=https%3A%2F%2Fnaver.worksmobile.com%2Fcalendar%3Fversion%3D18&amp;ofl=https%3A%2F%2Fcalendar.worksmobile.com"
+                                               style="text-decoration: none!important"
+                                               rel="noreferrer noopener" target="_blank">
+                                                <table border="0" cellpadding="0" cellspacing="0"
+                                                       style="border: 1px solid #eaeaea; height: 74px; width: 186px">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td
+                                                                style="vertical-align: middle; width: 58px; text-align: center; padding-top: 4px; padding-left: 2px;">
+                                                            <img alt="캘린더" height="34"
+                                                                 src="https://static.worksmobile.net/static/wm/dm/welcome/btn_more_calendar_220222.png"
+                                                                 width="34" loading="lazy"></td>
+                                                        <td
+                                                                style="vertical-align: middle; font-size: 13px; line-height: 20px; color: #000; text-align: left;">
+                                                            업무 효율을 높이는<br>스마트한 일정 관리</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </a>
+                                        </div>
+
+                                        <div
+                                                style="display: inline-block; width: 186px; margin: 0 20px 20px 0;">
+                                            <a href="https://task.worksmobile.com"
+                                               style="text-decoration: none!important"
+                                               rel="noreferrer noopener" target="_blank">
+                                                <table border="0" cellpadding="0" cellspacing="0"
+                                                       style="border: 1px solid #eaeaea; height: 74px; width: 186px">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td
+                                                                style="vertical-align: middle; width: 58px; text-align: center; padding-top: 5px; padding-left: 2px;">
+                                                            <img alt="할일" height="32"
+                                                                 src="https://static.worksmobile.net/static/wm/dm/welcome/btn_more_todo_220222.png"
+                                                                 width="32" loading="lazy"></td>
+                                                        <td
+                                                                style="vertical-align: middle; font-size: 13px; line-height: 20px; color: #000; text-align: left;">
+                                                            간편하게 관리하는<br>나만의 업무 리스트</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </a>
+                                        </div>
+
+                                        <div
+                                                style="display: inline-block; width: 186px; margin: 0 20px 20px 0;">
+                                            <a href="https://form.worksmobile.com"
+                                               style="text-decoration: none!important"
+                                               rel="noreferrer noopener" target="_blank">
+                                                <table border="0" cellpadding="0" cellspacing="0"
+                                                       style="border: 1px solid #eaeaea; height: 74px; width: 186px">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td
+                                                                style="vertical-align: middle; width: 58px; text-align: center; padding-top: 5px; padding-left: 2px;">
+                                                            <img alt="설문" height="34"
+                                                                 src="https://static.worksmobile.net/static/wm/dm/welcome/btn_more_survey_220222.png"
+                                                                 width="34" loading="lazy"></td>
+                                                        <td
+                                                                style="vertical-align: middle; font-size: 13px; line-height: 20px; color: #000; text-align: left;">
+                                                            쉽고 빠른 정보 수집<br>온라인 설문</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </a>
+                                        </div>
+
+                                        <div
+                                                style="display: inline-block; width: 186px; margin: 0 20px 20px 0;">
+                                            <a href="https://deeplink.worksmobile.com/redirect?link=https%3A%2F%2Fnaver.worksmobile.com%2Fcontact%3Fversion%3D18&amp;ofl=https%3A%2F%2Fcontact.worksmobile.com"
+                                               style="text-decoration: none!important"
+                                               rel="noreferrer noopener" target="_blank">
+                                                <table border="0" cellpadding="0" cellspacing="0"
+                                                       style="border: 1px solid #eaeaea; height: 74px; width: 186px">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td
+                                                                style="vertical-align: middle; width: 58px; text-align: center; padding-top: 4px; padding-left: 2px;">
+                                                            <img alt="주소록" height="34"
+                                                                 src="https://static.worksmobile.net/static/wm/dm/welcome/btn_more_contact_220222.png"
+                                                                 width="34" loading="lazy"></td>
+                                                        <td
+                                                                style="vertical-align: middle; font-size: 13px; line-height: 20px; color: #000; text-align: left;letter-spacing: -1px">
+                                                            한눈에 볼 수 있는<br>사내 조직도와 연락처</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </a>
+                                        </div>
+
+
+                                        <div
+                                                style="display: inline-block; width: 186px; margin: 0 20px 20px 0;">
+                                            <a href="https://admin.worksmobile.com"
+                                               style="text-decoration: none!important"
+                                               rel="noreferrer noopener" target="_blank">
+                                                <table border="0" cellpadding="0" cellspacing="0"
+                                                       style="border: 1px solid #eaeaea; height: 74px; width: 186px">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td
+                                                                style="vertical-align: middle; width: 58px; text-align: center; padding-top: 4px; padding-left: 2px;">
+                                                            <img alt="어드민" height="34"
+                                                                 src="https://static.worksmobile.net/static/wm/dm/welcome/btn_more_admin_220222.png"
+                                                                 width="34" loading="lazy"></td>
+                                                        <td
+                                                                style="vertical-align: middle; font-size: 13px; line-height: 20px; color: #000; text-align: left;letter-spacing: -1px">
+                                                            구성원 관리/보안 등<br>관리자용 설정 기능</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </a>
+                                        </div>
+
+                                        <div
+                                                style="display: inline-block; width: 186px; margin: 0 20px 20px 0;">
+                                            <a href="https://contact.worksmobile.com/v2/personal-info-settings"
+                                               style="text-decoration: none!important"
+                                               rel="noreferrer noopener" target="_blank">
+                                                <table border="0" cellpadding="0" cellspacing="0"
+                                                       style="border: 1px solid #eaeaea; height: 74px; width: 186px">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td
+                                                                style="vertical-align: middle; width: 58px; text-align: center; padding-top: 4px; padding-left: 2px;">
+                                                            <img alt="환경설정" height="34"
+                                                                 src="https://static.worksmobile.net/static/wm/dm/welcome/btn_more_setting_220222.png"
+                                                                 width="34" loading="lazy"></td>
+                                                        <td
+                                                                style="vertical-align: middle; font-size: 13px; line-height: 20px; color: #000; text-align: left;letter-spacing: -1px">
+                                                            WEHAGO<br>사용을 위한 설정</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 30px;line-height:0;padding:0;margin:0;"></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <p style="margin:0; border-top: 1px solid #d8d8d8; height: 60px;"></p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <p
+                                            style="font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', Dotum, sans-serif; margin: 0; font-size: 24px; color: #222; line-height: 29px; font-weight: bold; text-align: center; margin-bottom: 11px;">
+                                        더 궁금한 점이 있으신가요?</p>
+                                    <p
+                                            style="font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', Dotum, sans-serif; font-size: 14px; color: #222; line-height: 22px; padding: 0; margin: 0; text-align: center;">
+                                        WEHAGO에 대해 더 궁금한 점이 있으시다면 여기서 살펴보세요.</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding-top: 5px; text-align: center">
+                                    <a href="https://wehagohelp.zendesk.com/hc/ko" rel="noreferrer noopener" target="_blank"><span style="display: inline-block; min-width:193px; background-color: #1a83ff; height: 40px; padding: 0 40px; line-height: 40px; color: #fff; font-size: 14px; font-weight: bold; border-radius: 2px; margin: 15px 3px 0 3px; box-sizing: border-box; vertical-align: top; width: 230px; padding: 0; margin: 15px 5px 0">고객센터
+                                                    바로 가기</span></a>
+<!--                                    <a href="https://guide.worksmobile.com/kr/tips" rel="noreferrer noopener"-->
+                                    <a href="#" rel="noreferrer noopener"
+
+                                       target="_blank"><span
+                                            style="display: inline-block; min-width:193px; background-color: #1a83ff; height: 40px; padding: 0 40px; line-height: 40px; color: #fff; font-size: 14px; font-weight: bold; border-radius: 2px; margin: 15px 3px 0 3px; box-sizing: border-box; vertical-align: top; width: 230px; padding: 0; margin: 15px 6px 0">활용팁
+                                                    살펴보기</span></a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="height: 60px;line-height:0;padding:0;margin:0;"></td>
+                            </tr>
+                            <tr>
+                                <td
+                                        style="border-bottom: 1px solid #222;height:0;padding: 0;margin:0;line-height:0;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 0px;line-height:0;padding:0;margin:0;"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table border="0" cellpadding="0" cellspacing="0"
+                               style="font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', Dotum, sans-serif;"
+                               width="100%">
+                            <tbody>
+                            <tr>
+                                <td align="center" style="margin: 0; padding: 60px 0 15px; text-align: center;">
+                                    <!-- 위하고 작은 로고로 변경하기 -->
+                                    <img src="https://static.worksmobile.net/static/pwe/wm/dm/badge_nw_36x36_2x_210715.png"
+                                         alt="naver works" width="36" height="36" border="0"
+                                         style="vertical-align: top;" loading="lazy">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p
+                                            style="font-size: 12px; color: #989898; line-height: 18px; padding: 0; margin: 0; text-align: center;">
+                                        본 메일은 발신전용입니다.<br>불편하신 점이나 궁금한 사항은 <a href="http://localhost:3000"
+                                                                              style="color: #1a83ff;; text-decoration: none;" target="_blank"
+                                                                              rel="noreferrer noopener">헬프센터</a>로 문의해주세요.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center"
+                                    style="font-size: 12px; color: #989898; padding: 15px 0 40px; margin: 0;">
+                                    <strong>©</strong> DOUZONE BIZON Co.,Ltd.
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<!--</body>-->
+<!--</html>-->
