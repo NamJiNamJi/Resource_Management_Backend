@@ -45,6 +45,7 @@ public class UserController {
     public ResponseEntity<?> userLogin(@RequestBody @Valid UserLoginDTO userLoginDTO) {
         return ResponseEntity.ok().body(userService.userLogin(userLoginDTO));
     }
+
     @PostMapping("/api/pwd/update")
     public ResponseEntity<Object> updatePwd(@RequestPart(value = "data") UpdatePasswordDTO updatePasswordDTO){
         return ResponseEntity.ok().body(userService.updatePwd(updatePasswordDTO));

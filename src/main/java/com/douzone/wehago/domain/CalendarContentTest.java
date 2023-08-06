@@ -1,16 +1,15 @@
 package com.douzone.wehago.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 public class CalendarContentTest {
 
     private String title;
@@ -19,5 +18,5 @@ public class CalendarContentTest {
     private String end;
     private String backgroundColor;
     private String color;
-
+    private LocalDate calendar;
 }

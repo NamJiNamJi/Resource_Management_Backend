@@ -25,6 +25,10 @@ public enum ErrorCode {
     FILE_NOT_EXIST(404, "FILE_NOT_EXIST", "파일이 없습니다. 파일을 추가해 주세요."),
     FILE_SIZE_EXCEED(413, "FILE_SIZE_EXCEED", "업로드 할 수 있는 파일 최대 크기는 20MB 입니다."),
     INVALID_FILE_TYPE(415, "INVALID_FILE_TYPE", "업로드 할 수 있는 파일 형식은 jpg, jpeg, png 입니다."),
+
+    // Mail
+    MAIL_SEND_FAIL(500, "MAIL_SEND_FAIL", "메일 전송 실패")
+
     ;
 
 
