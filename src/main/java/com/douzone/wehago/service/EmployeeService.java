@@ -2,13 +2,20 @@ package com.douzone.wehago.service;
 
 import com.douzone.wehago.common.S3Uploader;
 import com.douzone.wehago.domain.Employee;
+import com.douzone.wehago.domain.User;
 import com.douzone.wehago.dto.employee.EmployeeDTO;
 import com.douzone.wehago.dto.employee.EmployeePageResponseDTO;
 import com.douzone.wehago.dto.employee.EmployeeResponseDTO;
 import com.douzone.wehago.repository.EmployeeRepository;
+import com.douzone.wehago.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,7 +31,14 @@ public class EmployeeService {
     private final S3Uploader s3Uploader;
 
     @Transactional
-    public EmployeeResponseDTO saveEmployee(EmployeeDTO employeeDTO) {
+    public ResponseEntity<?> saveEmployee(EmployeeDTO employeeDTO, UserDetails userDetails) {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            String errorMessage = "토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
+        }
 
         Employee employee = Employee.builder()
                 .empName(employeeDTO.getEmpName())
@@ -37,8 +51,7 @@ public class EmployeeService {
 
         employeeRepository.save(employee);
 
-
-        return getEmployeeResponseDTO(employee);
+        return ResponseEntity.status(HttpStatus.CREATED).body(getEmployeeResponseDTO(employee));
     }
 
     @Transactional(readOnly = true)

@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,10 +25,12 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<Object> saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<Object> saveEmployee(@RequestBody EmployeeDTO employeeDTO,
+                                               @AuthenticationPrincipal UserDetails userDetails) {
 
-        EmployeeResponseDTO employeeResponseDTO = employeeService.saveEmployee(employeeDTO);
-        Response response = new Response(HttpStatus.CREATED, "사원 등록 성공", employeeResponseDTO);
+        ResponseEntity<?> employeeResponseDTO = employeeService.saveEmployee(employeeDTO, userDetails);
+
+        Response response = new Response(HttpStatus.CREATED, "사원 등록 성공", employeeResponseDTO.getBody());
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
