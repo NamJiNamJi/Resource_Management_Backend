@@ -1,19 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-
-
-
-
+<!--<body>-->
 
 <div style='margin:20px;'>
     <div align='center' style='border:1px solid black; font-family:verdana' ;>
-        <div style='font-size:130%'>
-
 
             <table align="center" border="0" cellpadding="0" cellspacing="0"
                    style="max-width:698px;width:100%;-webkit-text-size-adjust:100%;" width="100%">
@@ -23,7 +17,7 @@
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tbody>
                             <tr>
-                                <td align="center" style="padding: 40px 0 40px; line-height: 0;">
+                                <td align="center" style="padding: 60px 0 50px; line-height: 0;">
                                     <a href="https://localhost:3000" target="_blank" rel="noreferrer noopener">
                                         <img src="https://kimsky.s3.ap-northeast-2.amazonaws.com//wehago_logo.png"
                                              alt="WEHAGO" width="170" height="55" border="0"
@@ -40,19 +34,19 @@
                             <tr>
                                 <td align="left"
                                     style="font-size: 34px; color: #222; line-height: 40px; letter-spacing: -0.5px; font-weight: bold; word-break: break-word; word-wrap: break-word; padding-bottom: 60px;">
-                                    <span style="color: #1a83ff;">kgitbank</span> 구성원으로 추가되었습니다.</td>
+                                    <span style="color: #1a83ff;">{회사명 넣기}</span> 구성원으로 추가되었습니다.</td>
                             </tr>
                             <tr>
                                 <td>
                                     <p
                                             style="font-size: 14px; color: #222; line-height: 22px; padding: 0; margin: 0; word-break: break-word; word-wrap: break-word;">
-                                        <span style="font-weight: bold;"><span style="color: #1a83ff;">{사용자명넣기}</span>님의 계정과 임시비밀번호가 생성되었습니다.</span>
+                                        <span style="font-weight: bold;"><span style="color: #1a83ff;" th:text="${empName}" />님의 계정과 임시비밀번호가 생성되었습니다.</span>
                                     </p>
                                     <p
                                             style="font-size: 14px; color: #222; line-height: 22px; padding: 0; margin: 0; word-break: keep-all; word-wrap: break-word; margin-top: 22px;">
                                         아래 '서비스 로그인하기'를 클릭해 발급된 계정과 임시 비밀번호 정보로 로그인할 수 있습니다.<br>계정 도용을 방지하고자 임시
                                         비밀번호로 로그인하면 새 비밀번호 등록 화면이 연결되니,<br> 안전한 비밀번호로 변경 후 서비스를 이용해주세요.<br>임시
-                                        비밀번호는 메일 발송일로부터 <span style="color: ##1a83ff;">30일</span>(<span
+                                        비밀번호는 메일 발송일로부터 <span style="color: #1a83ff;">30일</span>(<span
                                             style="color: #1a83ff;">2023. 9. 1.까지</span>)간 유효하며,<br>만료 시 회사/단체의
                                         WEHAGO 관리자에게 문의해 다시 발급받을 수 있습니다.
                                     </p>
@@ -75,24 +69,14 @@
                             <tr>
                                 <td>
                                     <dl style="padding: 0; margin: 0; line-height: 21px;">
-                                        <dt style="font-size: 14px; line-height: 17px; font-weight: bold;">이름
-                                        </dt>
-                                        <dd
-                                                style="word-break: break-all; word-wrap: break-word;margin: 0; padding-top: 6px; font-size: 18px; line-height: 21px;">
-                                            {구성원이름}</dd>
-                                        <dt
-                                                style="padding-top: 25px; font-size: 14px; line-height: 17px; font-weight: bold;">
-                                            권한</dt>
-                                        <dd
-                                                style="word-break: break-all; word-wrap: break-word;margin: 0; padding-top: 6px; font-size: 18px; line-height: 21px;">
-                                            {직책넣기}</dd>
-                                        <dt
-                                                style="padding-top: 25px; font-size: 14px; line-height: 17px; font-weight: bold;">
-                                            이메일</dt>
-                                        <dd
-                                                style="word-break: break-all; word-wrap: break-word;margin: 0; padding-top: 6px; font-size: 18px; line-height: 21px;">
-                                            {sky0202@kgitbank}</dd>
+                                        <dt style="font-size: 14px; line-height: 17px; font-weight: bold;">이름</dt>
+                                        <dd style="word-break: break-all; word-wrap: break-word;margin: 0; padding-top: 6px; font-size: 18px; line-height: 21px;" th:text="${empName}"/>
 
+                                        <dt style="padding-top: 25px; font-size: 14px; line-height: 17px; font-weight: bold;">권한</dt>
+                                        <dd style="word-break: break-all; word-wrap: break-word;margin: 0; padding-top: 6px; font-size: 18px; line-height: 21px;" th:text="${empPosition}"/>
+
+                                        <dt style="padding-top: 25px; font-size: 14px; line-height: 17px; font-weight: bold;">이메일</dt>
+                                        <dd style="word-break: break-all; word-wrap: break-word;margin: 0; padding-top: 6px; font-size: 18px; line-height: 21px;" th:text="${empEmail}"/>
                                     </dl>
                                 </td>
                             </tr>
@@ -101,9 +85,7 @@
                                 <td style="height: 20px;line-height:0;padding:0;margin:0;"></td>
                             </tr>
                             <tr>
-                                <td
-                                        style="border-bottom: 1px solid #222;height:0;padding: 0;margin:0;line-height:0;">
-                                </td>
+                                <td style="border-bottom: 1px solid #222;height:0;padding: 0;margin:0;line-height:0;"></td>
                             </tr>
                             <tr>
                                 <td style="height: 60px;line-height:0;padding:0;margin:0;"></td>
@@ -111,20 +93,18 @@
 
                             <tr>
                                 <td>
-                                    <p
-                                            style="font-size: 14px; color: #222; line-height: 22px; padding: 0; margin: 0; word-break: keep-all; word-wrap: break-word; text-align: center;">
+                                    <p style="font-size: 14px; color: #222; line-height: 22px; padding: 0; margin: 0; word-break: keep-all; word-wrap: break-word; text-align: center;">
                                         PC앱, 모바일앱을 사용하면 언제 어디서나 빠르게 사용할 수 있습니다.</p>
                                     <div style="margin-top: 20px; text-align: center;">
-                                        <a href="https://deeplink.worksmobile.com/redirect?link=https%3A%2F%2Fnaver.worksmobile.com%2Fmore%2Flogin%2Fstep2%3Fversion%3D28%26account%3Dsky0202%2540kgitbank%26service%3Dhome&amp;ofl=https%3A%2F%2Fauth.worksmobile.com%2Flogin%2Flogin%3FloginParam%3Dsky0202%2540kgitbank%26isIdOnly%3Dtrue%26accessUrl%3Dhttps%3A%2F%2Ftalk.worksmobile.com"
+                                        <a href="http://localhost:3000"
                                            style="text-decoration: none;" rel="noreferrer noopener"
                                            target="_blank">
-                                                    <span
-                                                            style="display: inline-block; min-width:193px; background-color: #1a83ff; height: 40px; padding: 0 40px; line-height: 40px; color: #fff; font-size: 14px; font-weight: bold; border-radius: 2px; margin: 15px 3px 0 3px; box-sizing: border-box; vertical-align: top; width: 200px; height: 44px; margin: 0; padding: 0; line-height: 44px;">서비스
-                                                        시작하기</span>
+                                                    <span style="display: inline-block; min-width:193px; background-color: #1a83ff; height: 40px; padding: 0 40px; line-height: 40px; color: #fff; font-size: 14px; font-weight: bold; border-radius: 2px; margin: 15px 3px 0 3px; box-sizing: border-box; vertical-align: top; width: 200px; height: 44px; margin: 0; padding: 0; line-height: 44px;">서비스 시작하기</span>
                                         </a>
                                     </div>
                                     <div style="margin-top: 15px; text-align: center;">
-                                        <a href="https://guide.worksmobile.com/start/sign-in-with-created-account/#sign-in-with-created-account"
+<!--                                        <a href="https://guide.worksmobile.com/start/sign-in-with-created-account/#sign-in-with-created-account"-->
+                                        <a href="#"
                                            style="text-decoration: none;" rel="noreferrer noopener"
                                            target="_blank">
                                                     <span
@@ -375,7 +355,9 @@
                                 <td style="padding-top: 5px; text-align: center">
                                     <a href="https://wehagohelp.zendesk.com/hc/ko" rel="noreferrer noopener" target="_blank"><span style="display: inline-block; min-width:193px; background-color: #1a83ff; height: 40px; padding: 0 40px; line-height: 40px; color: #fff; font-size: 14px; font-weight: bold; border-radius: 2px; margin: 15px 3px 0 3px; box-sizing: border-box; vertical-align: top; width: 230px; padding: 0; margin: 15px 5px 0">고객센터
                                                     바로 가기</span></a>
-                                    <a href="https://guide.worksmobile.com/kr/tips" rel="noreferrer noopener"
+<!--                                    <a href="https://guide.worksmobile.com/kr/tips" rel="noreferrer noopener"-->
+                                    <a href="#" rel="noreferrer noopener"
+
                                        target="_blank"><span
                                             style="display: inline-block; min-width:193px; background-color: #1a83ff; height: 40px; padding: 0 40px; line-height: 40px; color: #fff; font-size: 14px; font-weight: bold; border-radius: 2px; margin: 15px 3px 0 3px; box-sizing: border-box; vertical-align: top; width: 230px; padding: 0; margin: 15px 6px 0">활용팁
                                                     살펴보기</span></a>
@@ -428,7 +410,7 @@
                 </tr>
                 </tbody>
             </table>
-        </div>
+
     </div>
 </div>
 
@@ -438,5 +420,5 @@
 
 
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->
