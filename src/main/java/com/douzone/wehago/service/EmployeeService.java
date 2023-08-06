@@ -10,8 +10,13 @@ import com.douzone.wehago.repository.EmployeeRepository;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.douzone.wehago.security.UserDetailsImpl;
+import com.douzone.wehago.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,6 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,51 +59,10 @@ public class EmployeeService {
         return getEmployeeResponseDTO(employee);
     }
 
-//    @Transactional
-//    public ResponseEntity<?> saveEmployee(EmployeeDTO employeeDTO, UserDetails userDetails) {
-//
-//        User user = ((UserDetailsImpl) userDetails).getUser();
-//
-//        if (user == null) {
-//            String errorMessage = "토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.";
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
-//        }
-//
-//        Employee employee = Employee.builder()
-//                .empName(employeeDTO.getEmpName())
-//                .empPosition(employeeDTO.getEmpPosition())
-////                .empImage('')
-//                .copSeq(employeeDTO.getCopSeq())
-//                .userSeq(employeeDTO.getUserSeq())
-//                .authLevel(employeeDTO.getAuthLevel())
-//                .build();
-//
-//        employeeRepository.save(employee);
-//
-//        return ResponseEntity.status(HttpStatus.CREATED).body(getEmployeeResponseDTO(employee));
-//    }
-
     @Transactional(readOnly = true)
-    public EmployeePageResponseDTO findAll(int pageNo , int pageSize) {
-        List<Employee> employeeList = employeeRepository.findAll(pageNo,pageSize);
-        Object total =((Page) employeeList).getPages();
-        List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
+    public EmployeePageResponseDTO findAll() {
+        List<Employee> employeeList = employeeRepository.findAll();
 
-        for(Employee employee : employeeList) {
-            employeeResponseDTOList.add(getEmployeeResponseDTO(employee));
-        }
-
-        return EmployeePageResponseDTO.builder()
-                .employeeList(employeeResponseDTOList)
-                .total(total)
-                .build();
-    }
-
-
-    // 사원 검색
-    @Transactional(readOnly = true)
-    public EmployeePageResponseDTO searchEmployee(String type, String keyword) {
-        List<Employee> employeeList = employeeRepository.searchEmployee(type, keyword);
         List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
 
         for(Employee employee : employeeList) {
