@@ -28,10 +28,12 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<Object> saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<Object> saveEmployee(@RequestBody EmployeeDTO employeeDTO,
+                                               @AuthenticationPrincipal UserDetails userDetails) {
 
-        EmployeeResponseDTO employeeResponseDTO = employeeService.saveEmployee(employeeDTO);
-        Response response = new Response(HttpStatus.CREATED, "사원 등록 성공", employeeResponseDTO);
+        ResponseEntity<?> employeeResponseDTO = employeeService.saveEmployee(employeeDTO, userDetails);
+
+        Response response = new Response(HttpStatus.CREATED, "사원 등록 성공", employeeResponseDTO.getBody());
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
