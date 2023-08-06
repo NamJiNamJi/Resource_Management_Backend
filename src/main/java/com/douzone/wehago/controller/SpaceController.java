@@ -1,11 +1,9 @@
 package com.douzone.wehago.controller;
 
 import com.douzone.wehago.common.Response;
-import com.douzone.wehago.domain.Space;
-import com.douzone.wehago.dto.CarDTO;
-import com.douzone.wehago.dto.SpaceDTO;
-import com.douzone.wehago.dto.SpacePageResponseDTO;
-import com.douzone.wehago.dto.SpaceResponseDTO;
+import com.douzone.wehago.dto.space.SpaceDTO;
+import com.douzone.wehago.dto.space.SpacePageResponseDTO;
+import com.douzone.wehago.dto.space.SpaceResponseDTO;
 import com.douzone.wehago.service.SpaceService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,8 +35,9 @@ public class SpaceController {
     public ResponseEntity<Object> SpacefindAll() {
 
         SpacePageResponseDTO spacePageResponseDTO =  spaceService.findAllSpace();
+        Response response = new Response(HttpStatus.OK, "공간자원 전체 조회 성공", spacePageResponseDTO);
 
-        return new ResponseEntity<>(spacePageResponseDTO, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{spcSeq}")
@@ -48,9 +47,10 @@ public class SpaceController {
         return new ResponseEntity<>(spaceResponseDTO, HttpStatus.OK);
     }
 
-    @PutMapping("/{spcSeq}")
-    public ResponseEntity<Object> updateSpace (@RequestBody SpaceDTO spaceDTO,
-                                               @PathVariable Integer spcSeq) {
+    @PostMapping ("/{spcSeq}")
+    public ResponseEntity<Object> updateSpace (@RequestPart(value = "data") SpaceDTO spaceDTO,
+                                               @RequestPart(value = "image", required = false) MultipartFile image,
+                                               @PathVariable Integer spcSeq) throws IOException {
         SpaceResponseDTO spaceResponseDTO = spaceService.updateSpace(spaceDTO, spcSeq);
 
         return new ResponseEntity<>(spaceResponseDTO, HttpStatus.OK);

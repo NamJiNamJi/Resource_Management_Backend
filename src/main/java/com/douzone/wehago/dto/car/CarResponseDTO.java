@@ -1,8 +1,9 @@
-package com.douzone.wehago.dto;
+package com.douzone.wehago.dto.car;
 
 import lombok.Builder;
 import lombok.Getter;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Builder
@@ -18,6 +19,6 @@ public class CarResponseDTO {
     private Integer copSeq;
     private Integer rscSeq;
     private Boolean carState;
-    private LocalDate carCreated;
-    private LocalDate carUpdated;
+    private Timestamp carCreated;
+    private Timestamp carUpdated;
 }

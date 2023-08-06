@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,6 +23,12 @@ public class DeviceRepository {
         return  sqlSession.selectList("com.douzone.wehago.mapper.DeviceMapper.findAll");
     }
 
+    public List<Device> searchDevice(String queryType, String searchString) {
+        Map<String, String> map = new HashMap<>();
+        map.put("queryType", converCamelToSnakeCase(queryType));
+        map.put("searchString", searchString);
+        return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.searchDevice", map);
+    }
     public Device findOne(Integer dvc_seq) {
         return sqlSession.selectOne("com.douzone.wehago.mapper.DeviceMapper.findOne", dvc_seq);
     }
@@ -31,5 +39,19 @@ public class DeviceRepository {
 
     public void delete(Integer dvc_seq) {
         sqlSession.delete("com.douzone.wehago.mapper.DeviceMapper.delete", dvc_seq);
+    }
+
+    private String converCamelToSnakeCase(String camelCase) {
+
+        StringBuilder snakeCase = new StringBuilder();
+
+        for (char c : camelCase.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                snakeCase.append('_').append(Character.toLowerCase(c));
+            } else {
+                snakeCase.append(c);
+            }
+        }
+        return snakeCase.toString();
     }
 }

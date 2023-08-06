@@ -7,12 +7,34 @@
 <mapper namespace="com.douzone.wehago.mapper.CarMapper">
 
     <insert id ="save" parameterType="com.douzone.wehago.domain.Car">
-        INSERT INTO tb_cars (car_name, car_number, car_distance, car_year, car_image, car_explain, cop_seq, rsc_seq)
-        VALUES (#{carName}, #{carNumber}, #{carDistance}, #{carYear}, #{carImage}, #{carExplain}, #{copSeq}, #{rscSeq});
+        INSERT INTO
+            tb_cars
+            (car_name,
+             car_number,
+             car_distance,
+             car_year,
+             car_image,
+             car_explain,
+             cop_seq,
+             rsc_seq)
+        VALUES
+            (#{carName},
+             #{carNumber},
+             #{carDistance},
+             #{carYear},
+             #{carImage},
+             #{carExplain},
+             #{copSeq},
+             #{rscSeq});
     </insert>
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Car">
+        SELECT * FROM tb_cars ORDER BY car_created DESC
+    </select>
+
+    <select id="searchCar" parameterType="hashMap" resultType="com.douzone.wehago.domain.Car">
         SELECT * FROM tb_cars
+        WHERE  ${columnName} LIKE CONCAT('%', #{searchString}, '%')
     </select>
 
     <select id = "findOne" resultType="com.douzone.wehago.domain.Car">
@@ -39,8 +61,15 @@
         WHERE car_seq = #{carSeq};
     </update>
 
-    <delete id="delete" parameterType="Integer">
-        DELETE FROM tb_cars WHERE car_seq = #{carSeq};
-    </delete>
+    <update id="delete" parameterType="com.douzone.wehago.domain.Car">
+        UPDATE tb_cars
+        SET
+            car_state = #{carState},
+            car_updated = #{carUpdated}
+        WHERE car_seq = #{carSeq}
+    </update>
+<!--    <delete id="delete" parameterType="Integer">-->
+<!--        DELETE FROM tb_cars WHERE car_seq = #{carSeq};-->
+<!--    </delete>-->
 
 </mapper>

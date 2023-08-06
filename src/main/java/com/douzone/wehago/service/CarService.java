@@ -2,9 +2,9 @@ package com.douzone.wehago.service;
 
 import com.douzone.wehago.common.S3Uploader;
 import com.douzone.wehago.domain.Car;
-import com.douzone.wehago.dto.CarDTO;
-import com.douzone.wehago.dto.CarPageResponseDTO;
-import com.douzone.wehago.dto.CarResponseDTO;
+import com.douzone.wehago.dto.car.CarDTO;
+import com.douzone.wehago.dto.car.CarPageResponseDTO;
+import com.douzone.wehago.dto.car.CarResponseDTO;
 import com.douzone.wehago.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,20 +46,37 @@ public class CarService {
     @Transactional(readOnly = true)
     public CarPageResponseDTO findAllCar() {
 
-        List<Car> carList = carRepository.findAll();
+        List<Car> list = carRepository.findAll();
 
         List<CarResponseDTO> carResponseDTOList = new ArrayList<>();
 
-        for (Car car : carList) {
+        for (Car car : list) {
+            if (car.getCarState()) {
+                carResponseDTOList.add(getCarResponseDTO(car));
+            }
+        }
+
+        return CarPageResponseDTO.builder()
+                .list(carResponseDTOList)
+                .build();
+    }
+
+    @Transactional(readOnly = true)
+    public CarPageResponseDTO searchCar (String columnName, String searchString) {
+        List<Car> list = carRepository.searchCar(columnName, searchString);
+        System.out.println("service" + columnName + searchString);
+        List<CarResponseDTO> carResponseDTOList = new ArrayList<>();
+
+        for (Car car : list) {
             carResponseDTOList.add(getCarResponseDTO(car));
         }
 
         return CarPageResponseDTO.builder()
-                .carList(carResponseDTOList)
+                .list(carResponseDTOList)
                 .build();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public CarResponseDTO findOneCar (Integer carSeq) {
         Car car = carRepository.findOne(carSeq);
 
@@ -69,6 +87,12 @@ public class CarService {
     public CarResponseDTO updateCar (CarDTO carDTO, MultipartFile image, Integer carSeq) throws IOException {
 
         String imageUrl = s3Uploader.upload(image, "car/image");
+
+        if (imageUrl != null) {
+            s3Uploader.deleteImage(imageUrl, "car/image");
+            imageUrl = s3Uploader.upload(image, "car/image");
+        }
+
         Car car = Car.builder()
                 .carSeq(carSeq)
                 .carName(carDTO.getCarName())
@@ -84,9 +108,21 @@ public class CarService {
         return getCarResponseDTO(car);
     }
 
-    public void deleteCar(Integer carSeq) {
-        carRepository.delete(carSeq);
+    @Transactional
+    public void deleteCar (Integer carSeq) {
+
+        Car car = Car.builder()
+                .carSeq(carSeq)
+                .carState(false)
+                .carUpdated(new Timestamp(System.currentTimeMillis()))
+                .build();
+
+        carRepository.delete(car);
     }
+
+//    public void deleteCar(Integer carSeq) {
+//        carRepository.delete(carSeq);
+//    }
 
     private CarResponseDTO getCarResponseDTO (Car car) {
         return CarResponseDTO.builder()
@@ -97,8 +133,6 @@ public class CarService {
                 .carImage(car.getCarImage())
                 .carExplain(car.getCarExplain())
                 .carYear(car.getCarYear())
-                .carCreated(car.getCarCreated())
-                .carUpdated(car.getCarUpdated())
                 .carState(car.getCarState())
                 .copSeq(car.getCopSeq())
                 .rscSeq(car.getRscSeq())
