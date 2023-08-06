@@ -1,16 +1,24 @@
 package com.douzone.wehago.service;
 
+import com.douzone.wehago.common.Response;
 import com.douzone.wehago.domain.Company;
+import com.douzone.wehago.domain.User;
 import com.douzone.wehago.dto.CompanyDTO;
 import com.douzone.wehago.dto.CompanyPageResponseDTO;
 import com.douzone.wehago.dto.CompanyResponseDTO;
 import com.douzone.wehago.repository.CompanyRepository;
+import com.douzone.wehago.security.UserDetailsImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -21,20 +29,36 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CompanyService {
+
     private final CompanyRepository companyRepository;
 
     @Transactional
-    public CompanyResponseDTO save(CompanyDTO companyDTO) {
-        Company company = Company.builder()
-                .copRegNum(companyDTO.getCopRegNum())
-                .copName(companyDTO.getCopName())
-                .copState(companyDTO.getCopState())
-                .build();
-        companyRepository.save(company);
+    public Response save(CompanyDTO companyDTO, UserDetails userDetails) {
 
-//        company = companyRepository.findOne(company.getCopSeq());
+            User user = ((UserDetailsImpl) userDetails).getUser();
 
-        return getCompanyResponseDTO(company);
+            if (user == null) {
+                String errorMessage = "토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.";
+                return Response.builder()
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .message(errorMessage)
+                        .build();
+            }
+
+            Company company = Company.builder()
+                    .copRegNum(companyDTO.getCopRegNum())
+                    .copName(companyDTO.getCopName())
+                    .copState(companyDTO.getCopState())
+                    .build();
+
+            CompanyDTO returnCopSeq = companyRepository.save(company);
+
+            return Response.builder()
+                    .status(HttpStatus.CREATED)
+                    .message("회사 등록 성공")
+                    .data(returnCopSeq.getCopSeq()) // 지금은 회사 일련번호만 있으면 되징
+                    .build();
+
     }
 
     @Transactional(readOnly = true)

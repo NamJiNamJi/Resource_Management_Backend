@@ -20,6 +20,7 @@ public class User {
     private String userPhone;
     private String userGender;
     private String userAddress;
+    private Boolean userState;
     private Integer copSeq;
     private Timestamp userCreated;
     private Timestamp userUpdated;
