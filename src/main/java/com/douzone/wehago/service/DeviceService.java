@@ -1,5 +1,6 @@
 package com.douzone.wehago.service;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.douzone.wehago.common.S3Uploader;
 import com.douzone.wehago.domain.Device;
 import com.douzone.wehago.dto.device.DeviceDTO;
@@ -39,31 +40,47 @@ public class DeviceService {
 
         deviceRepository.save(device);
 
-        return getDeivceResponseDTO(device);
+        return getDeviceResponseDTO(device);
     }
 
     @Transactional(readOnly = true)
     public DevicePageResponseDTO findAllDevice() {
 
-        List<Device> dvcList = deviceRepository.findAll();
+        List<Device> list = deviceRepository.findAll();
 
         List<DeviceResponseDTO> deviceResponseDTOList = new ArrayList<>();
 
-        for (Device device : dvcList) {
-            deviceResponseDTOList.add(getDeivceResponseDTO(device));
+        for (Device device : list) {
+            deviceResponseDTOList.add(getDeviceResponseDTO(device));
         }
 
         return DevicePageResponseDTO.builder()
-                .dvcList(deviceResponseDTOList)
+                .list(deviceResponseDTOList)
                 .build();
     }
+
+    @Transactional(readOnly = true)
+    public DevicePageResponseDTO searchDevice (String queryType, String searchString) {
+        List<Device> list = deviceRepository.searchDevice(queryType, searchString);
+        System.out.println("service" + queryType + searchString);
+        List<DeviceResponseDTO> deviceResponseDTOList = new ArrayList<>();
+
+        for (Device device : list) {
+            deviceResponseDTOList.add(getDeviceResponseDTO(device));
+        }
+
+        return DevicePageResponseDTO.builder()
+                .list(deviceResponseDTOList)
+                .build();
+    }
+
 
     @Transactional
     public DeviceResponseDTO findOneDevice(Integer dvcSeq) {
 
         Device device = deviceRepository.findOne(dvcSeq);
 
-        return getDeivceResponseDTO(device);
+        return getDeviceResponseDTO(device);
     }
 
     @Transactional
@@ -81,14 +98,14 @@ public class DeviceService {
 
         deviceRepository.update(device);
 
-        return getDeivceResponseDTO(device);
+        return getDeviceResponseDTO(device);
     }
 
     public void deleteDevice (Integer dvcSeq) {
         deviceRepository.delete(dvcSeq);
     }
 
-    private DeviceResponseDTO getDeivceResponseDTO (Device device) {
+    private DeviceResponseDTO getDeviceResponseDTO (Device device) {
         return DeviceResponseDTO.builder()
                 .dvcSeq(device.getDvcSeq())
                 .dvcName(device.getDvcName())

@@ -8,5 +8,5 @@ import java.util.List;
 @Builder
 @Getter
 public class DevicePageResponseDTO {
-    List<DeviceResponseDTO> dvcList;
+    List<DeviceResponseDTO> list;
 }

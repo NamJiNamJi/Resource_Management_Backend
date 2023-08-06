@@ -46,33 +46,33 @@ public class CarService {
     @Transactional(readOnly = true)
     public CarPageResponseDTO findAllCar() {
 
-        List<Car> carList = carRepository.findAll();
+        List<Car> list = carRepository.findAll();
 
         List<CarResponseDTO> carResponseDTOList = new ArrayList<>();
 
-        for (Car car : carList) {
-            if (car.getCarState() == true) {
+        for (Car car : list) {
+            if (car.getCarState()) {
                 carResponseDTOList.add(getCarResponseDTO(car));
             }
         }
 
         return CarPageResponseDTO.builder()
-                .carList(carResponseDTOList)
+                .list(carResponseDTOList)
                 .build();
     }
 
     @Transactional(readOnly = true)
-    public CarPageResponseDTO searchCar (String queryType, String searchString) {
-        List<Car> carList = carRepository.searchCar(queryType, searchString);
-        System.out.println("service" + queryType + searchString);
+    public CarPageResponseDTO searchCar (String columnName, String searchString) {
+        List<Car> list = carRepository.searchCar(columnName, searchString);
+        System.out.println("service" + columnName + searchString);
         List<CarResponseDTO> carResponseDTOList = new ArrayList<>();
 
-        for (Car car : carList) {
+        for (Car car : list) {
             carResponseDTOList.add(getCarResponseDTO(car));
         }
 
         return CarPageResponseDTO.builder()
-                .carList(carResponseDTOList)
+                .list(carResponseDTOList)
                 .build();
     }
 

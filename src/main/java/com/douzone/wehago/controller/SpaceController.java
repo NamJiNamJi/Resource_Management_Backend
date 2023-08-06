@@ -35,8 +35,9 @@ public class SpaceController {
     public ResponseEntity<Object> SpacefindAll() {
 
         SpacePageResponseDTO spacePageResponseDTO =  spaceService.findAllSpace();
+        Response response = new Response(HttpStatus.OK, "공간자원 전체 조회 성공", spacePageResponseDTO);
 
-        return new ResponseEntity<>(spacePageResponseDTO, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{spcSeq}")

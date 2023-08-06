@@ -5,7 +5,10 @@ import com.douzone.wehago.dto.device.DeviceDTO;
 import com.douzone.wehago.dto.device.DevicePageResponseDTO;
 import com.douzone.wehago.dto.device.DeviceResponseDTO;
 import com.douzone.wehago.service.DeviceService;
+import jdk.nashorn.internal.objects.annotations.SpecializedFunction;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.logging.LogFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
+@Slf4j
 @AllArgsConstructor
 @RequestMapping("/api/device")
 public class DeviceController {
@@ -34,8 +38,9 @@ public class DeviceController {
     public ResponseEntity<Object> DevicefindAll() {
 
         DevicePageResponseDTO devicePageResponseDTO = deviceService.findAllDevice();
+        Response response = new Response(HttpStatus.OK, "기기 전체 조회 성공", devicePageResponseDTO);
 
-        return new ResponseEntity<>(devicePageResponseDTO, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
@@ -45,6 +50,17 @@ public class DeviceController {
 
         return new ResponseEntity<>(deviceResponseDTO, HttpStatus.OK);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<Object> searchDevice (@RequestParam(value = "qeuryType") String queryType,
+                                                @RequestParam(value = "searchString") String searchString) {
+        log.info(queryType + searchString);
+        DevicePageResponseDTO devicePageResponseDTO = deviceService.searchDevice(queryType, searchString);
+        Response response = new Response(HttpStatus.OK, "기기 검색 성공", devicePageResponseDTO);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
     @PostMapping("/{dvcSeq}")
     public ResponseEntity<Object> updateDevice (@RequestPart(value = "data") DeviceDTO deviceDTO,

@@ -8,5 +8,5 @@ import java.util.List;
 @Builder
 @Getter
 public class SpacePageResponseDTO {
-    List<SpaceResponseDTO> spaceList;
+    List<SpaceResponseDTO> list;
 }

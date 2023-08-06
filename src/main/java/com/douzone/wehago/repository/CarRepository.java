@@ -23,9 +23,9 @@ public class CarRepository {
         return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.findAll");
     }
 
-    public List<Car> searchCar(String queryType, String searchString) {
+    public List<Car> searchCar(String columnName, String searchString) {
         Map<String, String> map = new HashMap<>();
-        map.put("queryType", converCamelToSnakeCase(queryType));
+        map.put("columnName", converCamelToSnakeCase(columnName));
         map.put("searchString", searchString);
         return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.searchCar", map);
     }

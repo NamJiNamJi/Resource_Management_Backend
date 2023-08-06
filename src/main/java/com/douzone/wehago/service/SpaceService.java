@@ -43,16 +43,16 @@ public class SpaceService {
     @Transactional
     public SpacePageResponseDTO findAllSpace() {
 
-        List<Space> spaceList = spaceRepository.findAll();
+        List<Space> list = spaceRepository.findAll();
 
         List<SpaceResponseDTO> spaceResponseDTOList = new ArrayList<>();
 
-        for (Space space : spaceList) {
+        for (Space space : list) {
             spaceResponseDTOList.add(getSpaceResponseDTO(space));
         }
 
         return SpacePageResponseDTO.builder()
-                .spaceList(spaceResponseDTOList)
+                .list(spaceResponseDTOList)
                 .build();
     }
 

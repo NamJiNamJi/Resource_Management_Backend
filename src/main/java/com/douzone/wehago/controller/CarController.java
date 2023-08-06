@@ -38,8 +38,9 @@ public class CarController {
     public ResponseEntity<Object> CarfindAll() {
 
         CarPageResponseDTO carPageResponseDTO = carService.findAllCar();
+        Response response = new Response(HttpStatus.OK, "차량 전체 조회 성공", carPageResponseDTO);
 
-        return new ResponseEntity<>(carPageResponseDTO, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
@@ -51,10 +52,10 @@ public class CarController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Object> searchCar (@RequestParam(value = "queryType") String queryType,
+    public ResponseEntity<Object> searchCar (@RequestParam(value = "columnName") String columnName,
                                              @RequestParam(value = "searchString") String searchString) {
-        log.info(queryType + searchString);
-        CarPageResponseDTO carPageResponseDTO = carService.searchCar(queryType, searchString);
+        log.info(columnName + searchString);
+        CarPageResponseDTO carPageResponseDTO = carService.searchCar(columnName, searchString);
         Response response = new Response(HttpStatus.OK, "차량 검색 성공", carPageResponseDTO);
 
         return  new ResponseEntity<>(response, HttpStatus.OK);
