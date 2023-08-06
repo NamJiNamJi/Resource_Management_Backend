@@ -59,10 +59,41 @@ public class EmployeeService {
         return getEmployeeResponseDTO(employee);
     }
 
-    @Transactional(readOnly = true)
-    public EmployeePageResponseDTO findAll() {
-        List<Employee> employeeList = employeeRepository.findAll();
+//    @Transactional(readOnly = true)
+//    public EmployeePageResponseDTO findAll() {
+//        List<Employee> employeeList = employeeRepository.findAll();
+//
+//        List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
+//
+//        for(Employee employee : employeeList) {
+//            employeeResponseDTOList.add(getEmployeeResponseDTO(employee));
+//        }
+//
+//        return EmployeePageResponseDTO.builder()
+//                .employeeList(employeeResponseDTOList)
+//                .build();
+//    }
 
+    @Transactional(readOnly = true)
+    public EmployeePageResponseDTO findAll(int pageNo , int pageSize) {
+        List<Employee> employeeList = employeeRepository.findAll(pageNo,pageSize);
+        Object total =((Page) employeeList).getPages();
+        List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
+
+        for(Employee employee : employeeList) {
+            employeeResponseDTOList.add(getEmployeeResponseDTO(employee));
+        }
+
+        return EmployeePageResponseDTO.builder()
+                .employeeList(employeeResponseDTOList)
+                .total(total)
+                .build();
+    }
+
+    // 사원 검색
+    @Transactional(readOnly = true)
+    public EmployeePageResponseDTO searchEmployee(String type, String keyword) {
+        List<Employee> employeeList = employeeRepository.searchEmployee(type, keyword);
         List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
 
         for(Employee employee : employeeList) {
