@@ -1,7 +1,7 @@
 package com.douzone.wehago.controller;
 import com.douzone.wehago.common.Response;
 import com.douzone.wehago.domain.CalendarContentTest;
-import com.douzone.wehago.dto.CarDTO;
+import com.douzone.wehago.dto.car.CarDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
