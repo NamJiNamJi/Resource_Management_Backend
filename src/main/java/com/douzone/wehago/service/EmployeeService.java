@@ -97,7 +97,7 @@ public class EmployeeService {
             imageUrl = s3Uploader.upload(image, "employee/image");
         }
 
-        employee = Employee.builder()
+         employee = Employee.builder()
                 .empSeq(empSeq)
                 .empName(employeeDTO.getEmpName())
                 .empPosition(employeeDTO.getEmpPosition())
@@ -117,10 +117,10 @@ public class EmployeeService {
     public void deleteEmployee(Integer empSeq) {
 
         Employee employee = Employee.builder()
-                .empSeq(empSeq)
-                .empState(false)
-                .empUpdated(new Timestamp(System.currentTimeMillis()))
-                .build();
+               .empSeq(empSeq)
+               .empState(false)
+               .empUpdated(new Timestamp(System.currentTimeMillis()))
+               .build();
 
         employeeRepository.delete(employee);
     }
