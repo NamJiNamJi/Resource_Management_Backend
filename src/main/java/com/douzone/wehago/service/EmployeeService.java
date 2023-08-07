@@ -2,30 +2,17 @@ package com.douzone.wehago.service;
 
 import com.douzone.wehago.common.S3Uploader;
 import com.douzone.wehago.domain.Employee;
-import com.douzone.wehago.domain.User;
 import com.douzone.wehago.dto.employee.EmployeeDTO;
 import com.douzone.wehago.dto.employee.EmployeePageResponseDTO;
 import com.douzone.wehago.dto.employee.EmployeeResponseDTO;
 import com.douzone.wehago.repository.EmployeeRepository;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
-import com.douzone.wehago.security.UserDetailsImpl;
-import com.douzone.wehago.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -60,9 +47,26 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true)
-    public EmployeePageResponseDTO findAll() {
-        List<Employee> employeeList = employeeRepository.findAll();
+    public EmployeePageResponseDTO findAll(int pageNo , int pageSize) {
+        List<Employee> employeeList = employeeRepository.findAll(pageNo,pageSize);
+        Object total =((Page) employeeList).getPages();
+        List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
 
+        for(Employee employee : employeeList) {
+            employeeResponseDTOList.add(getEmployeeResponseDTO(employee));
+        }
+
+        return EmployeePageResponseDTO.builder()
+                .employeeList(employeeResponseDTOList)
+                .total(total)
+                .build();
+    }
+
+
+    // 사원 검색
+    @Transactional(readOnly = true)
+    public EmployeePageResponseDTO searchEmployee(String type, String keyword) {
+        List<Employee> employeeList = employeeRepository.searchEmployee(type, keyword);
         List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
 
         for(Employee employee : employeeList) {
@@ -93,7 +97,7 @@ public class EmployeeService {
             imageUrl = s3Uploader.upload(image, "employee/image");
         }
 
-         employee = Employee.builder()
+        employee = Employee.builder()
                 .empSeq(empSeq)
                 .empName(employeeDTO.getEmpName())
                 .empPosition(employeeDTO.getEmpPosition())
@@ -113,10 +117,10 @@ public class EmployeeService {
     public void deleteEmployee(Integer empSeq) {
 
         Employee employee = Employee.builder()
-               .empSeq(empSeq)
-               .empState(false)
-               .empUpdated(new Timestamp(System.currentTimeMillis()))
-               .build();
+                .empSeq(empSeq)
+                .empState(false)
+                .empUpdated(new Timestamp(System.currentTimeMillis()))
+                .build();
 
         employeeRepository.delete(employee);
     }
@@ -134,5 +138,4 @@ public class EmployeeService {
                 .authLevel(employee.getAuthLevel())
                 .build();
     }
-
 }
