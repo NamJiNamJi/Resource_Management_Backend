@@ -12,7 +12,7 @@
     </insert>
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Device">
-        SELECT * FROM tb_devices;
+        SELECT * FROM tb_devices ORDER BY dvc_created DESC ;
     </select>
 
     <select id="findOne" resultType="com.douzone.wehago.domain.Device">

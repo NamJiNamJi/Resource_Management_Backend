@@ -44,12 +44,14 @@ public class CarController {
 
     }
 
-    @GetMapping("/{carSeq}")
-    public ResponseEntity<Object> findOneCar(@PathVariable Integer carSeq) {
-        CarResponseDTO carResponseDTO = carService.findOneCar(carSeq);
-
-        return  new ResponseEntity<>(carResponseDTO, HttpStatus.OK);
-    }
+//    @GetMapping("/{carSeq}")
+//    public ResponseEntity<Object> findOneCar(@PathVariable Integer carSeq) {
+//
+//        CarResponseDTO carResponseDTO = carService.findOneCar(carSeq);
+//        Response response = new Response(HttpStatus.OK, "차량 검색 성공", carResponseDTO);
+//
+//        return  new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
     @GetMapping("/search")
     public ResponseEntity<Object> searchCar (@RequestParam(value = "columnName") String columnName,
