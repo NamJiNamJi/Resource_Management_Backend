@@ -1,13 +1,19 @@
+/* 유저 테이블 삭제 */
+drop table tb_users;
+
+/* 초대 회원 아이디, 비밀번호 랜덤 String 으로 만들기 위한 uuid */
+create extension if not exists "uuid-ossp";
+
 /* 유저 테이블 생성 */
 create table tb_users (
                           user_seq serial primary key,
-                          user_id varchar(100) not null,
-                          user_pwd varchar(100) not null,
-                          user_name varchar(100) not null,
-                          user_email varchar(255) not null,
-                          user_phone varchar(100) not null,
-                          user_gender varchar(100) not null,
-                          user_address varchar(255) not null,
+                          user_id varchar(100) default uuid_generate_v4() not null,
+                          user_pwd varchar(100) default uuid_generate_v4() not null,
+                          user_name varchar(100) default '초대발송' not null,
+                          user_email varchar(255) default 'guest@douzone.com' not null,
+                          user_phone varchar(100) default '010-0000-0000' not null,
+                          user_gender varchar(100) default '초대발송' not null,
+                          user_address varchar(255) default '초대발송' not null,
                           user_state boolean default true not null,
                           user_image varchar(255) null,
                           cop_seq Integer null,
