@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,19 +32,35 @@ public class UserController {
     // todo :: user 회원가입 Controller
     @PostMapping("/api/user/signup")
     public ResponseEntity<?> userSignUp(@RequestBody @Valid UserRegisterDTO userRegisterDTO) {
-        return ResponseEntity.ok().body(userService.userRegister(userRegisterDTO));
+
+        Response response = userService.userRegister(userRegisterDTO);
+        return ResponseEntity.status(response.getStatus()).body(response.getMessage());
     }
 
-    // todo :: user 회원가입 id check Controller
+    // todo :: user 회원가입 id check Controller (token 필요없음)
     @PostMapping("/api/user/duplicate")
     public ResponseEntity<?> idCheck(@RequestParam String userId) {
         return ResponseEntity.ok().body(userService.userIdCheck(userId));
     }
 
-    // todo :: user 로그인 Controller
+    // todo :: user 로그인 Controller (token 필요없음)
     @PostMapping("/api/user/login")
     public ResponseEntity<?> userLogin(@RequestBody @Valid UserLoginDTO userLoginDTO) {
         return ResponseEntity.ok().body(userService.userLogin(userLoginDTO));
+    }
+
+    // todo :: user -> company -> employee 를 통한 user data get (token 필요함)
+    @PostMapping("/api/user/complete")
+    public ResponseEntity<?> userComplete(@AuthenticationPrincipal UserDetails userDetails) {
+        Response response = userService.userComplete(userDetails);
+        return ResponseEntity.status(response.getStatus()).body(response.getData());
+    }
+
+    // todo :: company -> emp -> 유저 정보 update .. custom Exception 만들어지면 jwt exception 도 추가로 넣어야 클라이언트로 오류 메시지 반환할 수 있을 듯..
+    @PutMapping("/api/user/update")
+    public ResponseEntity<?> userUpdate(@RequestBody UserDTO userDTO,
+                                        @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok().body(userService.userUpdate(userDTO, userDetails));
     }
 
     @PostMapping("/api/pwd/update")
@@ -68,12 +85,7 @@ public class UserController {
 //        return ResponseEntity.ok().body(userService.findSearchUsers(searchText));
 //    }
 //
-//    // todo :: 유저 정보 update .. custom Exception 만들어지면 jwt exception 도 추가로 넣어야 클라이언트로 오류 메시지 반환할 수 있을 듯..
-//    @GetMapping("/api/user/update")
-//    public ResponseEntity<?> userUpdate(@RequestBody UserDTO userDTO,
-//                                        @AuthenticationPrincipal UserDetails userDetails) {
-//        return ResponseEntity.ok().body(userService.userUpdate(userDTO, userDetails));
-//    }
+
 //
 //
 //    // todo :: axios 를 통해 accessToken 전달시 userDetails 가 잘 들어가는지..
