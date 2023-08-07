@@ -25,6 +25,11 @@
         FROM tb_spaces WHERE spc_seq = #{spcSeq};
     </select>
 
+    <select id="searchSpace" parameterType="hashMap" resultType="com.douzone.wehago.domain.Space">
+        SELECT * FROM tb_spaces
+        WHERE ${columnName} LIKE CONCAT('%', #{searchString}, '%')
+    </select>
+
     <update id="update" parameterType="com.douzone.wehago.domain.Space">
         UPDATE tb_spaces
         SET

@@ -27,7 +27,7 @@ public class DeviceRepository {
         Map<String, String> map = new HashMap<>();
         map.put("columnName", converCamelToSnakeCase(columnName));
         map.put("searchString", searchString);
-        return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.searchDevice", map);
+        return sqlSession.selectList("com.douzone.wehago.mapper.DeviceMapper.searchDevice", map);
     }
     public Device findOne(Integer dvc_seq) {
         return sqlSession.selectOne("com.douzone.wehago.mapper.DeviceMapper.findOne", dvc_seq);
