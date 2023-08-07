@@ -6,6 +6,7 @@ import com.douzone.wehago.dto.space.SpacePageResponseDTO;
 import com.douzone.wehago.dto.space.SpaceResponseDTO;
 import com.douzone.wehago.service.SpaceService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
+@Slf4j
 @AllArgsConstructor
 @RequestMapping("/api/space")
 public class SpaceController {
@@ -45,6 +47,16 @@ public class SpaceController {
         SpaceResponseDTO spaceResponseDTO = spaceService.findOneSpace(spcSeq);
 
         return new ResponseEntity<>(spaceResponseDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Object> searchSpace (@RequestParam(value = "columnName") String columnName,
+                                               @RequestParam(value = "searchString") String searchString) {
+        log.info(columnName + searchString);
+        SpacePageResponseDTO spacePageResponseDTO = spaceService.searchSpace(columnName, searchString);
+        Response response = new Response(HttpStatus.OK, "공간 검색 성공", spacePageResponseDTO);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping ("/{spcSeq}")

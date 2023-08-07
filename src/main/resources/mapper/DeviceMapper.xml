@@ -15,6 +15,11 @@
         SELECT * FROM tb_devices ORDER BY dvc_created DESC ;
     </select>
 
+    <select id="searchDevice" parameterType="hashMap" resultType="com.douzone.wehago.domain.Device">
+        SELECT * FROM tb_devices
+        WHERE ${columnName} LIKE CONCAT('%', #{searchString}, '%')
+    </select>
+
     <select id="findOne" resultType="com.douzone.wehago.domain.Device">
         SELECT
             dvc_name,

@@ -60,9 +60,9 @@ public class DeviceService {
     }
 
     @Transactional(readOnly = true)
-    public DevicePageResponseDTO searchDevice (String queryType, String searchString) {
-        List<Device> list = deviceRepository.searchDevice(queryType, searchString);
-        System.out.println("service" + queryType + searchString);
+    public DevicePageResponseDTO searchDevice (String columnName, String searchString) {
+        List<Device> list = deviceRepository.searchDevice(columnName, searchString);
+        System.out.println("service" + columnName + searchString);
         List<DeviceResponseDTO> deviceResponseDTOList = new ArrayList<>();
 
         for (Device device : list) {
