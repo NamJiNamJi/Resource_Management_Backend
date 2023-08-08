@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.douzone.wehago.mapper.EmployeeMapper">
+
+    <select id ="save" parameterType="com.douzone.wehago.domain.Employee" resultType="com.douzone.wehago.domain.Employee">
+        INSERT INTO tb_employees (emp_name, emp_position, cop_seq, user_seq, auth_level)
+        VALUES (#{empName}, #{empPosition}, #{copSeq}, #{userSeq}, #{authLevel})
+        RETURNING emp_seq as empSeq
+    </select>
+
+    <select id ="findAll" resultType="com.douzone.wehago.domain.Employee">
+        SELECT * FROM tb_employees
+    </select>
+
+    <select id ="searchEmployee" parameterType="hashMap" resultType="com.douzone.wehago.domain.Employee">
+        SELECT * FROM tb_employees
+        WHERE ${type} LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <select id = "findOne" resultType="com.douzone.wehago.domain.Employee">
+        SELECT * FROM tb_employees WHERE emp_seq = #{empSeq};
+    </select>
+
+    <update id="update" parameterType="com.douzone.wehago.domain.Employee">
+        UPDATE tb_employees SET emp_name = #{empName}, emp_position = #{empPosition}, emp_image = #{empImage}, cop_seq = #{copSeq}, user_seq = #{userSeq}, auth_level = #{authLevel}
+        WHERE emp_seq = #{empSeq}
+    </update>
+
+    <update id="delete" parameterType="com.douzone.wehago.domain.Employee">
+        UPDATE tb_employees SET emp_state = #{empState}, emp_updated = #{empUpdated}
+        WHERE emp_seq = #{empSeq}
+    </update>
+<!--    <delete id="delete" parameterType="Integer">-->
+<!--        DELETE FROM tb_employees WHERE emp_seq = #{empSeq}-->
+<!--    </delete>-->
+
+</mapper>

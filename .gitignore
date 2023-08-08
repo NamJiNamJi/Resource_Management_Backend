@@ -26,6 +26,11 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+application-*.properties
+application-*.yaml
+application-*.yml
+
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -35,3 +40,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Properties ###
+src/main/resources/application-credential.properties
+
+# aws S3 upload image Max Size
+spring.servlet.multipart.max-file-size=20MB
+spring.servlet.multipart.max-request-size=20MB

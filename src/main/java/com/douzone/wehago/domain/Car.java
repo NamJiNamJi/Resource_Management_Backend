@@ -1,24 +1,28 @@
 package com.douzone.wehago.domain;
 
+import lombok.*;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
-import java.util.Date;
-
+@Builder
 @Getter
 @Setter
-@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Car {
+    private Integer carSeq;
     private String carName;
-    private Integer carYear;
-    private Integer carDistance;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date startDate;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date endDate;
-    private String lender;
+    private String carNumber;
+    private String carDistance;
+    private LocalDate carYear;
+    private String carImage;
+    private String carExplain;
+    private Integer copSeq;
+    private Integer rscSeq;
+    private Boolean carState;
+    private Timestamp carCreated;
+    private Timestamp carUpdated;
+
 }
 

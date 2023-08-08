@@ -1,36 +1,59 @@
 package com.douzone.wehago.repository;
 
 import com.douzone.wehago.domain.Car;
-import com.douzone.wehago.domain.Member;
-import com.douzone.wehago.mapper.MemberMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CarRepository {
 
     private final SqlSession sqlSession;
-    public void save(Car car){
-        sqlSession.insert("com.douzone.wehago.mapper.carMapper.save", car);
+  
+    public void save(Car car) {
+        sqlSession.insert("com.douzone.wehago.mapper.CarMapper.save", car);
     }
 
-    public List<Member> findAll(){
-        return sqlSession.selectList("com.douzone.wehago.mapper.carMapper.findAll");
+    public List<Car> findAll(){
+        return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.findAll");
     }
-//
-//    public Member findOne(String memberId){
-//        return sqlSession.selectOne("com.douzone.wehago.mapper.MemberMapper.findOne", memberId);
-//    }
-//
-//    public Integer update(Member member){
-//        return sqlSession.update("com.douzone.wehago.mapper.MemberMapper.update", member);
-//    }
-//
-//    public void delete(String memberId){
-//        sqlSession.delete("com.douzone.wehago.mapper.MemberMapper.delete", memberId);
-//    }
+
+    public List<Car> searchCar(String columnName, String searchString) {
+        Map<String, String> map = new HashMap<>();
+        map.put("columnName", converCamelToSnakeCase(columnName));
+        map.put("searchString", searchString);
+        return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.searchCar", map);
+    }
+
+    public Car findOne(Integer car_seq) {
+        return sqlSession.selectOne("com.douzone.wehago.mapper.CarMapper.findOne", car_seq);
+    }
+
+    public Integer update(Car car){
+        return sqlSession.update("com.douzone.wehago.mapper.CarMapper.update", car);
+    }
+
+    public Car delete(Car car) {
+
+        return sqlSession.selectOne("com.douzone.wehago.mapper.CarMapper.delete", car);
+    }
+
+    private String converCamelToSnakeCase(String camelCase) {
+
+        StringBuilder snakeCase = new StringBuilder();
+
+        for (char c : camelCase.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                snakeCase.append('_').append(Character.toLowerCase(c));
+            } else {
+                snakeCase.append(c);
+            }
+        }
+        return snakeCase.toString();
+    }
 }
