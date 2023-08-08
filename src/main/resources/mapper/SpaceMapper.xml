@@ -12,7 +12,7 @@
     </insert>
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Space">
-        SELECT * FROM tb_spaces
+        SELECT * FROM tb_spaces ORDER BY spc_created DESC
     </select>
 
     <select id = "findOne" resultType="com.douzone.wehago.domain.Space">
