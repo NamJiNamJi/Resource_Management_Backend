@@ -3,6 +3,7 @@ package com.douzone.wehago.dto.device;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Builder
@@ -17,6 +18,6 @@ public class DeviceResponseDTO {
     private Integer copSeq;
     private Integer rscSeq;
     private Boolean dvcState;
-    private LocalDate dvcCreated;
-    private LocalDate dvcUpdated;
+    private Timestamp dvcCreated;
+    private Timestamp dvcUpdated;
 }

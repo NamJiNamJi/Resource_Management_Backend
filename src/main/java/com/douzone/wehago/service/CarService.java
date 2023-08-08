@@ -109,7 +109,7 @@ public class CarService {
     }
 
     @Transactional
-    public void deleteCar (Integer carSeq) {
+    public Integer deleteCar (Integer carSeq) {
 
         Car car = Car.builder()
                 .carSeq(carSeq)
@@ -117,7 +117,8 @@ public class CarService {
                 .carUpdated(new Timestamp(System.currentTimeMillis()))
                 .build();
 
-        carRepository.delete(car);
+        Car responseCar = carRepository.delete(car);
+        return responseCar.getCarSeq();
     }
 
 //    public void deleteCar(Integer carSeq) {

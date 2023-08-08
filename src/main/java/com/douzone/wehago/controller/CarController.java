@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +23,7 @@ import java.io.IOException;
 public class CarController {
 
     private final CarService carService;
+
 
     @PostMapping
     public ResponseEntity<Object> saveCar(@RequestPart(value = "data") CarDTO carDTO,
@@ -78,8 +81,8 @@ public class CarController {
     @PostMapping("/del/{carSeq}")
     public ResponseEntity<Object> deleteCar(@PathVariable Integer carSeq) {
 
-        carService.deleteCar(carSeq);
-        Response response = new Response(HttpStatus.OK, "차량 삭제 성공", null);
+        Integer result = carService.deleteCar(carSeq);
+        Response response = new Response(HttpStatus.OK, "차량 삭제 성공", result);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

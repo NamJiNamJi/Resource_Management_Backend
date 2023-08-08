@@ -5,10 +5,8 @@ import com.douzone.wehago.dto.device.DeviceDTO;
 import com.douzone.wehago.dto.device.DevicePageResponseDTO;
 import com.douzone.wehago.dto.device.DeviceResponseDTO;
 import com.douzone.wehago.service.DeviceService;
-import jdk.nashorn.internal.objects.annotations.SpecializedFunction;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.logging.LogFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -74,11 +72,12 @@ public class DeviceController {
 
     }
 
-    @DeleteMapping("/{dvcSeq}")
+    @PostMapping("/del/{dvcSeq}")
     public ResponseEntity<Object> deleteDevice(@PathVariable Integer dvcSeq) {
-        deviceService.deleteDevice(dvcSeq);
-        String message = "삭제 성공";
 
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        Integer result = deviceService.deleteDevice(dvcSeq);
+        Response response = new Response(HttpStatus.OK, "모바일기기 삭제 성공", result);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

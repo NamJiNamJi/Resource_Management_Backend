@@ -29,12 +29,16 @@
     </insert>
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Car">
-        SELECT * FROM tb_cars ORDER BY car_created DESC
+        SELECT * FROM tb_cars
+        WHERE car_state = true
+        ORDER BY car_created DESC
+        LIMIT 5 OFFSET 0
     </select>
 
     <select id="searchCar" parameterType="hashMap" resultType="com.douzone.wehago.domain.Car">
         SELECT * FROM tb_cars
-        WHERE  ${columnName} LIKE CONCAT('%', #{searchString}, '%')
+        WHERE  ${columnName}
+        LIKE CONCAT('%', #{searchString}, '%')
     </select>
 
     <select id = "findOne" resultType="com.douzone.wehago.domain.Car">
@@ -46,7 +50,8 @@
             car_year,
             car_explain,
             car_image
-        FROM tb_cars WHERE car_seq = #{carSeq};
+        FROM tb_cars
+        WHERE car_seq = #{carSeq};
     </select>
 
     <update id="update" parameterType="com.douzone.wehago.domain.Car">
@@ -61,13 +66,14 @@
         WHERE car_seq = #{carSeq};
     </update>
 
-    <update id="delete" parameterType="com.douzone.wehago.domain.Car">
+    <select id="delete" parameterType="com.douzone.wehago.domain.Car" resultType="com.douzone.wehago.domain.Car">
         UPDATE tb_cars
         SET
             car_state = #{carState},
             car_updated = #{carUpdated}
         WHERE car_seq = #{carSeq}
-    </update>
+        RETURNING car_seq as carSeq
+    </select>
 <!--    <delete id="delete" parameterType="Integer">-->
 <!--        DELETE FROM tb_cars WHERE car_seq = #{carSeq};-->
 <!--    </delete>-->
