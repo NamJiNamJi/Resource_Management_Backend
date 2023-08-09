@@ -34,4 +34,7 @@ public class CompanyRepository {
         sqlSession.update("com.douzone.wehago.mapper.CompanyMapper.updateState", company);
     }
 
+    public List<Company> findAllByCopSeq(Integer copSeq) {
+        return sqlSession.selectList("com.douzone.wehago.mapper.CompanyMapper.findAllByCopSeq", copSeq);
+    }
 }

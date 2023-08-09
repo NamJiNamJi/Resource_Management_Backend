@@ -28,9 +28,10 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<Object> saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<Object> saveEmployee(@RequestBody EmployeeDTO employeeDTO,
+                                               @AuthenticationPrincipal UserDetails userDetails) {
 
-        EmployeeResponseDTO employeeResponseDTO = employeeService.saveEmployee(employeeDTO);
+        EmployeeResponseDTO employeeResponseDTO = employeeService.saveEmployee(employeeDTO, userDetails);
         Response response = new Response(HttpStatus.CREATED, "사원 등록 성공", employeeResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -49,9 +50,10 @@ public class EmployeeController {
 
     @GetMapping
     public ResponseEntity<Object> findAll(@RequestParam(defaultValue = "1") Integer pageNum,
-                                          @RequestParam(defaultValue = "3") Integer pageSize){
+                                          @RequestParam(defaultValue = "3") Integer pageSize,
+                                          @AuthenticationPrincipal UserDetails userDetails){
 
-        EmployeePageResponseDTO employeePageResponseDTO = employeeService.findAll(pageNum,pageSize);
+        EmployeePageResponseDTO employeePageResponseDTO = employeeService.findAll(pageNum, pageSize, userDetails);
 
         Response response = new Response(HttpStatus.OK, "사원 전체 조회 성공", employeePageResponseDTO);
 
@@ -59,7 +61,7 @@ public class EmployeeController {
     }
 
 
-    // 회사 검색
+    // 사원 검색
     @GetMapping("/search")
     public ResponseEntity<Object> searchEmployee(@RequestParam(value = "type") String type,
                                                  @RequestParam(value = "keyword") String keyword) {
@@ -80,13 +82,13 @@ public class EmployeeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    // 회사 수정
+    // 사원 수정
     @PostMapping("/{empSeq}")
-    public ResponseEntity<Object> updateEmployee(@RequestPart(value = "data") EmployeeDTO employeeDTO,
-                                                 @RequestPart(value = "image" ,required = false) MultipartFile image,
-                                                 @PathVariable Integer empSeq) throws IOException {
+    public ResponseEntity<Object> updateEmployee(@RequestBody EmployeeDTO employeeDTO,
+                                                 @PathVariable Integer empSeq,
+                                                 @AuthenticationPrincipal UserDetails userDetails) {
 
-        EmployeeResponseDTO employeeResponseDTO = employeeService.updateEmployee(employeeDTO, image, empSeq);
+        EmployeeResponseDTO employeeResponseDTO = employeeService.updateEmployee(employeeDTO, empSeq, userDetails);
         Response response = new Response(HttpStatus.OK, "회사 수정 성공",employeeResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

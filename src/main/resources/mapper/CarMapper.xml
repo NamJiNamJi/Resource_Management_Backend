@@ -34,7 +34,20 @@
         ORDER BY car_created DESC
         LIMIT 5 OFFSET 0
     </select>
+    <select id ="findcarList"  resultType="com.douzone.wehago.domain.Car" parameterType="com.douzone.wehago.dto.reservation.ReservationDTO">
+        SELECT * FROM tb_cars
+        WHERE car_seq
+                  not in(
+            (select rsv_detail from tb_reservations where #{rsvStart} &lt; rsv_end and rsv_end &lt; #{rsvEnd})
+            union
+            (select rsv_detail from tb_reservations where #{rsvStart} &lt; rsv_start and rsv_end &lt; #{rsvEnd})
+            union
+            (select rsv_detail from tb_reservations where #{rsvStart} &lt; rsv_start and rsv_start &lt; #{rsvEnd})
+             union
+            (select rsv_detail from tb_reservations where #{rsvStart} &gt; rsv_start and rsv_end &gt; #{rsvEnd}))
 
+                                                        and cop_seq = ${copSeq} and car_state = true;
+    </select>
     <select id="searchCar" parameterType="hashMap" resultType="com.douzone.wehago.domain.Car">
         SELECT * FROM tb_cars
         WHERE  ${columnName}

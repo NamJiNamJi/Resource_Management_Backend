@@ -7,10 +7,9 @@ import lombok.Getter;
 @Builder
 public class MailDTO {
 
-    private String empEmail;
+    private String empMail;
     private String empName;
     private String empPosition;
-    private Integer copSeq;
     private Integer userSeq;
     private String authLevel;
 }
