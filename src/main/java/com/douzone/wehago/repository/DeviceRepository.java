@@ -37,8 +37,8 @@ public class DeviceRepository {
         return sqlSession.update("com.douzone.wehago.mapper.DeviceMapper.update", device);
     }
 
-    public void delete(Integer dvc_seq) {
-        sqlSession.delete("com.douzone.wehago.mapper.DeviceMapper.delete", dvc_seq);
+    public Device delete(Device device) {
+        return sqlSession.selectOne("com.douzone.wehago.mapper.DeviceMapper.delete", device);
     }
 
     private String converCamelToSnakeCase(String camelCase) {

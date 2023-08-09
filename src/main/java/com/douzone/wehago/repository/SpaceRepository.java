@@ -39,8 +39,8 @@ public class SpaceRepository {
         return  sqlSession.update("com.douzone.wehago.mapper.SpaceMapper.update", space);
     }
 
-    public void delete (Integer spc_seq) {
-        sqlSession.delete("com.douzone.wehago.mapper.SpaceMapper.delete", spc_seq);
+    public Space delete (Space space) {
+        return sqlSession.selectOne("com.douzone.wehago.mapper.SpaceMapper.delete", space);
     }
 
     private String converCamelToSnakeCase (String camelCase) {

@@ -1,15 +1,9 @@
 package com.douzone.wehago.domain;
 
 import lombok.*;
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotNull;
-import java.awt.*;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Builder
 @Getter
@@ -26,6 +20,6 @@ public class Device {
     private Integer copSeq;
     private Integer rscSeq;
     private Boolean dvcState;
-    private LocalDate dvcCreated;
-    private LocalDate dvcUpdated;
+    private Timestamp dvcCreated;
+    private Timestamp dvcUpdated;
 }

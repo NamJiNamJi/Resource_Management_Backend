@@ -2,7 +2,7 @@ package com.douzone.wehago.domain;
 
 import lombok.*;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 @Builder
 @Getter
@@ -17,8 +17,8 @@ public class Space {
     private String spcImage;
     private Integer copSeq;
     private Integer rscSeq;
-    private Boolean carState;
-    private LocalDate carCreated;
-    private LocalDate carUpdated;
-
+    private Boolean spcState;
+    private Timestamp spcCreated;
+    private Timestamp spcUpdated;
+// 수정??
 }
