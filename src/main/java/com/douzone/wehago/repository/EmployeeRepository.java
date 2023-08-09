@@ -22,9 +22,9 @@ public class EmployeeRepository {
         return sqlSession.selectOne("com.douzone.wehago.mapper.EmployeeMapper.save", employee);
     }
 
-    public List<Employee> findAll(Integer pageNo, Integer pageSize) {
-        PageHelper.startPage(pageNo,pageSize);
-        return sqlSession.selectList("com.douzone.wehago.mapper.EmployeeMapper.findAll");
+    public List<Employee> findAll(Integer pageNo, Integer pageSize, Integer copSeq) {
+        PageHelper.startPage(pageNo, pageSize);
+        return sqlSession.selectList("com.douzone.wehago.mapper.EmployeeMapper.findAll", copSeq);
     }
 
     public List<Employee> searchEmployee(String type, String keyword) {

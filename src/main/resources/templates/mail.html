@@ -34,7 +34,7 @@
                             <tr>
                                 <td align="left"
                                     style="font-size: 34px; color: #222; line-height: 40px; letter-spacing: -0.5px; font-weight: bold; word-break: break-word; word-wrap: break-word; padding-bottom: 60px;">
-                                    <span style="color: #1a83ff;">{회사명 넣기}</span> 구성원으로 추가되었습니다.</td>
+                                    <span style="color: #1a83ff;" th:text="${copName}"></span> 구성원으로 추가되었습니다.</td>
                             </tr>
                             <tr>
                                 <td>
@@ -72,11 +72,11 @@
                                         <dt style="font-size: 14px; line-height: 17px; font-weight: bold;">이름</dt>
                                         <dd style="word-break: break-all; word-wrap: break-word;margin: 0; padding-top: 6px; font-size: 18px; line-height: 21px;" th:text="${empName}"/>
 
-                                        <dt style="padding-top: 25px; font-size: 14px; line-height: 17px; font-weight: bold;">권한</dt>
+                                        <dt style="padding-top: 25px; font-size: 14px; line-height: 17px; font-weight: bold;">직책</dt>
                                         <dd style="word-break: break-all; word-wrap: break-word;margin: 0; padding-top: 6px; font-size: 18px; line-height: 21px;" th:text="${empPosition}"/>
 
                                         <dt style="padding-top: 25px; font-size: 14px; line-height: 17px; font-weight: bold;">이메일</dt>
-                                        <dd style="word-break: break-all; word-wrap: break-word;margin: 0; padding-top: 6px; font-size: 18px; line-height: 21px;" th:text="${empEmail}"/>
+                                        <dd style="word-break: break-all; word-wrap: break-word;margin: 0; padding-top: 6px; font-size: 18px; line-height: 21px;" th:text="${empMail}"/>
                                     </dl>
                                 </td>
                             </tr>

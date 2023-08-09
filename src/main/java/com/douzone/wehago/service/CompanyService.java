@@ -1,6 +1,8 @@
 package com.douzone.wehago.service;
 
 import com.douzone.wehago.common.Response;
+import com.douzone.wehago.common.exception.BusinessException;
+import com.douzone.wehago.common.exception.ErrorCode;
 import com.douzone.wehago.domain.Company;
 import com.douzone.wehago.domain.User;
 import com.douzone.wehago.dto.CompanyDTO;
@@ -48,7 +50,6 @@ public class CompanyService {
             Company company = Company.builder()
                     .copRegNum(companyDTO.getCopRegNum())
                     .copName(companyDTO.getCopName())
-                    .copState(companyDTO.getCopState())
                     .build();
 
             CompanyDTO returnCopSeq = companyRepository.save(company);
@@ -62,10 +63,20 @@ public class CompanyService {
     }
 
     @Transactional(readOnly = true)
-    public CompanyPageResponseDTO findAll() {
+    public CompanyPageResponseDTO findAll(UserDetails userDetails) {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
         // 회사 상태가 true인 값만 조회
         Boolean state = true;
-        List<Company> companyList = companyRepository.findAll(state);
+
+        List<Company> companyList = companyRepository.findAllByCopSeq(user.getCopSeq());
+
+//        List<Company> companyList = companyRepository.findAll(state)
 //        System.out.println(companyList.toString());
 //        System.out.println(companyList.get(1));
 
@@ -94,7 +105,6 @@ public class CompanyService {
                 .copSeq(copSeq)
                 .copRegNum(companyDTO.getCopRegNum())
                 .copName(companyDTO.getCopName())
-                .copState(companyDTO.getCopState())
                 .copUpdated(new Timestamp(System.currentTimeMillis()))
                 .build();
 
@@ -110,7 +120,6 @@ public class CompanyService {
                 .copSeq(copSeq)
                 .copRegNum(companyDTO.getCopRegNum())
                 .copName(companyDTO.getCopName())
-                .copState(companyDTO.getCopState())
                 .copUpdated(new Timestamp(System.currentTimeMillis()))
                 .build();
 
@@ -138,7 +147,6 @@ public class CompanyService {
                 .copSeq(company.getCopSeq())
                 .copRegNum(company.getCopRegNum())
                 .copName(company.getCopName())
-                .copState(company.getCopState())
                 .build();
     }
 

@@ -51,8 +51,10 @@ public class CompanyController {
 
 
     @GetMapping
-    public ResponseEntity<Object> findAll() {
-        CompanyPageResponseDTO companyPageResponseDTO = companyService.findAll();
+    public ResponseEntity<Object> findAll(@AuthenticationPrincipal UserDetails userDetails) {
+
+        CompanyPageResponseDTO companyPageResponseDTO = companyService.findAll(userDetails);
+
         Response response = new Response(HttpStatus.OK, "회사 전체 조회 성공", companyPageResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

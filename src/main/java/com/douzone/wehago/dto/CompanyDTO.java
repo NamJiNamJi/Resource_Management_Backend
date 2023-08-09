@@ -12,5 +12,5 @@ public class CompanyDTO {
     private Integer copSeq;
     private String copRegNum;
     private String copName;
-    private Boolean copState;
+//    private Boolean copState;
 }
