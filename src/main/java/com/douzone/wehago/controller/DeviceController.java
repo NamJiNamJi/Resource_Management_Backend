@@ -52,10 +52,10 @@ public class DeviceController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Object> searchDevice (@RequestParam(value = "qeuryType") String queryType,
+    public ResponseEntity<Object> searchDevice (@RequestParam(value = "columnName") String columnName,
                                                 @RequestParam(value = "searchString") String searchString) {
-        log.info(queryType + searchString);
-        DevicePageResponseDTO devicePageResponseDTO = deviceService.searchDevice(queryType, searchString);
+        log.info(columnName + searchString);
+        DevicePageResponseDTO devicePageResponseDTO = deviceService.searchDevice(columnName, searchString);
         Response response = new Response(HttpStatus.OK, "기기 검색 성공", devicePageResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

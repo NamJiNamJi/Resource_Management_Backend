@@ -18,7 +18,7 @@ public interface CarMapper {
     /* 선택 차량 조회 Select */
     Car findOne(Integer car_seq);
 
-//    차량 검색
+    /* 차량 검색 Select */
     List<Car> searchCar(Map<String, Object> dataValues);
 
     /* 차량 정보 수정 Update */

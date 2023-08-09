@@ -13,7 +13,6 @@ public class ResponseReservationDTO {
 
     private Integer rsvSeq; // 예약 일련번호
     private Integer copSeq; // 회사 일련번호
-    private String copName; // 회사명
     private Integer rscSeq; // 자원 일련번호
     private String rscName; // 자원명 ex) 차량, 모바일기기, 공간
     private Integer rsvDetail; // 세부 일련번호

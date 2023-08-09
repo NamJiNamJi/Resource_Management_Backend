@@ -63,6 +63,21 @@ public class SpaceService {
         return getSpaceResponseDTO(space);
     }
 
+    @Transactional(readOnly = true)
+    public SpacePageResponseDTO searchSpace (String columnName, String searchString) {
+        List<Space> list = spaceRepository.searchSpace(columnName, searchString);
+        System.out.println("Service : " + columnName + searchString);
+        List<SpaceResponseDTO> spaceResponseDTOList = new ArrayList<>();
+
+        for (Space space : list) {
+            spaceResponseDTOList.add(getSpaceResponseDTO(space));
+        }
+
+        return SpacePageResponseDTO.builder()
+                .list(spaceResponseDTOList)
+                .build();
+    }
+
     @Transactional
     public SpaceResponseDTO updateSpace (SpaceDTO spaceDTO, Integer spcSeq) {
         Space space = Space.builder()

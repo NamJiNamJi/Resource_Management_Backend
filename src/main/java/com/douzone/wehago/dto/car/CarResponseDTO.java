@@ -21,4 +21,5 @@ public class CarResponseDTO {
     private Boolean carState;
     private Timestamp carCreated;
     private Timestamp carUpdated;
+
 }
