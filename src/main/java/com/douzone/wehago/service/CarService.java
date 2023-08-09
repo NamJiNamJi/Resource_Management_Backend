@@ -2,11 +2,15 @@ package com.douzone.wehago.service;
 
 import com.douzone.wehago.common.S3Uploader;
 import com.douzone.wehago.domain.Car;
+import com.douzone.wehago.domain.User;
 import com.douzone.wehago.dto.car.CarDTO;
 import com.douzone.wehago.dto.car.CarPageResponseDTO;
 import com.douzone.wehago.dto.car.CarResponseDTO;
+import com.douzone.wehago.dto.reservation.ReservationDTO;
 import com.douzone.wehago.repository.CarRepository;
+import com.douzone.wehago.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +26,24 @@ public class CarService {
 
     private final CarRepository carRepository;
     private final S3Uploader s3Uploader;
+    @Transactional
+    public CarPageResponseDTO findcarList(ReservationDTO reservationDTO , UserDetails userDetails){
+        User user = ((UserDetailsImpl) userDetails).getUser();
+        reservationDTO.setCopSeq(user.getCopSeq());
+        System.out.println(user.getCopSeq());
+        List<Car> list = carRepository.findcarList(reservationDTO);
 
+        List<CarResponseDTO> carResponseDTOList = new ArrayList<>();
+
+        for (Car car : list) {
+            if (car.getCarState()) {
+                carResponseDTOList.add(getCarResponseDTO(car));
+            }
+        }
+        return CarPageResponseDTO.builder()
+                .list(carResponseDTOList)
+                .build();
+    }
     @Transactional
     public CarResponseDTO saveCar (CarDTO carDTO, MultipartFile image) throws IOException {
 

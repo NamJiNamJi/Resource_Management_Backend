@@ -1,6 +1,7 @@
 package com.douzone.wehago.repository;
 
 import com.douzone.wehago.domain.Car;
+import com.douzone.wehago.dto.reservation.ReservationDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -22,7 +23,9 @@ public class CarRepository {
     public List<Car> findAll(){
         return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.findAll");
     }
-
+    public List<Car> findcarList(ReservationDTO reservationDTO){
+        return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.findcarList",reservationDTO);
+    }
     public List<Car> searchCar(String columnName, String searchString) {
         Map<String, String> map = new HashMap<>();
         map.put("columnName", converCamelToSnakeCase(columnName));

@@ -4,11 +4,14 @@ import com.douzone.wehago.common.Response;
 import com.douzone.wehago.dto.car.CarDTO;
 import com.douzone.wehago.dto.car.CarPageResponseDTO;
 import com.douzone.wehago.dto.car.CarResponseDTO;
+import com.douzone.wehago.dto.reservation.ReservationDTO;
 import com.douzone.wehago.service.CarService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +24,17 @@ import java.io.IOException;
 public class CarController {
 
     private final CarService carService;
+
+
+    @PostMapping("/carsearch")
+    public ResponseEntity<Object> CarRsvList(@RequestBody ReservationDTO reservationDTO, @AuthenticationPrincipal UserDetails userDetails){
+        System.out.println(reservationDTO.getRsvStart());
+        CarPageResponseDTO carPageResponseDTO = carService.findcarList(reservationDTO,userDetails);
+        Response response = new Response(HttpStatus.CREATED, "조회 성공", carPageResponseDTO);
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
 
     @PostMapping
     public ResponseEntity<Object> saveCar(@RequestPart(value = "data") CarDTO carDTO,
