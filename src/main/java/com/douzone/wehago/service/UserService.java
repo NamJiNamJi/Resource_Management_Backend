@@ -215,7 +215,7 @@ public class UserService {
     @Transactional
     public ResponseEntity<?> userUpdate(UserDTO userDTO, UserDetails userDetails) {
 
-            User user = ((UserDetailsImpl) userDetails).getUser();
+            User user = ((UserDetailsImpl) userDetails).getUser(); // 토큰이 유효한 토큰이라면 유저 정보를 가지고 온다.
 
             Map<String, Object> message = new HashMap<>();
 
