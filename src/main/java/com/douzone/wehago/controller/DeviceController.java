@@ -1,16 +1,18 @@
 package com.douzone.wehago.controller;
 
 import com.douzone.wehago.common.Response;
+import com.douzone.wehago.dto.car.CarPageResponseDTO;
 import com.douzone.wehago.dto.device.DeviceDTO;
 import com.douzone.wehago.dto.device.DevicePageResponseDTO;
 import com.douzone.wehago.dto.device.DeviceResponseDTO;
+import com.douzone.wehago.dto.reservation.ReservationDTO;
 import com.douzone.wehago.service.DeviceService;
-import jdk.nashorn.internal.objects.annotations.SpecializedFunction;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.logging.LogFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +25,14 @@ import java.io.IOException;
 public class DeviceController {
 
     private final DeviceService deviceService;
+    @PostMapping("/devicesearch")
+    public ResponseEntity<Object> deviceRsvList(@RequestBody ReservationDTO reservationDTO, @AuthenticationPrincipal UserDetails userDetails){
+        System.out.println(reservationDTO.getRsvStart());
+        DevicePageResponseDTO devicePageResponseDTO = deviceService.finddeviceList(reservationDTO,userDetails);
+        Response response = new Response(HttpStatus.CREATED, "조회 성공", devicePageResponseDTO);
 
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
     @PostMapping
     public ResponseEntity<Object> saveDeivce (@RequestPart(value = "data") DeviceDTO deviceDTO,
                                               @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
@@ -74,11 +83,12 @@ public class DeviceController {
 
     }
 
-    @DeleteMapping("/{dvcSeq}")
+    @PostMapping("/del/{dvcSeq}")
     public ResponseEntity<Object> deleteDevice(@PathVariable Integer dvcSeq) {
-        deviceService.deleteDevice(dvcSeq);
-        String message = "삭제 성공";
 
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        Integer result = deviceService.deleteDevice(dvcSeq);
+        Response response = new Response(HttpStatus.OK, "모바일기기 삭제 성공", result);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -11,13 +11,32 @@
         VALUES (#{dvcName}, #{dvcSerial}, #{dvcImage}, #{dvcBuy}, #{dvcExplain}, #{copSeq}, #{rscSeq})
     </insert>
 
+    <select id ="finddeviceList"  resultType="com.douzone.wehago.domain.Device" parameterType="com.douzone.wehago.dto.reservation.ReservationDTO">
+        SELECT * FROM tb_devices
+        WHERE dvc_seq
+            not in(
+                  (select rsv_detail from tb_reservations where #{rsvStart} &lt; rsv_end and rsv_end &lt; #{rsvEnd})
+                  union
+                  (select rsv_detail from tb_reservations where #{rsvStart} &lt; rsv_start and rsv_end &lt; #{rsvEnd})
+                  union
+                  (select rsv_detail from tb_reservations where #{rsvStart} &lt; rsv_start and rsv_start &lt; #{rsvEnd})
+                  union
+                  (select rsv_detail from tb_reservations where #{rsvStart} &gt; rsv_start and rsv_end &gt; #{rsvEnd}))
+
+          and cop_seq = ${copSeq} and dvc_state = true;
+    </select>
+
     <select id ="findAll" resultType="com.douzone.wehago.domain.Device">
-        SELECT * FROM tb_devices ORDER BY dvc_created DESC ;
+        SELECT * FROM tb_devices
+        WHERE dvc_state = true
+        ORDER BY dvc_created DESC
+        LIMIT 5 OFFSET 0
     </select>
 
     <select id="searchDevice" parameterType="hashMap" resultType="com.douzone.wehago.domain.Device">
         SELECT * FROM tb_devices
-        WHERE ${columnName} LIKE CONCAT('%', #{searchString}, '%')
+        WHERE ${columnName}
+        LIKE CONCAT('%', #{searchString}, '%')
     </select>
 
     <select id="findOne" resultType="com.douzone.wehago.domain.Device">
@@ -27,7 +46,8 @@
             dvc_image,
             dvc_buy,
             dvc_explain
-        FROM tb_devices WHERE dvc_seq = #{dvcSeq}
+        FROM tb_devices
+        WHERE dvc_seq = #{dvcSeq}
     </select>
 
     <update id="update" parameterType="com.douzone.wehago.domain.Device">
@@ -40,7 +60,12 @@
         WHERE dvc_seq = #{dvcSeq}
     </update>
 
-    <delete id="delete" parameterType="Integer">
-        DELETE FROM tb_devices WHERE dvc_seq = #{dvcSeq}
-    </delete>
+    <select id="delete" parameterType="com.douzone.wehago.domain.Device" resultType="com.douzone.wehago.domain.Device">
+        UPDATE tb_devices
+        SET
+            dvc_state = #{dvcState},
+            dvc_updated = #{dvcUpdated}
+        WHERE dvc_seq = #{dvcSeq}
+        RETURNING dvc_seq as dvcSeq
+    </select>
 </mapper>

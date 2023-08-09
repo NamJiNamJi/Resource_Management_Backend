@@ -7,8 +7,21 @@
 <mapper namespace="com.douzone.wehago.mapper.SpaceMapper">
 
     <insert id ="save" parameterType="com.douzone.wehago.domain.Space">
-        INSERT INTO tb_spaces (spc_name, spc_cap, spc_image, spc_explain, cop_seq, rsc_seq)
-        VALUES (#{spcName}, #{spcCap}, #{spcImage}, #{spcExplain}, #{copSeq}, #{rscSeq});
+        INSERT INTO
+            tb_spaces
+            (spc_name,
+             spc_cap,
+             spc_image,
+             spc_explain,
+             cop_seq,
+             rsc_seq)
+        VALUES
+            (#{spcName},
+             #{spcCap},
+             #{spcImage},
+             #{spcExplain},
+             #{copSeq},
+             #{rscSeq});
     </insert>
 
     <select id ="findspaceList"  resultType="com.douzone.wehago.domain.Space" parameterType="com.douzone.wehago.dto.reservation.ReservationDTO">
@@ -28,6 +41,9 @@
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Space">
         SELECT * FROM tb_spaces
+        WHERE spc_state = true
+        ORDER BY spc_created DESC
+        LIMIT 5 OFFSET 0
     </select>
 
     <select id = "findOne" resultType="com.douzone.wehago.domain.Space">
@@ -42,7 +58,8 @@
 
     <select id="searchSpace" parameterType="hashMap" resultType="com.douzone.wehago.domain.Space">
         SELECT * FROM tb_spaces
-        WHERE ${columnName} LIKE CONCAT('%', #{searchString}, '%')
+        WHERE ${columnName}
+        LIKE CONCAT('%', #{searchString}, '%')
     </select>
 
     <update id="update" parameterType="com.douzone.wehago.domain.Space">
@@ -55,8 +72,17 @@
         WHERE spc_seq = #{spcSeq};
     </update>
 
-    <delete id="delete" parameterType="Integer">
-        DELETE FROM tb_spaces WHERE spc_seq = #{spcSeq};
-    </delete>
+    <select id="delete" parameterType="com.douzone.wehago.domain.Space" resultType="com.douzone.wehago.domain.Space">
+        UPDATE tb_spaces
+        SET
+            spc_state = #{spcState},
+            spc_updated = #{spcUpdated}
+        WHERE spc_seq = #{spcSeq}
+        RETURNING spc_seq as spcSeq
+    </select>
+
+<!--    <delete id="delete" parameterType="Integer">-->
+<!--        DELETE FROM tb_spaces WHERE spc_seq = #{spcSeq};-->
+<!--    </delete>-->
 
 </mapper>

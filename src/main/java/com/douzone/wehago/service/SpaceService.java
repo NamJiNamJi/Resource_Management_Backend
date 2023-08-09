@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,9 +119,22 @@ public class SpaceService {
         return getSpaceResponseDTO(space);
     }
 
-    public void deleteSpace (Integer spcSeq) {
-        spaceRepository.delete(spcSeq);
+    @Transactional
+    public Integer deleteSpace (Integer spcSeq) {
+
+        Space space = Space.builder()
+                .spcSeq(spcSeq)
+                .spcState(false)
+                .spcUpdated(new Timestamp(System.currentTimeMillis()))
+                .build();
+
+        Space responseSpace = spaceRepository.delete(space);
+        return responseSpace.getSpcSeq();
     }
+
+//    public void deleteSpace (Integer spcSeq) {
+//        spaceRepository.delete(spcSeq);
+//    }
 
     private SpaceResponseDTO getSpaceResponseDTO (Space space) {
         return SpaceResponseDTO.builder()
@@ -129,9 +143,9 @@ public class SpaceService {
                 .spcCap(space.getSpcCap())
                 .spcImage(space.getSpcImage())
                 .spcExplain(space.getSpcExplain())
-                .carCreated(space.getCarCreated())
-                .carUpdated(space.getCarUpdated())
-                .carState(space.getCarState())
+                .spcCreated(space.getSpcCreated())
+                .spcUpdated(space.getSpcUpdated())
+                .spcState(space.getSpcState())
                 .copSeq(space.getCopSeq())
                 .rscSeq(space.getRscSeq())
                 .build();

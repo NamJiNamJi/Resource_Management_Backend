@@ -41,8 +41,9 @@ public class CarRepository {
         return sqlSession.update("com.douzone.wehago.mapper.CarMapper.update", car);
     }
 
-    public void delete(Car car) {
-        sqlSession.delete("com.douzone.wehago.mapper.CarMapper.delete", car);
+    public Car delete(Car car) {
+
+        return sqlSession.selectOne("com.douzone.wehago.mapper.CarMapper.delete", car);
     }
 
     private String converCamelToSnakeCase(String camelCase) {
