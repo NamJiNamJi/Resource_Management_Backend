@@ -3,6 +3,7 @@ package com.douzone.wehago.dto.space;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Builder
@@ -15,7 +16,7 @@ public class SpaceResponseDTO {
     private String spcExplain;
     private Integer copSeq;
     private Integer rscSeq;
-    private Boolean carState;
-    private LocalDate carCreated;
-    private LocalDate carUpdated;
+    private Boolean spcState;
+    private Timestamp spcCreated;
+    private Timestamp spcUpdated;
 }

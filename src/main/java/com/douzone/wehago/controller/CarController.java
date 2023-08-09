@@ -25,7 +25,6 @@ public class CarController {
 
     private final CarService carService;
 
-
     @PostMapping("/carsearch")
     public ResponseEntity<Object> CarRsvList(@RequestBody ReservationDTO reservationDTO, @AuthenticationPrincipal UserDetails userDetails){
         System.out.println(reservationDTO.getRsvStart());
@@ -34,7 +33,6 @@ public class CarController {
 
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-
 
     @PostMapping
     public ResponseEntity<Object> saveCar(@RequestPart(value = "data") CarDTO carDTO,
@@ -92,8 +90,8 @@ public class CarController {
     @PostMapping("/del/{carSeq}")
     public ResponseEntity<Object> deleteCar(@PathVariable Integer carSeq) {
 
-        carService.deleteCar(carSeq);
-        Response response = new Response(HttpStatus.OK, "차량 삭제 성공", null);
+        Integer result = carService.deleteCar(carSeq);
+        Response response = new Response(HttpStatus.OK, "차량 삭제 성공", result);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

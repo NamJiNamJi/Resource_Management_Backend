@@ -19,5 +19,5 @@ public interface DeviceMapper {
 
     void update (Device device);
 
-    void delete(Integer dvc_seq);
+    Device delete(Device device);
 }

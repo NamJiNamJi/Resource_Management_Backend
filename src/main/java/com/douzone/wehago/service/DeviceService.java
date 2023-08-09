@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,8 +102,16 @@ public class DeviceService {
         return getDeviceResponseDTO(device);
     }
 
-    public void deleteDevice (Integer dvcSeq) {
-        deviceRepository.delete(dvcSeq);
+    public Integer deleteDevice (Integer dvcSeq) {
+
+        Device device = Device.builder()
+                .dvcSeq(dvcSeq)
+                .dvcState(false)
+                .dvcUpdated(new Timestamp(System.currentTimeMillis()))
+                .build();
+
+        Device responseDevice = deviceRepository.delete(device);
+        return responseDevice.getDvcSeq();
     }
 
     private DeviceResponseDTO getDeviceResponseDTO (Device device) {

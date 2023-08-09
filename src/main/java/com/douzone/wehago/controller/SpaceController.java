@@ -68,7 +68,7 @@ public class SpaceController {
         return new ResponseEntity<>(spaceResponseDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{spcSeq}")
+    @PostMapping("/del/{spcSeq}")
     public ResponseEntity<Object> deleteSpace(@PathVariable Integer spcSeq) {
         spaceService.deleteSpace(spcSeq);
         String message = "삭제 성공";

@@ -25,7 +25,7 @@ public interface CarMapper {
     void update(Car car);
 
     /* 차량 정보 삭제 Delete */
-    void delete(Car car);
+    Car delete(Car car);
 
 //    /* 차량 정보 삭제 Delete */
 //    void delete(Integer car_seq);
