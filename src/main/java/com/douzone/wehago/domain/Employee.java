@@ -15,7 +15,6 @@ public class Employee {
     private Integer empSeq;
     private String empName;
     private String empPosition;
-    private String empImage;
     private Integer copSeq;
     private Integer userSeq;
     private AuthLevel authLevel;

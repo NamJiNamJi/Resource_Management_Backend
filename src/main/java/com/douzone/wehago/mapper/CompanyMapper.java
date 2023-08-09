@@ -12,6 +12,7 @@ public interface CompanyMapper {
     CompanyDTO save(Company company);
 
     List<Company> findAll();
+    List<Company> findAllByCopSeq();
 
     Company findOne();
 

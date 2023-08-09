@@ -27,8 +27,12 @@ public enum ErrorCode {
     INVALID_FILE_TYPE(415, "INVALID_FILE_TYPE", "업로드 할 수 있는 파일 형식은 jpg, jpeg, png 입니다."),
 
     // Mail
-    MAIL_SEND_FAIL(500, "MAIL_SEND_FAIL", "메일 전송 실패")
+    MAIL_SEND_FAIL(500, "MAIL_SEND_FAIL", "메일 전송 실패"),
 
+
+    //JWT
+    JWT_NOT_PERMIT(400, "JWT_NOT_PERMIT", "존재하지 않는 Token 입니다."),
+    JWT_INVALID_TOKEN(401, "JWT_INVALID_TOKEN", "토큰이 유효하지 않습니다.")
     ;
 
 
