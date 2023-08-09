@@ -1,6 +1,8 @@
 package com.douzone.wehago.repository;
 
+import com.douzone.wehago.domain.Car;
 import com.douzone.wehago.domain.Space;
+import com.douzone.wehago.dto.reservation.ReservationDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.postgresql.shaded.com.ongres.scram.common.util.CharAttribute;
@@ -15,7 +17,9 @@ import java.util.Map;
 public class SpaceRepository {
 
     private final SqlSession sqlSession;
-
+    public List<Space> findspaceList(ReservationDTO reservationDTO){
+        return sqlSession.selectList("com.douzone.wehago.mapper.SpaceMapper.findspaceList",reservationDTO);
+    }
     public void save(Space space) {
         sqlSession.insert("com.douzone.wehago.mapper.SpaceMapper.save", space);
     }
