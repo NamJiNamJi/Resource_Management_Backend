@@ -17,7 +17,7 @@ public class Space {
     private String spcImage;
     private Integer copSeq;
     private Integer rscSeq;
-    private Boolean carState;
+    private Boolean spcState;
     private LocalDate carCreated;
     private LocalDate carUpdated;
 
