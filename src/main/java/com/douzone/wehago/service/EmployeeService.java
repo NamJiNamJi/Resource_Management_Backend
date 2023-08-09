@@ -9,6 +9,7 @@ import com.douzone.wehago.dto.employee.EmployeeDTO;
 import com.douzone.wehago.dto.employee.EmployeePageResponseDTO;
 import com.douzone.wehago.dto.employee.EmployeeResponseDTO;
 import com.douzone.wehago.repository.EmployeeRepository;
+import com.douzone.wehago.repository.UserRepository;
 import com.douzone.wehago.security.UserDetailsImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
@@ -30,6 +31,7 @@ import java.util.List;
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final UserRepository userRepository;
 
     // 사원 등록
     @Transactional
@@ -41,18 +43,22 @@ public class EmployeeService {
             throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
         }
 
+        User newUser = userRepository.save();
+        log.info("회원 일련번호 : " + newUser.getUserSeq());
+
         Employee employee = Employee.builder()
                 .empName(employeeDTO.getEmpName())
                 .empPosition(employeeDTO.getEmpPosition())
                 .copSeq(user.getCopSeq())
-                .userSeq(user.getUserSeq())
+                .userSeq(newUser.getUserSeq())
                 .authLevel(employeeDTO.getAuthLevel())
                 .build();
 
         Employee newEmployee = employeeRepository.save(employee);
-        log.info("사원 일련번호 : " + newEmployee.getEmpSeq());
+//        log.info("사원 일련번호 : " + newEmployee.getEmpSeq());
 
         return EmployeeResponseDTO.builder()
+                .userSeq(newUser.getUserSeq())
                 .empSeq(newEmployee.getEmpSeq())
                 .empName(employeeDTO.getEmpName())
                 .empPosition(employeeDTO.getEmpPosition())

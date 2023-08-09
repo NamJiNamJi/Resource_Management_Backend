@@ -19,6 +19,10 @@ public class UserRepository {
         sqlSession.insert("com.douzone.wehago.mapper.UserMapper.userRegister", user);
     }
 
+    public User save() {
+        return sqlSession.selectOne("com.douzone.wehago.mapper.UserMapper.userRegister");
+    }
+
     public User findUser(String userId) {
         return sqlSession.selectOne("com.douzone.wehago.mapper.UserMapper.findUser", userId);
     }

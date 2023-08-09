@@ -7,6 +7,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class EmployeeResponseDTO {
+    private Integer userSeq;
     private Integer empSeq;
     private String empName;
     private String empPosition;

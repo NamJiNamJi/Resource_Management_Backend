@@ -12,6 +12,12 @@
         VALUES (#{userId}, #{userPwd}, #{userName}, #{userEmail}, #{userPhone}, #{userGender}, #{userAddress})
     </insert>
 
+    <select id ="save" parameterType="com.douzone.wehago.domain.User" resultType="com.douzone.wehago.domain.User">
+        INSERT INTO tb_users (user_name)
+        VALUES (#{userName})
+        RETURNING user_seq as userSeq
+    </select>
+
     <!-- 로그인 로직 -->
     <select id="findUser" parameterType="java.lang.String" resultType="com.douzone.wehago.domain.User">
         SELECT * FROM tb_users WHERE user_id = #{userId}
