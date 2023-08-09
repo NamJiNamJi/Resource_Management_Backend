@@ -44,8 +44,8 @@ public class EmployeeService {
         Employee employee = Employee.builder()
                 .empName(employeeDTO.getEmpName())
                 .empPosition(employeeDTO.getEmpPosition())
-                .copSeq(user.getCopSeq())
-                .userSeq(user.getUserSeq())
+                .copSeq(employeeDTO.getCopSeq())
+                .userSeq(employeeDTO.getUserSeq())
                 .authLevel(employeeDTO.getAuthLevel())
                 .build();
 
@@ -58,6 +58,7 @@ public class EmployeeService {
                 .empPosition(employeeDTO.getEmpPosition())
                 .authLevel(employeeDTO.getAuthLevel())
                 .build();
+
     }
 
     @Transactional(readOnly = true)
