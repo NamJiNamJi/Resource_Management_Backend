@@ -1,6 +1,8 @@
 package com.douzone.wehago.controller;
 
 import com.douzone.wehago.common.Response;
+import com.douzone.wehago.dto.car.CarPageResponseDTO;
+import com.douzone.wehago.dto.reservation.ReservationDTO;
 import com.douzone.wehago.dto.space.SpaceDTO;
 import com.douzone.wehago.dto.space.SpacePageResponseDTO;
 import com.douzone.wehago.dto.space.SpaceResponseDTO;
@@ -9,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +26,14 @@ public class SpaceController {
 
     private final SpaceService spaceService;
 
+    @PostMapping("/spacesearch")
+    public ResponseEntity<Object> roomRsvList(@RequestBody ReservationDTO reservationDTO, @AuthenticationPrincipal UserDetails userDetails){
+        System.out.println(reservationDTO.getRsvStart());
+        SpacePageResponseDTO spacePageResponseDTO = spaceService.findspaceList(reservationDTO,userDetails);
+        Response response = new Response(HttpStatus.CREATED, "조회 성공", spacePageResponseDTO);
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
     @PostMapping
     public ResponseEntity<Object> saceSapce(@RequestPart(value = "data") SpaceDTO spaceDTO,
                                             @RequestPart(value = "image", required = false) MultipartFile image)

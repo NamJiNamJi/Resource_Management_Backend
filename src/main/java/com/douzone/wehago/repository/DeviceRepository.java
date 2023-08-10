@@ -1,6 +1,8 @@
 package com.douzone.wehago.repository;
 
+import com.douzone.wehago.domain.Car;
 import com.douzone.wehago.domain.Device;
+import com.douzone.wehago.dto.reservation.ReservationDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -18,7 +20,9 @@ public class DeviceRepository {
     public void save(Device device) {
         sqlSession.insert("com.douzone.wehago.mapper.DeviceMapper.save", device);
     }
-
+    public List<Device> finddeviceList(ReservationDTO reservationDTO){
+        return sqlSession.selectList("com.douzone.wehago.mapper.DeviceMapper.finddeviceList",reservationDTO);
+    }
     public List<Device> findAll() {
         return  sqlSession.selectList("com.douzone.wehago.mapper.DeviceMapper.findAll");
     }
