@@ -44,6 +44,25 @@ public class CarService {
                 .list(carResponseDTOList)
                 .build();
     }
+
+    @Transactional(readOnly = true)
+    public CarPageResponseDTO findAllCar() {
+
+        List<Car> list = carRepository.findAll();
+
+        List<CarResponseDTO> carResponseDTOList = new ArrayList<>();
+
+        for (Car car : list) {
+            if (car.getCarState()) {
+                carResponseDTOList.add(getCarResponseDTO(car));
+            }
+        }
+
+        return CarPageResponseDTO.builder()
+                .list(carResponseDTOList)
+                .build();
+    }
+
     @Transactional
     public CarResponseDTO saveCar (CarDTO carDTO, MultipartFile image) throws IOException {
 
@@ -64,23 +83,7 @@ public class CarService {
         return getCarResponseDTO(car);
     }
 
-    @Transactional(readOnly = true)
-    public CarPageResponseDTO findAllCar() {
 
-        List<Car> list = carRepository.findAll();
-
-        List<CarResponseDTO> carResponseDTOList = new ArrayList<>();
-
-        for (Car car : list) {
-            if (car.getCarState()) {
-                carResponseDTOList.add(getCarResponseDTO(car));
-            }
-        }
-
-        return CarPageResponseDTO.builder()
-                .list(carResponseDTOList)
-                .build();
-    }
 
     @Transactional(readOnly = true)
     public CarPageResponseDTO searchCar (String columnName, String searchString) {
