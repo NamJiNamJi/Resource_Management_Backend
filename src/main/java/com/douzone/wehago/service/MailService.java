@@ -3,7 +3,6 @@ package com.douzone.wehago.service;
 import com.douzone.wehago.common.exception.BusinessException;
 import com.douzone.wehago.common.exception.ErrorCode;
 import com.douzone.wehago.domain.User;
-import com.douzone.wehago.dto.CompanyResponseDTO;
 import com.douzone.wehago.dto.MailDTO;
 import com.douzone.wehago.repository.CompanyRepository;
 import com.douzone.wehago.security.UserDetailsImpl;
