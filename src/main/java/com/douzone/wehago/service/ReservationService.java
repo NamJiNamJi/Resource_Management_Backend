@@ -16,7 +16,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.douzone.wehago.domain.User;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,10 +30,12 @@ public class ReservationService{
 
     private final ModelMapper modelMapper;
     private final ReservationRepository reservationRepository;
-
+    protected static final String APP_TYPE_URL_ENCODED = "application/x-www-form-urlencoded;charset=UTF-8";
+    protected static final String APP_TYPE_JSON = "application/json;charset=UTF-8";
     @Transactional(readOnly = true)
-    public ReservationPageResponseDTO reservationList(int pageNo , int pageSize,UserDetails userDetails){
+    public ReservationPageResponseDTO reservationList(int pageNo , int pageSize, UserDetails userDetails){
         User user = ((UserDetailsImpl) userDetails).getUser();
+
         String rsvId = user.getUserId();
 
 
@@ -99,4 +103,5 @@ public class ReservationService{
 
         return null;
     }
+
 }

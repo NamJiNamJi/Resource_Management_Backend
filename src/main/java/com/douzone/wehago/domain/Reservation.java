@@ -21,7 +21,7 @@ public class Reservation {
     private String rsvId; // 예약자 아이디
     private String rsvName; // 예약자명
     private String rsvExplain; // 설명
-    private String rsvParti; // 사용인원
+    private Integer rsvParti; // 사용인원
     private String rsvTitle; // 예약제목
     private Timestamp rsvStart; // 예약 시작 시간
     private Timestamp rsvEnd; // 예약 종료 시간
