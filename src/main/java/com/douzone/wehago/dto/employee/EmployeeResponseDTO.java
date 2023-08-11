@@ -11,5 +11,6 @@ public class EmployeeResponseDTO {
     private Integer empSeq;
     private String empName;
     private String empPosition;
+    private Integer copSeq;
     private AuthLevel authLevel;
 }

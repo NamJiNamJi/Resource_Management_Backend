@@ -37,6 +37,13 @@ public class UserController {
         return ResponseEntity.status(response.getStatus()).body(response.getMessage());
     }
 
+    @PostMapping("/api/user/signup/invited")
+    public ResponseEntity<Object> invitedSignUp(@RequestBody @Valid UserRegisterDTO userRegisterDTO) {
+
+        Response response = userService.invitedUpdate(userRegisterDTO);
+        return ResponseEntity.status(response.getStatus()).body(response.getMessage());
+    }
+
     // todo :: user 회원가입 id check Controller (token 필요없음)
     @PostMapping("/api/user/duplicate")
     public ResponseEntity<?> idCheck(@RequestParam String userId) {

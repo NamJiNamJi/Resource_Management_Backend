@@ -235,6 +235,24 @@ public class UserService {
     }
 
     @Transactional
+    public Response invitedUpdate(UserRegisterDTO userRegisterDTO) {
+
+        try {
+            String password = passwordEncoder.encode(userRegisterDTO.getUserPwd());
+            userRegisterDTO.beforeRegisterUpdate(password);
+
+            User user = modelMapper.map(userRegisterDTO, User.class);
+            userRepository.updateInvited(user);
+
+            return new Response(HttpStatus.OK, "회원가입을 축하합니다!", null);
+
+        } catch (Exception e) {
+            return new Response(HttpStatus.BAD_REQUEST, "잘못된 요청입니다.", null);
+        }
+
+    }
+
+    @Transactional
     public UserResponseDTO ImageUpdate(UserDTO userDTO, MultipartFile image) throws IOException {
         String imageUrl = s3Uploader.upload(image, "user/image");
         userDTO.setUserImage(imageUrl);
@@ -252,4 +270,6 @@ public class UserService {
         //return UserResponseDTO.builder().message("회원정보가 정상적으로 수정되었습니다.").build();
 
     }
+
+
 }

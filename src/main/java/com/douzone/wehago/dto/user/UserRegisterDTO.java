@@ -31,6 +31,8 @@ public class UserRegisterDTO {
     @NotBlank
     private String userAddress;
 
+    private Integer copSeq;
+
     public void beforeRegisterUpdate(String password) {
         this.userPwd = password;
     }

@@ -19,8 +19,8 @@ public class UserRepository {
         sqlSession.insert("com.douzone.wehago.mapper.UserMapper.userRegister", user);
     }
 
-    public User save() {
-        return sqlSession.selectOne("com.douzone.wehago.mapper.UserMapper.userRegister");
+    public User saveEmployee(String userName) {
+        return sqlSession.selectOne("com.douzone.wehago.mapper.UserMapper.saveEmployee", userName);
     }
 
     public User findUser(String userId) {
@@ -44,6 +44,10 @@ public class UserRepository {
 
     public int updateUser(UserDTO userDTO) {
         return sqlSession.update("com.douzone.wehago.mapper.UserMapper.updateUser", userDTO);
+    }
+
+    public int updateInvited(User user) {
+        return sqlSession.update("com.douzone.wehago.mapper.UserMapper.updateInvited", user);
     }
     public int updateImage(User user){
         return  sqlSession.update("com.douzone.wehago.mapper.UserMapper.updateImage", user);

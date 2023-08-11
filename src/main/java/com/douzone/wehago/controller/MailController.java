@@ -20,6 +20,7 @@ public class MailController {
     @PostMapping("/api/employee/mail")
     public ResponseEntity<Object> mailSend(@RequestBody MailDTO mailDTO,
                                            @AuthenticationPrincipal UserDetails userDetails) {
+        System.out.println(mailDTO.getUserSeq());
         mailService.mailSend(mailDTO, userDetails);
 
         Response response = new Response(HttpStatus.OK, mailDTO.getEmpMail() + "로 메일 발송 성공", null);
