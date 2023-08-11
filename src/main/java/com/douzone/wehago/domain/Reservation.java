@@ -15,7 +15,14 @@ import java.time.LocalDateTime;
 @Getter
 public class Reservation {
 
-    private Timestamp rsvStart; // 예약 시작 시간
-    private Timestamp rsvEnd; // 예약 종료 시간
-    private Integer copSeq; // 회사 일련번호
+    private Integer copSeq;
+    private Integer rsvDetail;
+    private String rsvId;
+    private String rsvName;
+    private String rsvTitle;
+    private Integer rsvParti;
+    private String rsvExplain;
+    private Timestamp rsvStart;
+    private Timestamp rsvEnd;
+
 }

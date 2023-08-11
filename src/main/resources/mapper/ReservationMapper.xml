@@ -6,7 +6,7 @@
 
 <mapper namespace="com.douzone.wehago.mapper.ReservationMapper">
 
-    <!-- 저장된 차량 이벤트 찾기 -->
+    <!-- 저장된 이벤트 찾기 -->
     <select id="findAllReservation" parameterType="java.lang.Integer" resultType="com.douzone.wehago.dto.reservation.ResponseReservationDTO">
         SELECT a.rsv_seq, a.cop_seq, a.cop_name, a.rsc_seq, b.rsc_name, a.rsv_detail, a.car_name, a.rsv_id, a.rsv_name, a.car_explain, a.rsv_start, a.rsv_end FROM
             (SELECT rc.rsv_seq, rc.cop_seq, cp.cop_name, rc.rsc_seq, rc.rsv_detail, rc.rsv_id, rc.rsv_name, rc.car_name, rc.car_explain ,rc.rsv_start, rc.rsv_end FROM
@@ -22,5 +22,10 @@
                 (SELECT rsc_seq, rsc_name FROM tb_resources) as b
                 ON a.rsc_seq = b.rsc_seq;
     </select>
+
+    <insert id="registrationEvent" parameterType="com.douzone.wehago.domain.Reservation">
+        INSERT INTO tb_reservations (cop_seq, rsv_detail, rsv_id, rsv_name, rsv_title, rsv_parti, rsv_explain, rsv_start, rsv_end)
+        VALUES (#{copSeq}, #{rsvDetail}, #{rsvId}, #{rsvName}, #{rsvTitle}, #{rsvParti}, #{rsvExplain}, #{rsvStart}, #{rsvEnd})
+    </insert>
 
 </mapper>
