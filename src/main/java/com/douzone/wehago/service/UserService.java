@@ -215,7 +215,7 @@ public class UserService {
     @Transactional
     public ResponseEntity<?> userUpdate(UserDTO userDTO, UserDetails userDetails) {
 
-            User user = ((UserDetailsImpl) userDetails).getUser();
+            User user = ((UserDetailsImpl) userDetails).getUser(); // 토큰이 유효한 토큰이라면 유저 정보를 가지고 온다.
 
             Map<String, Object> message = new HashMap<>();
 
@@ -231,6 +231,24 @@ public class UserService {
             message.put("유저 데이터 변경 : ", result);
 
             return ResponseEntity.status(HttpStatus.OK).body(message);
+
+    }
+
+    @Transactional
+    public Response invitedUpdate(UserRegisterDTO userRegisterDTO) {
+
+        try {
+            String password = passwordEncoder.encode(userRegisterDTO.getUserPwd());
+            userRegisterDTO.beforeRegisterUpdate(password);
+
+            User user = modelMapper.map(userRegisterDTO, User.class);
+            userRepository.updateInvited(user);
+
+            return new Response(HttpStatus.OK, "회원가입을 축하합니다!", null);
+
+        } catch (Exception e) {
+            return new Response(HttpStatus.BAD_REQUEST, "잘못된 요청입니다.", null);
+        }
 
     }
 
@@ -252,4 +270,6 @@ public class UserService {
         //return UserResponseDTO.builder().message("회원정보가 정상적으로 수정되었습니다.").build();
 
     }
+
+
 }

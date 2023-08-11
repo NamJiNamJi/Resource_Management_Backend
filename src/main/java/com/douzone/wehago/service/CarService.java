@@ -1,6 +1,8 @@
 package com.douzone.wehago.service;
 
 import com.douzone.wehago.common.S3Uploader;
+import com.douzone.wehago.common.exception.BusinessException;
+import com.douzone.wehago.common.exception.ErrorCode;
 import com.douzone.wehago.domain.Car;
 import com.douzone.wehago.domain.User;
 import com.douzone.wehago.dto.car.CarDTO;
@@ -64,9 +66,16 @@ public class CarService {
     }
 
     @Transactional
-    public CarResponseDTO saveCar (CarDTO carDTO, MultipartFile image) throws IOException {
+    public CarResponseDTO saveCar (CarDTO carDTO, MultipartFile image, UserDetails userDetails) throws IOException {
 
+        System.out.println("userDetails : " + userDetails);
+        User user = ((UserDetailsImpl) userDetails).getUser();
+        System.out.println("CopSeq" + user.getCopSeq());
         String imageUrl = s3Uploader.upload(image, "car/image");
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
 
         Car car = Car.builder()
                 .carName(carDTO.getCarName())
@@ -75,7 +84,7 @@ public class CarService {
                 .carYear(carDTO.getCarYear())
                 .carImage(imageUrl)
                 .carExplain(carDTO.getCarExplain())
-                .copSeq(2)
+                .copSeq(user.getCopSeq())
                 .rscSeq(1)
                 .build();
         carRepository.save(car);

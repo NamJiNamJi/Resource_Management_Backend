@@ -37,6 +37,17 @@ public class EmployeeController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+
+    @PostMapping("/add")
+    public ResponseEntity<Object> addEmployee(@RequestBody EmployeeDTO employeeDTO,
+                                              @AuthenticationPrincipal UserDetails userDetails) {
+
+        EmployeeResponseDTO employeeResponseDTO = employeeService.addEmployee(employeeDTO, userDetails);
+        Response response = new Response(HttpStatus.CREATED, "사원 등록 성공", employeeResponseDTO);
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
 //    @PostMapping
 //    public ResponseEntity<Object> saveEmployee(@RequestBody EmployeeDTO employeeDTO,
 //                                               @AuthenticationPrincipal UserDetails userDetails) {

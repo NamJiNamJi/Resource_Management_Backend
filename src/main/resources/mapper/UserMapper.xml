@@ -12,6 +12,12 @@
         VALUES (#{userId}, #{userPwd}, #{userName}, #{userEmail}, #{userPhone}, #{userGender}, #{userAddress})
     </insert>
 
+    <select id ="saveEmployee" parameterType="com.douzone.wehago.domain.User" resultType="com.douzone.wehago.domain.User">
+        INSERT INTO tb_users (user_name)
+        VALUES (#{userName})
+        RETURNING user_seq as userSeq
+    </select>
+
     <!-- 로그인 로직 -->
     <select id="findUser" parameterType="java.lang.String" resultType="com.douzone.wehago.domain.User">
         SELECT * FROM tb_users WHERE user_id = #{userId}
@@ -71,6 +77,13 @@
     <select id="duplicationUserId" parameterType="java.lang.String" resultType="int">
         SELECT count(user_id) FROM tb_users WHERE user_id = #{userId}
     </select>
+
+
+    <!-- 초대 회원가입(업데이트) -->
+    <update id="updateInvited" parameterType="com.douzone.wehago.domain.User">
+        UPDATE tb_users set user_id = #{userId}, user_pwd = #{userPwd}, user_name = #{userName}, user_email = #{userEmail}, user_phone = #{userPhone}, user_gender = #{userGender}, user_address = #{userAddress}, cop_seq = #{copSeq}
+                        where user_seq = #{userSeq}
+    </update>
 
 
 </mapper>
