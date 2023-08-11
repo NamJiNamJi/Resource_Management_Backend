@@ -2,12 +2,19 @@ package com.douzone.wehago.service;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 import com.douzone.wehago.common.S3Uploader;
+import com.douzone.wehago.domain.Car;
 import com.douzone.wehago.domain.Device;
+import com.douzone.wehago.domain.User;
+import com.douzone.wehago.dto.car.CarPageResponseDTO;
+import com.douzone.wehago.dto.car.CarResponseDTO;
 import com.douzone.wehago.dto.device.DeviceDTO;
 import com.douzone.wehago.dto.device.DevicePageResponseDTO;
 import com.douzone.wehago.dto.device.DeviceResponseDTO;
+import com.douzone.wehago.dto.reservation.ReservationDTO;
 import com.douzone.wehago.repository.DeviceRepository;
+import com.douzone.wehago.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +31,25 @@ public class DeviceService {
     private final DeviceRepository deviceRepository;
     private final S3Uploader s3Uploader;
 
+
+    @Transactional
+    public DevicePageResponseDTO finddeviceList(ReservationDTO reservationDTO , UserDetails userDetails){
+        User user = ((UserDetailsImpl) userDetails).getUser();
+        reservationDTO.setCopSeq(user.getCopSeq());
+        System.out.println(user.getCopSeq());
+        List<Device> list = deviceRepository.finddeviceList(reservationDTO);
+
+        List<DeviceResponseDTO> deviceResponseDTOList = new ArrayList<>();
+
+        for (Device device : list) {
+            if (device.getDvcState()) {
+               deviceResponseDTOList.add(getDeviceResponseDTO(device));
+            }
+        }
+        return DevicePageResponseDTO.builder()
+                .list(deviceResponseDTOList)
+                .build();
+    }
     @Transactional
     public DeviceResponseDTO saveDevice (DeviceDTO deviceDTO, MultipartFile image) throws IOException {
 

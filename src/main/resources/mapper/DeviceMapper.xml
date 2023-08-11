@@ -11,6 +11,21 @@
         VALUES (#{dvcName}, #{dvcSerial}, #{dvcImage}, #{dvcBuy}, #{dvcExplain}, #{copSeq}, #{rscSeq})
     </insert>
 
+    <select id ="finddeviceList"  resultType="com.douzone.wehago.domain.Device" parameterType="com.douzone.wehago.dto.reservation.ReservationDTO">
+        SELECT * FROM tb_devices
+        WHERE dvc_seq
+            not in(
+                  (select rsv_detail from tb_reservations where #{rsvStart} &lt; rsv_end and rsv_end &lt; #{rsvEnd})
+                  union
+                  (select rsv_detail from tb_reservations where #{rsvStart} &lt; rsv_start and rsv_end &lt; #{rsvEnd})
+                  union
+                  (select rsv_detail from tb_reservations where #{rsvStart} &lt; rsv_start and rsv_start &lt; #{rsvEnd})
+                  union
+                  (select rsv_detail from tb_reservations where #{rsvStart} &gt; rsv_start and rsv_end &gt; #{rsvEnd}))
+
+          and cop_seq = ${copSeq} and dvc_state = true;
+    </select>
+
     <select id ="findAll" resultType="com.douzone.wehago.domain.Device">
         SELECT * FROM tb_devices
         WHERE dvc_state = true
