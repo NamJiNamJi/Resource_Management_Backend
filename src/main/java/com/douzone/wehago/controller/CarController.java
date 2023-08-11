@@ -36,10 +36,11 @@ public class CarController {
 
     @PostMapping
     public ResponseEntity<Object> saveCar(@RequestPart(value = "data") CarDTO carDTO,
-                                          @RequestPart(value = "image", required = false) MultipartFile image)
+                                          @RequestPart(value = "image", required = false) MultipartFile image,
+                                          @AuthenticationPrincipal UserDetails userDetails)
             throws IOException {
 
-        CarResponseDTO carResponseDTO = carService.saveCar(carDTO, image);
+        CarResponseDTO carResponseDTO = carService.saveCar(carDTO, image, userDetails);
         Response response = new Response(HttpStatus.CREATED, "등록 성공", carResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);

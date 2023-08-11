@@ -11,9 +11,10 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
+@Setter
 public class ReservationDTO {
+
     private Integer rsvSeq; // 예약 일련번호
     private Integer copSeq; // 회사 일련번호
     private Integer rsvDetail; //세부 일련번호
@@ -27,4 +28,5 @@ public class ReservationDTO {
     private Timestamp rsvCreated;
     private Timestamp rsvUpdated;
     private boolean rsvState; // 예약 상태
+
 }
