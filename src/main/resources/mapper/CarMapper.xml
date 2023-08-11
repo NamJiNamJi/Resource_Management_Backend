@@ -32,7 +32,6 @@
         SELECT * FROM tb_cars
         WHERE car_state = true
         ORDER BY car_created DESC
-        LIMIT 5 OFFSET 0
     </select>
     <select id ="findcarList"  resultType="com.douzone.wehago.domain.Car" parameterType="com.douzone.wehago.dto.reservation.ReservationDTO">
         SELECT * FROM tb_cars

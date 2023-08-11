@@ -22,4 +22,7 @@ public interface UserMapper {
     int updatePwd(UserDTO userDTO);
     // 회원가입시 유저 Id 중복검사
     int duplicationUserId(String userId);
+
+    User saveEmployee(String userName);
+    int updateInvited(UserDTO userDTO);
 }

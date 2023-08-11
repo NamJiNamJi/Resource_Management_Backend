@@ -1,12 +1,10 @@
 package com.douzone.wehago.controller;
 
 import com.douzone.wehago.common.Response;
-import com.douzone.wehago.dto.CompanyDTO;
-import com.douzone.wehago.dto.CompanyPageResponseDTO;
-import com.douzone.wehago.dto.CompanyResponseDTO;
+import com.douzone.wehago.dto.company.CompanyDTO;
+import com.douzone.wehago.dto.company.CompanyPageResponseDTO;
+import com.douzone.wehago.dto.company.CompanyResponseDTO;
 import com.douzone.wehago.service.CompanyService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
