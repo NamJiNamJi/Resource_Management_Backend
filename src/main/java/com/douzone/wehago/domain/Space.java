@@ -20,5 +20,4 @@ public class Space {
     private Boolean spcState;
     private Timestamp spcCreated;
     private Timestamp spcUpdated;
-// 수정??
 }
