@@ -26,4 +26,10 @@
             SELECT * FROM tb_reservations
             WHERE rsv_id = #{rsvId}
         </select>
+
+        <update id="updateReservation">
+            UPDATE tb_reservations SET rsv_state = false
+            WHERE rsv_end &lt; now();
+        </update>
+
 </mapper>

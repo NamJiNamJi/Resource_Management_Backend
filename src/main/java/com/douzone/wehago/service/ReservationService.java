@@ -8,6 +8,7 @@ import com.douzone.wehago.repository.ReservationRepository;
 import com.douzone.wehago.security.UserDetailsImpl;
 import com.github.pagehelper.Page;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.douzone.wehago.domain.User;
@@ -41,6 +42,14 @@ public class ReservationService{
                 .total(total)
                 .build();
     }
+
+    @Transactional
+    public void scheduledReservation() {
+        reservationRepository.updateReservation();
+    }
+
+
+
 
 
 

@@ -18,4 +18,8 @@ public class ReservationRepository {
         PageHelper.startPage(pageNo, pageSize);
         return sqlSession.selectList("com.douzone.wehago.mapper.ReservationMapper.reservationList", rsvId);
     }
+
+    public void updateReservation() {
+        sqlSession.update("com.douzone.wehago.mapper.ReservationMapper.updateReservation");
+    }
 }
