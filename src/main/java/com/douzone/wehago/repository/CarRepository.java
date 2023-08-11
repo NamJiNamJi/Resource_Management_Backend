@@ -17,33 +17,48 @@ public class CarRepository {
     private final SqlSession sqlSession;
   
     public void save(Car car) {
+
         sqlSession.insert("com.douzone.wehago.mapper.CarMapper.save", car);
+
     }
 
     public List<Car> findAll(){
+
         return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.findAll");
+
     }
+
     public List<Car> findcarList(ReservationDTO reservationDTO){
+
         return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.findcarList",reservationDTO);
+
     }
+
     public List<Car> searchCar(String columnName, String searchString) {
+
         Map<String, String> map = new HashMap<>();
         map.put("columnName", converCamelToSnakeCase(columnName));
         map.put("searchString", searchString);
         return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.searchCar", map);
+
     }
 
     public Car findOne(Integer car_seq) {
+
         return sqlSession.selectOne("com.douzone.wehago.mapper.CarMapper.findOne", car_seq);
+
     }
 
     public Integer update(Car car){
+
         return sqlSession.update("com.douzone.wehago.mapper.CarMapper.update", car);
+
     }
 
     public Car delete(Car car) {
 
         return sqlSession.selectOne("com.douzone.wehago.mapper.CarMapper.delete", car);
+
     }
 
     private String converCamelToSnakeCase(String camelCase) {

@@ -4,6 +4,7 @@ import ch.qos.logback.core.net.SyslogOutputStream;
 import com.douzone.wehago.common.Response;
 import com.douzone.wehago.domain.Reservation;
 import com.douzone.wehago.dto.reservation.ReservationPageResponseDTO;
+import com.douzone.wehago.dto.reservation.ReservationDTO;
 import com.douzone.wehago.service.ReservationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,11 +31,21 @@ public class ReservationController {
     @GetMapping("/api/reservationlist")
     public ResponseEntity<Object> reservationList(@RequestParam(defaultValue = "1") Integer pageNum,
                                                   @RequestParam(defaultValue = "3") Integer pageSize,
-                                                  @AuthenticationPrincipal UserDetails userDetails){
-        ReservationPageResponseDTO reservationPageResponseDTO = reservationService.reservationList(pageNum,pageSize,userDetails);
+                                                  @AuthenticationPrincipal UserDetails userDetails) {
+        ReservationPageResponseDTO reservationPageResponseDTO = reservationService.reservationList(pageNum, pageSize, userDetails);
         Response response = new Response(HttpStatus.OK, "나의 예약 조회 성공", reservationPageResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // 예약 등록
+    @PostMapping("/api/reservation")
+    public ResponseEntity<?> registerEvent(@RequestBody ReservationDTO reservationDTO,
+                                           @AuthenticationPrincipal UserDetails userDetails) {
+
+        reservationService.reservationEvent(reservationDTO, userDetails);
+
+        return null;
     }
 
 }
