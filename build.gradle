@@ -67,6 +67,12 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
 
+
+    // 카카오톡
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation group: 'org.json', name: 'json', version: '20210307'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
