@@ -1,4 +1,4 @@
-package com.douzone.wehago.dto;
+package com.douzone.wehago.dto.company;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
