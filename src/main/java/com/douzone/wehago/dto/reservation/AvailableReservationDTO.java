@@ -7,9 +7,8 @@ import java.sql.Timestamp;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
-public class ResponseReservationDTO {
+public class AvailableReservationDTO {
 
     private Integer rsvSeq; // 예약 일련번호
     private Integer copSeq; // 회사 일련번호
@@ -21,9 +20,6 @@ public class ResponseReservationDTO {
     private String rsvTitle; // 예약제목
     private Timestamp rsvStart; // 예약 시작 시간
     private Timestamp rsvEnd; // 예약 종료 시간
-    private Timestamp rsvCreated;
-    private Timestamp rsvUpdated;
-    private boolean rsvState; // 예약 상태
     private Integer rsvNum;
 
 }

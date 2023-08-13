@@ -26,9 +26,13 @@ public class CarController {
     private final CarService carService;
 
     @PostMapping("/carsearch")
-    public ResponseEntity<Object> CarRsvList(@RequestBody ReservationDTO reservationDTO, @AuthenticationPrincipal UserDetails userDetails){
+    public ResponseEntity<Object> CarRsvList(@RequestBody ReservationDTO reservationDTO,
+                                             @AuthenticationPrincipal UserDetails userDetails) {
+
         System.out.println(reservationDTO.getRsvStart());
-        CarPageResponseDTO carPageResponseDTO = carService.findcarList(reservationDTO,userDetails);
+        System.out.println(reservationDTO.getRsvEnd());
+
+        CarPageResponseDTO carPageResponseDTO = carService.findcarList(reservationDTO, userDetails);
         Response response = new Response(HttpStatus.CREATED, "조회 성공", carPageResponseDTO);
 
         return new ResponseEntity<>(response,HttpStatus.OK);
