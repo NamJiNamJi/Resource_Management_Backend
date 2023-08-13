@@ -16,6 +16,11 @@
         INSERT INTO tb_reservations (cop_seq, rsv_num, rsv_detail, rsv_id, rsv_name, rsv_title, rsv_parti, rsv_explain, rsv_start, rsv_end)
         VALUES (#{copSeq}, #{rsvNum}, #{rsvDetail}, #{rsvId}, #{rsvName}, #{rsvTitle}, #{rsvParti}, #{rsvExplain}, #{rsvStart}, #{rsvEnd})
     </insert>
+  
+    <update id="updateReservation">
+        UPDATE tb_reservations SET rsv_state = false
+        WHERE rsv_end &lt; now();
+    </update>
 
     <!-- 현재 true 값인 이벤트 찾기 -->
     <select id="findAllAvailableReservation" parameterType="java.lang.Integer" resultType="com.douzone.wehago.dto.reservation.AvailableReservationDTO">

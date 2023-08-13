@@ -11,6 +11,7 @@ import com.douzone.wehago.repository.ReservationRepository;
 import com.douzone.wehago.security.UserDetailsImpl;
 import com.github.pagehelper.Page;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -56,6 +57,13 @@ public class ReservationService{
                 .total(total)
                 .build();
     }
+
+    @Transactional
+    public void scheduledReservation() {
+        reservationRepository.updateReservation();
+    }
+
+
 
     private ResponseReservationDTO getResponseReservationDTO (Reservation reservation){
         return ResponseReservationDTO.builder()

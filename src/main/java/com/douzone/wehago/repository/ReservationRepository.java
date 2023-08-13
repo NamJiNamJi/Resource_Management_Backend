@@ -18,9 +18,17 @@ public class ReservationRepository {
         PageHelper.startPage(pageNo, pageSize);
         return sqlSession.selectList("com.douzone.wehago.mapper.ReservationMapper.reservationList", rsvId);
     }
+
+
+    public void updateReservation() {
+        sqlSession.update("com.douzone.wehago.mapper.ReservationMapper.updateReservation");
+    }
+
+
     // 이벤트 등록
     public void registrationEvent(Reservation reservation) {
         sqlSession.insert("com.douzone.wehago.mapper.ReservationMapper.registrationEvent", reservation);
+
     }
 
     // 현재 true 값인 모든 이벤트 찾기
