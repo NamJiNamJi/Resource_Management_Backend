@@ -19,6 +19,7 @@ public class ResponseReservationDTO {
     private String rsvExplain; // 설명
     private Integer rsvParti; // 사용인원
     private String rsvTitle; // 예약제목
+    private Integer rsvNum;
     private Timestamp rsvStart; // 예약 시작 시간
     private Timestamp rsvEnd; // 예약 종료 시간
     private Timestamp rsvCreated;

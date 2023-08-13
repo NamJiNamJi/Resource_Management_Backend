@@ -18,3 +18,9 @@ spring:
       max-file-size: 1000000MB
       max-request-size: 1000000MB
 
+
+twilio :
+  accoount_sid : AC8d6a50d7a294c16a9d9ac3ad2c4035cd
+  auth_token : 4adfa760a56fc94e8be24aea8745b87b
+  trual_number : +14702062651
+

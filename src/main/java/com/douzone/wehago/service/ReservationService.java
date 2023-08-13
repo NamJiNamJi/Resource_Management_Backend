@@ -3,9 +3,7 @@ package com.douzone.wehago.service;
 
 import com.douzone.wehago.common.Response;
 import com.douzone.wehago.domain.Reservation;
-import com.douzone.wehago.dto.reservation.ReservationDTO;
-import com.douzone.wehago.dto.reservation.ReservationPageResponseDTO;
-import com.douzone.wehago.dto.reservation.ResponseReservationDTO;
+import com.douzone.wehago.dto.reservation.*;
 import com.douzone.wehago.repository.ReservationRepository;
 import com.douzone.wehago.security.UserDetailsImpl;
 import com.github.pagehelper.Page;
@@ -30,8 +28,6 @@ public class ReservationService{
 
     private final ModelMapper modelMapper;
     private final ReservationRepository reservationRepository;
-    protected static final String APP_TYPE_URL_ENCODED = "application/x-www-form-urlencoded;charset=UTF-8";
-    protected static final String APP_TYPE_JSON = "application/json;charset=UTF-8";
     @Transactional(readOnly = true)
     public ReservationPageResponseDTO reservationList(int pageNo , int pageSize, UserDetails userDetails){
         User user = ((UserDetailsImpl) userDetails).getUser();
@@ -102,6 +98,46 @@ public class ReservationService{
         reservationRepository.registrationEvent(reservation);
 
         return null;
+    }
+    public Map<Integer, Integer> getMonthlyReservationCounts(Integer copSeq) {
+        List<MonthlyCountDTO> monthlyCounts = reservationRepository.getMonthlyReservationCounts(copSeq);
+        Map<Integer, Integer> resultMap = new HashMap<>();
+
+        for (MonthlyCountDTO dto : monthlyCounts) {
+            resultMap.put(dto.getMonth(), dto.getCount());
+        }
+
+        return resultMap;
+    }
+    public Map<Integer, Integer> getMonthlyReservationCountsCar(ReservationChartDTO reservationChartDTO) {
+        List<MonthlyCountDTO> monthlyCounts = reservationRepository.getMonthlyReservationCountsCar(reservationChartDTO);
+        Map<Integer, Integer> resultMap = new HashMap<>();
+
+        for (MonthlyCountDTO dto : monthlyCounts) {
+            resultMap.put(dto.getMonth(), dto.getCount());
+        }
+
+        return resultMap;
+    }
+    public Map<Integer, Integer> getMonthlyReservationCountsDevice(ReservationChartDTO reservationChartDTO) {
+        List<MonthlyCountDTO> monthlyCounts = reservationRepository.getMonthlyReservationCountsDevice(reservationChartDTO);
+        Map<Integer, Integer> resultMap = new HashMap<>();
+
+        for (MonthlyCountDTO dto : monthlyCounts) {
+            resultMap.put(dto.getMonth(), dto.getCount());
+        }
+
+        return resultMap;
+    }
+    public Map<Integer, Integer> getMonthlyReservationCountsSpace(ReservationChartDTO reservationChartDTO) {
+        List<MonthlyCountDTO> monthlyCounts = reservationRepository.getMonthlyReservationCountsSpace(reservationChartDTO);
+        Map<Integer, Integer> resultMap = new HashMap<>();
+
+        for (MonthlyCountDTO dto : monthlyCounts) {
+            resultMap.put(dto.getMonth(), dto.getCount());
+        }
+
+        return resultMap;
     }
 
 }
