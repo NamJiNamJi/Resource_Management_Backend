@@ -43,9 +43,18 @@ public class ReservationController {
     public ResponseEntity<?> registerEvent(@RequestBody ReservationDTO reservationDTO,
                                            @AuthenticationPrincipal UserDetails userDetails) {
 
-        reservationService.reservationEvent(reservationDTO, userDetails);
+        Response response = reservationService.reservationEvent(reservationDTO, userDetails);
 
-        return null;
+        return ResponseEntity.status(response.getStatus()).body(response.getMessage());
+    }
+
+    // 캘린더 전체 예약 조회
+    @GetMapping("/api/reservation")
+    public ResponseEntity<?> allReservation(@AuthenticationPrincipal UserDetails userDetails) {
+
+        Response response = reservationService.allAvailableReservation(userDetails);
+
+        return ResponseEntity.status(response.getStatus()).body(response.getData());
     }
 
 }

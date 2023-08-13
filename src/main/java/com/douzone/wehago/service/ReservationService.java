@@ -3,6 +3,7 @@ package com.douzone.wehago.service;
 
 import com.douzone.wehago.common.Response;
 import com.douzone.wehago.domain.Reservation;
+import com.douzone.wehago.dto.reservation.AvailableReservationDTO;
 import com.douzone.wehago.dto.reservation.ReservationDTO;
 import com.douzone.wehago.dto.reservation.ReservationPageResponseDTO;
 import com.douzone.wehago.dto.reservation.ResponseReservationDTO;
@@ -16,9 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.douzone.wehago.domain.User;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +31,10 @@ public class ReservationService{
     private final ReservationRepository reservationRepository;
     protected static final String APP_TYPE_URL_ENCODED = "application/x-www-form-urlencoded;charset=UTF-8";
     protected static final String APP_TYPE_JSON = "application/json;charset=UTF-8";
+
+
+    // todo :: 겹치는거 리팩토링
+
     @Transactional(readOnly = true)
     public ReservationPageResponseDTO reservationList(int pageNo , int pageSize, UserDetails userDetails){
         User user = ((UserDetailsImpl) userDetails).getUser();
@@ -70,6 +73,8 @@ public class ReservationService{
                 .build();
     }
 
+
+    // 예약 등록 서비스
     @Transactional
     public Response reservationEvent(ReservationDTO reservationDTO, UserDetails userDetails) {
 
@@ -85,23 +90,58 @@ public class ReservationService{
                     .build();
         }
 
-        System.out.println("========= start ===========");
-        System.out.println(reservationDTO.getCopSeq());
-        System.out.println(reservationDTO.getRsvDetail());
-        System.out.println(reservationDTO.getRsvId());
-        System.out.println(reservationDTO.getRsvName());
-        System.out.println(reservationDTO.getRsvTitle());
-        System.out.println(reservationDTO.getRsvParti());
-        System.out.println(reservationDTO.getRsvExplain());
-        System.out.println(reservationDTO.getRsvStart());
-        System.out.println(reservationDTO.getRsvEnd());
-        System.out.println("=========  end  ===========");
+        try {
 
-        Reservation reservation = modelMapper.map(reservationDTO, Reservation.class);
+            Reservation reservation = modelMapper.map(reservationDTO, Reservation.class);
+            reservationRepository.registrationEvent(reservation);
 
-        reservationRepository.registrationEvent(reservation);
+        } catch (Exception e) {
+            Response.builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .message("예약 모달에 빈 곳이 없는지 확인해주세요.")
+                    .build();
+        }
 
-        return null;
+        return Response.builder()
+                .status(HttpStatus.OK)
+                .message("예약 등록이 완료되었습니다.")
+                .build();
     }
 
+    // 캘린더 회사 전체 예약 정보 가져오기
+    @Transactional
+    public Response allAvailableReservation(UserDetails userDetails) {
+
+        User user = ((UserDetailsImpl) userDetails).getUser(); // 토큰이 유효한 토큰이라면 유저 정보를 가지고 온다.
+
+        Map<String, Object> message = new HashMap<>();
+
+        if (user == null) {
+            String errorMessage = "토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.";
+            return Response.builder()
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .message(errorMessage)
+                    .build();
+        }
+
+        try {
+            List<AvailableReservationDTO> availableReservationDTOS =
+                    reservationRepository.findAllAvailableReservation(user.getCopSeq());
+
+            System.out.println(availableReservationDTOS.get(0).getRsvNum());
+
+            return Response.builder()
+                    .status(HttpStatus.OK)
+                    .message("조회 성공")
+                    .data(availableReservationDTOS)
+                    .build();
+
+        } catch (Exception e) {
+
+            return Response.builder()
+                    .status(HttpStatus.OK)
+                    .message("조회 성공")
+                    .build();
+        }
+    }
 }

@@ -11,10 +11,17 @@
         WHERE rsv_id = #{rsvId}
     </select>
 
+    <!-- 이벤트 등록 -->
     <insert id="registrationEvent" parameterType="com.douzone.wehago.domain.Reservation">
-        INSERT INTO tb_reservations (cop_seq, rsv_detail, rsv_id, rsv_name, rsv_title, rsv_parti, rsv_explain, rsv_start, rsv_end)
-        VALUES (#{copSeq}, #{rsvDetail}, #{rsvId}, #{rsvName}, #{rsvTitle}, #{rsvParti}, #{rsvExplain}, #{rsvStart}, #{rsvEnd})
+        INSERT INTO tb_reservations (cop_seq, rsv_num, rsv_detail, rsv_id, rsv_name, rsv_title, rsv_parti, rsv_explain, rsv_start, rsv_end)
+        VALUES (#{copSeq}, #{rsvNum}, #{rsvDetail}, #{rsvId}, #{rsvName}, #{rsvTitle}, #{rsvParti}, #{rsvExplain}, #{rsvStart}, #{rsvEnd})
     </insert>
+
+    <!-- 현재 true 값인 이벤트 찾기 -->
+    <select id="findAllAvailableReservation" parameterType="java.lang.Integer" resultType="com.douzone.wehago.dto.reservation.AvailableReservationDTO">
+        SELECT rsv_seq, rsv_num, cop_seq, rsv_detail, rsv_id, rsv_name, rsv_explain, rsv_parti, rsv_title, rsv_start, rsv_end FROM tb_reservations
+        WHERE cop_seq = #{copSeq} and rsv_state = true
+    </select>
 
     <!-- 저장된 이벤트 찾기 -->
     <select id="findAllReservation" parameterType="java.lang.Integer" resultType="com.douzone.wehago.dto.reservation.ResponseReservationDTO">

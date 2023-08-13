@@ -30,9 +30,9 @@ public class CarService {
     private final S3Uploader s3Uploader;
     @Transactional
     public CarPageResponseDTO findcarList(ReservationDTO reservationDTO , UserDetails userDetails){
+
         User user = ((UserDetailsImpl) userDetails).getUser();
         reservationDTO.setCopSeq(user.getCopSeq());
-        System.out.println(user.getCopSeq());
         List<Car> list = carRepository.findcarList(reservationDTO);
 
         List<CarResponseDTO> carResponseDTOList = new ArrayList<>();
