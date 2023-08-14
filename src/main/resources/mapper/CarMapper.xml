@@ -42,6 +42,7 @@
             (select rsv_detail from tb_reservations where #{rsvStart} &lt; rsv_start and rsv_end &lt; #{rsvEnd})
             union
             (select rsv_detail from tb_reservations where #{rsvStart} &lt; rsv_start and rsv_start &lt; #{rsvEnd})
+
             union
             (select rsv_detail from tb_reservations where #{rsvStart} &gt; rsv_start and rsv_end &gt; #{rsvEnd})
             union

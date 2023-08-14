@@ -11,10 +11,39 @@
         WHERE rsv_id = #{rsvId}
     </select>
 
+
+    <select id="getMonthlyReservationCountsCar" resultType="com.douzone.wehago.dto.reservation.MonthlyCountDTO">
+        SELECT EXTRACT(MONTH FROM rsv_created) AS month, COUNT(*) AS count
+        FROM tb_reservations
+        WHERE cop_seq = #{copSeq} AND rsv_num = #{rsvNum}
+        GROUP BY EXTRACT(MONTH FROM rsv_created)
+    </select>
+    <select id="getMonthlyReservationCountsDevice" resultType="com.douzone.wehago.dto.reservation.MonthlyCountDTO">
+        SELECT EXTRACT(MONTH FROM rsv_created) AS month, COUNT(*) AS count
+        FROM tb_reservations
+        WHERE cop_seq = #{copSeq} AND rsv_num = #{rsvNum}
+        GROUP BY EXTRACT(MONTH FROM rsv_created)
+    </select>
+    <select id="getMonthlyReservationCountsSpace" resultType="com.douzone.wehago.dto.reservation.MonthlyCountDTO">
+        SELECT EXTRACT(MONTH FROM rsv_created) AS month, COUNT(*) AS count
+        FROM tb_reservations
+        WHERE cop_seq = #{copSeq} AND rsv_num = #{rsvNum}
+        GROUP BY EXTRACT(MONTH FROM rsv_created)
+    </select>
+
+
+    <select id="getMonthlyReservationCountsAll" resultType="com.douzone.wehago.dto.reservation.MonthlyCountDTO">
+        SELECT EXTRACT(MONTH FROM rsv_created) AS month, COUNT(*) AS count
+        FROM tb_reservations
+        WHERE cop_seq = #{copSeq}
+        GROUP BY EXTRACT(MONTH FROM rsv_created)
+    </select>
+
     <!-- 이벤트 등록 -->
     <insert id="registrationEvent" parameterType="com.douzone.wehago.domain.Reservation">
         INSERT INTO tb_reservations (cop_seq, rsv_num, rsv_detail, rsv_id, rsv_name, rsv_title, rsv_parti, rsv_explain, rsv_start, rsv_end)
         VALUES (#{copSeq}, #{rsvNum}, #{rsvDetail}, #{rsvId}, #{rsvName}, #{rsvTitle}, #{rsvParti}, #{rsvExplain}, #{rsvStart}, #{rsvEnd})
+
     </insert>
   
     <update id="updateReservation">
@@ -44,4 +73,5 @@
                 (SELECT rsc_seq, rsc_name FROM tb_resources) as b
                 ON a.rsc_seq = b.rsc_seq;
     </select>
+
 </mapper>
