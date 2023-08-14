@@ -49,10 +49,20 @@ public class ReservationController {
     @PostMapping("/api/reservation")
     public ResponseEntity<?> registerEvent(@RequestBody ReservationDTO reservationDTO,
                                            @AuthenticationPrincipal UserDetails userDetails) {
-        System.out.println(reservationDTO.getRsvNum());
-        reservationService.reservationEvent(reservationDTO, userDetails);
 
-        return null;
+
+        Response response = reservationService.reservationEvent(reservationDTO, userDetails);
+
+        return ResponseEntity.status(response.getStatus()).body(response.getMessage());
+    }
+
+    // 캘린더 전체 예약 조회
+    @GetMapping("/api/reservation")
+    public ResponseEntity<?> allReservation(@AuthenticationPrincipal UserDetails userDetails) {
+
+        Response response = reservationService.allAvailableReservation(userDetails);
+
+        return ResponseEntity.status(response.getStatus()).body(response.getData());
     }
     @GetMapping("/api/reservationcount/selectAll")
     public ResponseEntity<Map<Integer, Integer>> getMonthlyReservationCounts(@AuthenticationPrincipal UserDetails userDetails) {
