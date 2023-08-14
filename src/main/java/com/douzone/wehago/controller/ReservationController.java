@@ -37,7 +37,9 @@ public class ReservationController {
     public ResponseEntity<Object> reservationList(@RequestParam(defaultValue = "1") Integer pageNum,
                                                   @RequestParam(defaultValue = "3") Integer pageSize,
                                                   @AuthenticationPrincipal UserDetails userDetails) {
+
         ReservationPageResponseDTO reservationPageResponseDTO = reservationService.reservationList(pageNum, pageSize, userDetails);
+        System.out.println(reservationPageResponseDTO.getPageSize() + "---" + reservationPageResponseDTO.getPageNum()+ "=="+ reservationPageResponseDTO.getTotal());
         Response response = new Response(HttpStatus.OK, "나의 예약 조회 성공", reservationPageResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

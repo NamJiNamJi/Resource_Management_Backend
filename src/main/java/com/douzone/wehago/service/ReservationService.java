@@ -29,10 +29,11 @@ public class ReservationService{
     private final ModelMapper modelMapper;
     private final ReservationRepository reservationRepository;
     @Transactional(readOnly = true)
-    public ReservationPageResponseDTO reservationList(int pageNo , int pageSize, UserDetails userDetails){
+    public ReservationPageResponseDTO reservationList(Integer pageNo , Integer pageSize, UserDetails userDetails){
         User user = ((UserDetailsImpl) userDetails).getUser();
 
         String rsvId = user.getUserId();
+        System.out.println(rsvId);
 
 
         List<Reservation> list = reservationRepository.reservationList(pageNo,pageSize,rsvId);
@@ -57,6 +58,7 @@ public class ReservationService{
                 .rsvDetail(reservation.getRsvDetail())
                 .rsvId(reservation.getRsvId())
                 .rsvName(reservation.getRsvName())
+                .rsvNum(reservation.getRsvNum())
                 .rsvExplain(reservation.getRsvExplain())
                 .rsvParti(reservation.getRsvParti())
                 .rsvTitle(reservation.getRsvTitle())
