@@ -126,7 +126,14 @@ public class EmployeeService {
 
     // 사원 검색
     @Transactional(readOnly = true)
-    public EmployeePageResponseDTO searchEmployee(String type, String keyword) {
+    public EmployeePageResponseDTO searchEmployee(String type, String keyword, UserDetails userDetails) {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
         List<Employee> employeeList = employeeRepository.searchEmployee(type, keyword);
         List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
 
@@ -171,7 +178,13 @@ public class EmployeeService {
     }
 
     @Transactional
-    public void deleteEmployee(Integer empSeq) {
+    public void deleteEmployee(Integer empSeq, UserDetails userDetails) {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
 
         Employee employee = Employee.builder()
                .empSeq(empSeq)
