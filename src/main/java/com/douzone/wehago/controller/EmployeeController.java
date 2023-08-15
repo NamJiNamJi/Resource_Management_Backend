@@ -6,8 +6,6 @@ import com.douzone.wehago.dto.employee.EmployeeDTO;
 import com.douzone.wehago.dto.employee.EmployeePageResponseDTO;
 import com.douzone.wehago.dto.employee.EmployeeResponseDTO;
 import com.douzone.wehago.service.EmployeeService;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,9 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @Slf4j
 @RestController
@@ -48,17 +43,6 @@ public class EmployeeController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-//    @PostMapping
-//    public ResponseEntity<Object> saveEmployee(@RequestBody EmployeeDTO employeeDTO,
-//                                               @AuthenticationPrincipal UserDetails userDetails) {
-//
-//        ResponseEntity<?> employeeResponseDTO = employeeService.saveEmployee(employeeDTO, userDetails);
-//
-//        Response response = new Response(HttpStatus.CREATED, "사원 등록 성공", employeeResponseDTO.getBody());
-//
-//        return new ResponseEntity<>(response, HttpStatus.CREATED);
-//    }
-
     @GetMapping
     public ResponseEntity<Object> findAll(@RequestParam(defaultValue = "1") Integer pageNum,
                                           @RequestParam(defaultValue = "3") Integer pageSize,
@@ -75,9 +59,10 @@ public class EmployeeController {
     // 사원 검색
     @GetMapping("/search")
     public ResponseEntity<Object> searchEmployee(@RequestParam(value = "type") String type,
-                                                 @RequestParam(value = "keyword") String keyword) {
+                                                 @RequestParam(value = "keyword") String keyword,
+                                                 @AuthenticationPrincipal UserDetails userDetails) {
         log.info(type + keyword);
-        EmployeePageResponseDTO employeePageResponseDTO = employeeService.searchEmployee(type, keyword);
+        EmployeePageResponseDTO employeePageResponseDTO = employeeService.searchEmployee(type, keyword, userDetails);
         Response response = new Response(HttpStatus.OK, "사원 검색 성공", employeePageResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -107,9 +92,9 @@ public class EmployeeController {
 
 
     @PostMapping("/del/{empSeq}")
-    public ResponseEntity<Object> deleteEmployee(@PathVariable Integer empSeq) {
+    public ResponseEntity<Object> deleteEmployee(@PathVariable Integer empSeq, @AuthenticationPrincipal UserDetails userDetails) {
 
-        employeeService.deleteEmployee(empSeq);
+        employeeService.deleteEmployee(empSeq, userDetails);
         Response response = new Response(HttpStatus.OK, "회사 삭제 성공", null);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
