@@ -25,6 +25,4 @@ public class ResponseReservationDTO {
     private Timestamp rsvCreated;
     private Timestamp rsvUpdated;
     private boolean rsvState; // 예약 상태
-    private Integer rsvNum;
-
 }
