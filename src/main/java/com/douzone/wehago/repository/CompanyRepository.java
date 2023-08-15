@@ -1,7 +1,7 @@
 package com.douzone.wehago.repository;
 
 import com.douzone.wehago.domain.Company;
-import com.douzone.wehago.dto.CompanyDTO;
+import com.douzone.wehago.dto.company.CompanyDTO;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;

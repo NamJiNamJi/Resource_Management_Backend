@@ -34,14 +34,16 @@
                   union
                   (select rsv_detail from tb_reservations where #{rsvStart} &lt; rsv_start and rsv_start &lt; #{rsvEnd})
                   union
-                  (select rsv_detail from tb_reservations where #{rsvStart} &gt; rsv_start and rsv_end &gt; #{rsvEnd}))
+                  (select rsv_detail from tb_reservations where #{rsvStart} &gt; rsv_start and rsv_end &gt; #{rsvEnd})
+                  union
+                  (select rsv_detail from tb_reservations where #{rsvStart} = rsv_start and rsv_end = #{rsvEnd}))
 
           and cop_seq = ${copSeq} and spc_state = true;
     </select>
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Space">
         SELECT * FROM tb_spaces
-        WHERE spc_state = true
+        WHERE spc_state = true AND cop_seq = #{copSeq}
         ORDER BY spc_created DESC
     </select>
 
@@ -52,7 +54,8 @@
             spc_cap,
             spc_image,
             spc_explain
-        FROM tb_spaces WHERE spc_seq = #{spcSeq};
+        FROM tb_spaces
+        WHERE spc_seq = #{spcSeq};
     </select>
 
     <select id="searchSpace" parameterType="hashMap" resultType="com.douzone.wehago.domain.Space">

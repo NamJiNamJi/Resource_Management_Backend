@@ -43,11 +43,11 @@ public class CarRepository {
 
     }
 
-    public Car findOne(Integer car_seq) {
-
-        return sqlSession.selectOne("com.douzone.wehago.mapper.CarMapper.findOne", car_seq);
-
-    }
+//    public Car findOne(Integer car_seq) {
+//
+//        return sqlSession.selectOne("com.douzone.wehago.mapper.CarMapper.findOne", car_seq);
+//
+//    }
 
     public Integer update(Car car){
 

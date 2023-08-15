@@ -1,8 +1,7 @@
 package com.douzone.wehago.mapper;
 
 import com.douzone.wehago.domain.Company;
-import com.douzone.wehago.dto.CompanyDTO;
-import com.github.pagehelper.Page;
+import com.douzone.wehago.dto.company.CompanyDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

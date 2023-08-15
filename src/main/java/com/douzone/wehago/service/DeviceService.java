@@ -1,12 +1,10 @@
 package com.douzone.wehago.service;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.douzone.wehago.common.S3Uploader;
-import com.douzone.wehago.domain.Car;
+import com.douzone.wehago.common.exception.BusinessException;
+import com.douzone.wehago.common.exception.ErrorCode;
 import com.douzone.wehago.domain.Device;
 import com.douzone.wehago.domain.User;
-import com.douzone.wehago.dto.car.CarPageResponseDTO;
-import com.douzone.wehago.dto.car.CarResponseDTO;
 import com.douzone.wehago.dto.device.DeviceDTO;
 import com.douzone.wehago.dto.device.DevicePageResponseDTO;
 import com.douzone.wehago.dto.device.DeviceResponseDTO;
@@ -31,10 +29,15 @@ public class DeviceService {
     private final DeviceRepository deviceRepository;
     private final S3Uploader s3Uploader;
 
-
     @Transactional
     public DevicePageResponseDTO finddeviceList(ReservationDTO reservationDTO , UserDetails userDetails){
+
         User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
         reservationDTO.setCopSeq(user.getCopSeq());
         System.out.println(user.getCopSeq());
         List<Device> list = deviceRepository.finddeviceList(reservationDTO);
@@ -51,7 +54,13 @@ public class DeviceService {
                 .build();
     }
     @Transactional
-    public DeviceResponseDTO saveDevice (DeviceDTO deviceDTO, MultipartFile image) throws IOException {
+    public DeviceResponseDTO saveDevice (DeviceDTO deviceDTO, MultipartFile image, UserDetails userDetails) throws IOException {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
 
         String imageUrl = s3Uploader.upload(image, "device/image");
 
@@ -71,9 +80,15 @@ public class DeviceService {
     }
 
     @Transactional(readOnly = true)
-    public DevicePageResponseDTO findAllDevice() {
+    public DevicePageResponseDTO findAllDevice(UserDetails userDetails) {
 
-        List<Device> list = deviceRepository.findAll();
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
+        List<Device> list = deviceRepository.findAll(user.getCopSeq());
 
         List<DeviceResponseDTO> deviceResponseDTOList = new ArrayList<>();
 
@@ -87,7 +102,14 @@ public class DeviceService {
     }
 
     @Transactional(readOnly = true)
-    public DevicePageResponseDTO searchDevice (String columnName, String searchString) {
+    public DevicePageResponseDTO searchDevice (String columnName, String searchString, UserDetails userDetails) {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
         List<Device> list = deviceRepository.searchDevice(columnName, searchString);
         System.out.println("service" + columnName + searchString);
         List<DeviceResponseDTO> deviceResponseDTOList = new ArrayList<>();
@@ -102,16 +124,28 @@ public class DeviceService {
     }
 
 
+//    @Transactional
+//    public DeviceResponseDTO findOneDevice(Integer dvcSeq, UserDetails userDetails) {
+//
+//        User user = ((UserDetailsImpl) userDetails).getUser();
+//
+//        if (user == null) {
+//            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+//        }
+//
+//        Device device = deviceRepository.findOne(dvcSeq);
+//
+//        return getDeviceResponseDTO(device);
+//    }
+
     @Transactional
-    public DeviceResponseDTO findOneDevice(Integer dvcSeq) {
+    public DeviceResponseDTO updateDevice (DeviceDTO deviceDTO, MultipartFile image, Integer dvcSeq, UserDetails userDetails) throws IOException {
 
-        Device device = deviceRepository.findOne(dvcSeq);
+        User user = ((UserDetailsImpl) userDetails).getUser();
 
-        return getDeviceResponseDTO(device);
-    }
-
-    @Transactional
-    public DeviceResponseDTO updateDevice (DeviceDTO deviceDTO, MultipartFile image, Integer dvcSeq) throws IOException {
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
 
         String imageUrl = s3Uploader.upload(image, "device/image");
         Device device = Device.builder()
@@ -128,7 +162,13 @@ public class DeviceService {
         return getDeviceResponseDTO(device);
     }
 
-    public Integer deleteDevice (Integer dvcSeq) {
+    public Integer deleteDevice (Integer dvcSeq, UserDetails userDetails) {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
 
         Device device = Device.builder()
                 .dvcSeq(dvcSeq)

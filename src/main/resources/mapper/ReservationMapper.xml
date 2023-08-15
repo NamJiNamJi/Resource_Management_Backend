@@ -6,24 +6,72 @@
 
 <mapper namespace="com.douzone.wehago.mapper.ReservationMapper">
 
-<!--    &lt;!&ndash; 저장된 차량 이벤트 찾기 &ndash;&gt;-->
-<!--    <select id="findAllReservation" parameterType="java.lang.Integer" resultType="com.douzone.wehago.dto.reservation.ResponseReservationDTO">-->
-<!--        SELECT a.rsv_seq, a.cop_seq, a.cop_name, a.rsc_seq, b.rsc_name, a.rsv_detail, a.car_name, a.rsv_id, a.rsv_name, a.car_explain, a.rsv_start, a.rsv_end FROM-->
-<!--            (SELECT rc.rsv_seq, rc.cop_seq, cp.cop_name, rc.rsc_seq, rc.rsv_detail, rc.rsv_id, rc.rsv_name, rc.car_name, rc.car_explain ,rc.rsv_start, rc.rsv_end FROM-->
-<!--                (SELECT r.rsv_seq, r.cop_seq, r.rsc_seq, r.rsv_detail, r.rsv_id, r.rsv_name, r.rsv_start, r.rsv_end, c.car_name, c.car_explain-->
-<!--                 FROM (SELECT * FROM tb_reservations WHERE rsv_state = true) as r-->
-<!--                          INNER JOIN tb_cars as c-->
-<!--                                     ON r.rsv_detail = c.car_seq-->
-<!--                 WHERE r.cop_seq = #{copSeq}) as rc-->
-<!--                    INNER JOIN-->
-<!--                    (SELECT cop_name, cop_seq FROM tb_companys) as cp-->
-<!--                    ON rc.cop_seq = cp.cop_seq) as a-->
-<!--                INNER JOIN-->
-<!--                (SELECT rsc_seq, rsc_name FROM tb_resources) as b-->
-<!--                ON a.rsc_seq = b.rsc_seq;-->
-<!--    </select>-->
-        <select id="reservationList" resultType="com.douzone.wehago.domain.Reservation">
-            SELECT * FROM tb_reservations
-            WHERE rsv_id = #{rsvId}
-        </select>
+    <select id="reservationList" resultType="com.douzone.wehago.domain.Reservation">
+        SELECT * FROM tb_reservations
+        WHERE rsv_id = #{rsvId}
+    </select>
+
+
+    <select id="getMonthlyReservationCountsCar" resultType="com.douzone.wehago.dto.reservation.MonthlyCountDTO">
+        SELECT EXTRACT(MONTH FROM rsv_created) AS month, COUNT(*) AS count
+        FROM tb_reservations
+        WHERE cop_seq = #{copSeq} AND rsv_num = #{rsvNum}
+        GROUP BY EXTRACT(MONTH FROM rsv_created)
+    </select>
+    <select id="getMonthlyReservationCountsDevice" resultType="com.douzone.wehago.dto.reservation.MonthlyCountDTO">
+        SELECT EXTRACT(MONTH FROM rsv_created) AS month, COUNT(*) AS count
+        FROM tb_reservations
+        WHERE cop_seq = #{copSeq} AND rsv_num = #{rsvNum}
+        GROUP BY EXTRACT(MONTH FROM rsv_created)
+    </select>
+    <select id="getMonthlyReservationCountsSpace" resultType="com.douzone.wehago.dto.reservation.MonthlyCountDTO">
+        SELECT EXTRACT(MONTH FROM rsv_created) AS month, COUNT(*) AS count
+        FROM tb_reservations
+        WHERE cop_seq = #{copSeq} AND rsv_num = #{rsvNum}
+        GROUP BY EXTRACT(MONTH FROM rsv_created)
+    </select>
+
+
+    <select id="getMonthlyReservationCountsAll" resultType="com.douzone.wehago.dto.reservation.MonthlyCountDTO">
+        SELECT EXTRACT(MONTH FROM rsv_created) AS month, COUNT(*) AS count
+        FROM tb_reservations
+        WHERE cop_seq = #{copSeq}
+        GROUP BY EXTRACT(MONTH FROM rsv_created)
+    </select>
+
+    <!-- 이벤트 등록 -->
+    <insert id="registrationEvent" parameterType="com.douzone.wehago.domain.Reservation">
+        INSERT INTO tb_reservations (cop_seq, rsv_num, rsv_detail, rsv_id, rsv_name, rsv_title, rsv_parti, rsv_explain, rsv_start, rsv_end)
+        VALUES (#{copSeq}, #{rsvNum}, #{rsvDetail}, #{rsvId}, #{rsvName}, #{rsvTitle}, #{rsvParti}, #{rsvExplain}, #{rsvStart}, #{rsvEnd})
+
+    </insert>
+  
+    <update id="updateReservation">
+        UPDATE tb_reservations SET rsv_state = false
+        WHERE rsv_end &lt; now();
+    </update>
+
+    <!-- 현재 true 값인 이벤트 찾기 -->
+    <select id="findAllAvailableReservation" parameterType="java.lang.Integer" resultType="com.douzone.wehago.dto.reservation.AvailableReservationDTO">
+        SELECT rsv_seq, rsv_num, cop_seq, rsv_detail, rsv_id, rsv_name, rsv_explain, rsv_parti, rsv_title, rsv_start, rsv_end FROM tb_reservations
+        WHERE cop_seq = #{copSeq} and rsv_state = true
+    </select>
+
+    <!-- 저장된 이벤트 찾기 -->
+    <select id="findAllReservation" parameterType="java.lang.Integer" resultType="com.douzone.wehago.dto.reservation.ResponseReservationDTO">
+        SELECT a.rsv_seq, a.cop_seq, a.cop_name, a.rsc_seq, b.rsc_name, a.rsv_detail, a.car_name, a.rsv_id, a.rsv_name, a.car_explain, a.rsv_start, a.rsv_end FROM
+            (SELECT rc.rsv_seq, rc.cop_seq, cp.cop_name, rc.rsc_seq, rc.rsv_detail, rc.rsv_id, rc.rsv_name, rc.car_name, rc.car_explain ,rc.rsv_start, rc.rsv_end FROM
+                (SELECT r.rsv_seq, r.cop_seq, r.rsc_seq, r.rsv_detail, r.rsv_id, r.rsv_name, r.rsv_start, r.rsv_end, c.car_name, c.car_explain
+                 FROM (SELECT * FROM tb_reservations WHERE rsv_state = true) as r
+                          INNER JOIN tb_cars as c
+                                     ON r.rsv_detail = c.car_seq
+                 WHERE r.cop_seq = #{copSeq}) as rc
+                    INNER JOIN
+                    (SELECT cop_name, cop_seq FROM tb_companys) as cp
+                    ON rc.cop_seq = cp.cop_seq) as a
+                INNER JOIN
+                (SELECT rsc_seq, rsc_name FROM tb_resources) as b
+                ON a.rsc_seq = b.rsc_seq;
+    </select>
+
 </mapper>
