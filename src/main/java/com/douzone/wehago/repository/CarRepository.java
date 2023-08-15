@@ -22,9 +22,9 @@ public class CarRepository {
 
     }
 
-    public List<Car> findAll(){
+    public List<Car> findAll(Integer copSeq){
 
-        return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.findAll");
+        return sqlSession.selectList("com.douzone.wehago.mapper.CarMapper.findAll", copSeq);
 
     }
 

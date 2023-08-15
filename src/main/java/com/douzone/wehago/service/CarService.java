@@ -48,16 +48,21 @@ public class CarService {
     }
 
     @Transactional(readOnly = true)
-    public CarPageResponseDTO findAllCar() {
+    public CarPageResponseDTO findAllCar(UserDetails userDetails) {
 
-        List<Car> list = carRepository.findAll();
+        System.out.println("userDetails : " + userDetails);
+        User user = ((UserDetailsImpl) userDetails).getUser();
+        System.out.println("user : " + user);
 
-        List<CarResponseDTO> carResponseDTOList = new ArrayList<>();
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
+        List<Car> list = carRepository.findAll(user.getCopSeq());
+        List<CarResponseDTO> carResponseDTOList = new ArrayList<>(user.getCopSeq());
 
         for (Car car : list) {
-            if (car.getCarState()) {
                 carResponseDTOList.add(getCarResponseDTO(car));
-            }
         }
 
         return CarPageResponseDTO.builder()
@@ -109,12 +114,12 @@ public class CarService {
                 .build();
     }
 
-    @Transactional(readOnly = true)
-    public CarResponseDTO findOneCar (Integer carSeq) {
-        Car car = carRepository.findOne(carSeq);
-
-        return getCarResponseDTO(car);
-    }
+//    @Transactional(readOnly = true)
+//    public CarResponseDTO findOneCar (Integer carSeq) {
+//        Car car = carRepository.findOne(carSeq);
+//
+//        return getCarResponseDTO(car);
+//    }
 
     @Transactional
     public CarResponseDTO updateCar (CarDTO carDTO, MultipartFile image, Integer carSeq) throws IOException {

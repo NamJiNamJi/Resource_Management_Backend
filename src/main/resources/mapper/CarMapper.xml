@@ -30,7 +30,7 @@
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Car">
         SELECT * FROM tb_cars
-        WHERE car_state = true
+        WHERE car_state = true AND cop_seq = #{copSeq}
         ORDER BY car_created DESC
     </select>
     <select id ="findcarList"  resultType="com.douzone.wehago.domain.Car" parameterType="com.douzone.wehago.dto.reservation.ReservationDTO">
