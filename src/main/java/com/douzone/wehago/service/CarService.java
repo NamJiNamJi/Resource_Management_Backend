@@ -30,9 +30,14 @@ public class CarService {
     private final S3Uploader s3Uploader;
     @Transactional
     public CarPageResponseDTO findcarList(ReservationDTO reservationDTO , UserDetails userDetails){
+
         User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
         reservationDTO.setCopSeq(user.getCopSeq());
-        System.out.println(user.getCopSeq());
         List<Car> list = carRepository.findcarList(reservationDTO);
 
         List<CarResponseDTO> carResponseDTOList = new ArrayList<>();
@@ -48,16 +53,21 @@ public class CarService {
     }
 
     @Transactional(readOnly = true)
-    public CarPageResponseDTO findAllCar() {
+    public CarPageResponseDTO findAllCar(UserDetails userDetails) {
 
-        List<Car> list = carRepository.findAll();
+        System.out.println("userDetails : " + userDetails);
+        User user = ((UserDetailsImpl) userDetails).getUser();
+        System.out.println("user : " + user);
 
-        List<CarResponseDTO> carResponseDTOList = new ArrayList<>();
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
+        List<Car> list = carRepository.findAll(user.getCopSeq());
+        List<CarResponseDTO> carResponseDTOList = new ArrayList<>(user.getCopSeq());
 
         for (Car car : list) {
-            if (car.getCarState()) {
                 carResponseDTOList.add(getCarResponseDTO(car));
-            }
         }
 
         return CarPageResponseDTO.builder()
@@ -72,10 +82,6 @@ public class CarService {
         User user = ((UserDetailsImpl) userDetails).getUser();
         System.out.println("CopSeq" + user.getCopSeq());
         String imageUrl = s3Uploader.upload(image, "car/image");
-
-        if (user == null) {
-            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
-        }
 
         Car car = Car.builder()
                 .carName(carDTO.getCarName())
@@ -95,7 +101,14 @@ public class CarService {
 
 
     @Transactional(readOnly = true)
-    public CarPageResponseDTO searchCar (String columnName, String searchString) {
+    public CarPageResponseDTO searchCar (String columnName, String searchString, UserDetails userDetails) {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
         List<Car> list = carRepository.searchCar(columnName, searchString);
         System.out.println("service" + columnName + searchString);
         List<CarResponseDTO> carResponseDTOList = new ArrayList<>();
@@ -109,17 +122,22 @@ public class CarService {
                 .build();
     }
 
-    @Transactional(readOnly = true)
-    public CarResponseDTO findOneCar (Integer carSeq) {
-        Car car = carRepository.findOne(carSeq);
-
-        return getCarResponseDTO(car);
-    }
+//    @Transactional(readOnly = true)
+//    public CarResponseDTO findOneCar (Integer carSeq, UserDetails userDetails) {
+//        Car car = carRepository.findOne(carSeq);
+//
+//        return getCarResponseDTO(car);
+//    }
 
     @Transactional
-    public CarResponseDTO updateCar (CarDTO carDTO, MultipartFile image, Integer carSeq) throws IOException {
+    public CarResponseDTO updateCar (CarDTO carDTO, MultipartFile image, Integer carSeq, UserDetails userDetails) throws IOException {
 
+        User user = ((UserDetailsImpl) userDetails).getUser();
         String imageUrl = s3Uploader.upload(image, "car/image");
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
 
         if (imageUrl != null) {
             s3Uploader.deleteImage(imageUrl, "car/image");
@@ -134,6 +152,7 @@ public class CarService {
                 .carYear(carDTO.getCarYear())
                 .carImage(imageUrl)
                 .carExplain(carDTO.getCarExplain())
+                .copSeq(user.getCopSeq())
                 .build();
 
         carRepository.update(car);
@@ -142,11 +161,18 @@ public class CarService {
     }
 
     @Transactional
-    public Integer deleteCar (Integer carSeq) {
+    public Integer deleteCar (Integer carSeq, UserDetails userDetails) {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
 
         Car car = Car.builder()
                 .carSeq(carSeq)
                 .carState(false)
+                .copSeq(user.getCopSeq())
                 .carUpdated(new Timestamp(System.currentTimeMillis()))
                 .build();
 

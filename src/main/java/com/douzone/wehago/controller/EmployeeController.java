@@ -65,7 +65,7 @@ public class EmployeeController {
                                           @AuthenticationPrincipal UserDetails userDetails){
 
         EmployeePageResponseDTO employeePageResponseDTO = employeeService.findAll(pageNum, pageSize, userDetails);
-
+        System.out.println(employeePageResponseDTO.getPageNum() +""+ employeePageResponseDTO.getPageSize() +""+ employeePageResponseDTO.getTotal());
         Response response = new Response(HttpStatus.OK, "사원 전체 조회 성공", employeePageResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

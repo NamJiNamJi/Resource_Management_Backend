@@ -24,8 +24,9 @@ public class SpaceRepository {
         sqlSession.insert("com.douzone.wehago.mapper.SpaceMapper.save", space);
     }
 
-    public List<Space> findAll() {
-        return sqlSession.selectList("com.douzone.wehago.mapper.SpaceMapper.findAll");
+    public List<Space> findAll(Integer copSeq) {
+        return sqlSession.selectList("com.douzone.wehago.mapper.SpaceMapper.findAll", copSeq
+        );
     }
 
     public List<Space> searchSpace(String columnName, String searchString) {

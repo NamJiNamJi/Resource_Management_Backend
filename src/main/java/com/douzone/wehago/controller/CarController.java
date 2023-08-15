@@ -26,9 +26,13 @@ public class CarController {
     private final CarService carService;
 
     @PostMapping("/carsearch")
-    public ResponseEntity<Object> CarRsvList(@RequestBody ReservationDTO reservationDTO, @AuthenticationPrincipal UserDetails userDetails){
+    public ResponseEntity<Object> CarRsvList(@RequestBody ReservationDTO reservationDTO,
+                                             @AuthenticationPrincipal UserDetails userDetails){
+
         System.out.println(reservationDTO.getRsvStart());
-        CarPageResponseDTO carPageResponseDTO = carService.findcarList(reservationDTO,userDetails);
+        System.out.println(reservationDTO.getRsvEnd());
+
+        CarPageResponseDTO carPageResponseDTO = carService.findcarList(reservationDTO, userDetails);
         Response response = new Response(HttpStatus.CREATED, "조회 성공", carPageResponseDTO);
 
         return new ResponseEntity<>(response,HttpStatus.OK);
@@ -48,9 +52,9 @@ public class CarController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> CarfindAll() {
+    public ResponseEntity<Object> CarfindAll(@AuthenticationPrincipal UserDetails userDetails) {
 
-        CarPageResponseDTO carPageResponseDTO = carService.findAllCar();
+        CarPageResponseDTO carPageResponseDTO = carService.findAllCar(userDetails);
         Response response = new Response(HttpStatus.OK, "차량 전체 조회 성공", carPageResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -58,9 +62,9 @@ public class CarController {
     }
 
 //    @GetMapping("/{carSeq}")
-//    public ResponseEntity<Object> findOneCar(@PathVariable Integer carSeq) {
+//    public ResponseEntity<Object> findOneCar(@PathVariable Integer carSeq, @AuthenticationPrincipal UserDetails userDetails) {
 //
-//        CarResponseDTO carResponseDTO = carService.findOneCar(carSeq);
+//        CarResponseDTO carResponseDTO = carService.findOneCar(carSeq, userDetails);
 //        Response response = new Response(HttpStatus.OK, "차량 검색 성공", carResponseDTO);
 //
 //        return  new ResponseEntity<>(response, HttpStatus.OK);
@@ -68,9 +72,12 @@ public class CarController {
 
     @GetMapping("/search")
     public ResponseEntity<Object> searchCar (@RequestParam(value = "columnName") String columnName,
-                                             @RequestParam(value = "searchString") String searchString) {
+                                             @RequestParam(value = "searchString") String searchString,
+                                             @AuthenticationPrincipal UserDetails userDetails
+                                             ) {
+
         log.info(columnName + searchString);
-        CarPageResponseDTO carPageResponseDTO = carService.searchCar(columnName, searchString);
+        CarPageResponseDTO carPageResponseDTO = carService.searchCar(columnName, searchString, userDetails);
         Response response = new Response(HttpStatus.OK, "차량 검색 성공", carPageResponseDTO);
 
         return  new ResponseEntity<>(response, HttpStatus.OK);
@@ -79,9 +86,11 @@ public class CarController {
     @PostMapping("/{carSeq}")
     public ResponseEntity<Object> updateCar (@RequestPart(value = "data") CarDTO carDTO,
                                              @RequestPart(value = "image", required = false) MultipartFile image,
-                                             @PathVariable Integer carSeq) throws IOException {
+                                             @PathVariable Integer carSeq,
+                                             @AuthenticationPrincipal UserDetails userDetails
+                                             ) throws IOException {
 
-        CarResponseDTO carResponseDTO = carService.updateCar(carDTO, image, carSeq);
+        CarResponseDTO carResponseDTO = carService.updateCar(carDTO, image, carSeq, userDetails);
         Response response = new Response(HttpStatus.OK, "등록 성공", carResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -89,17 +98,18 @@ public class CarController {
     }
 
     @PostMapping("/del/{carSeq}")
-    public ResponseEntity<Object> deleteCar(@PathVariable Integer carSeq) {
+    public ResponseEntity<Object> deleteCar(@PathVariable Integer carSeq,
+                                            @AuthenticationPrincipal UserDetails userDetails) {
 
-        Integer result = carService.deleteCar(carSeq);
+        Integer result = carService.deleteCar(carSeq, userDetails);
         Response response = new Response(HttpStatus.OK, "차량 삭제 성공", result);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 //    @DeleteMapping("/{carSeq}")
-//    public ResponseEntity<Object> deleteCar(@PathVariable Integer carSeq) {
-//        carService.deleteCar(carSeq);
+//    public ResponseEntity<Object> deleteCar(@PathVariable Integer carSeq, @AuthenticationPrincipal UserDetails userDetails) {
+//        carService.deleteCar(carSeq, userDetails);
 //        String message = "삭제 성공";
 //
 //        return new ResponseEntity<>(message, HttpStatus.OK);

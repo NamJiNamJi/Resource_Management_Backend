@@ -26,7 +26,8 @@ public class DeviceController {
 
     private final DeviceService deviceService;
     @PostMapping("/devicesearch")
-    public ResponseEntity<Object> deviceRsvList(@RequestBody ReservationDTO reservationDTO, @AuthenticationPrincipal UserDetails userDetails){
+    public ResponseEntity<Object> deviceRsvList(@RequestBody ReservationDTO reservationDTO,
+                                                @AuthenticationPrincipal UserDetails userDetails){
         System.out.println(reservationDTO.getRsvStart());
         DevicePageResponseDTO devicePageResponseDTO = deviceService.finddeviceList(reservationDTO,userDetails);
         Response response = new Response(HttpStatus.CREATED, "조회 성공", devicePageResponseDTO);
@@ -35,36 +36,38 @@ public class DeviceController {
     }
     @PostMapping
     public ResponseEntity<Object> saveDeivce (@RequestPart(value = "data") DeviceDTO deviceDTO,
-                                              @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
+                                              @RequestPart(value = "image", required = false) MultipartFile image,
+                                              @AuthenticationPrincipal UserDetails userDetails) throws IOException {
 
-        DeviceResponseDTO deviceResponseDTO = deviceService.saveDevice(deviceDTO, image);
+        DeviceResponseDTO deviceResponseDTO = deviceService.saveDevice(deviceDTO, image, userDetails);
         Response response = new Response(HttpStatus.CREATED, "등록 성공", deviceResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<Object> DevicefindAll() {
+    public ResponseEntity<Object> DevicefindAll(@AuthenticationPrincipal UserDetails userDetails) {
 
-        DevicePageResponseDTO devicePageResponseDTO = deviceService.findAllDevice();
+        DevicePageResponseDTO devicePageResponseDTO = deviceService.findAllDevice(userDetails);
         Response response = new Response(HttpStatus.OK, "기기 전체 조회 성공", devicePageResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
-    @GetMapping("/{dvcSeq}")
-    public ResponseEntity<Object> findOneDevice (@PathVariable Integer dvcSeq) {
-        DeviceResponseDTO deviceResponseDTO = deviceService.findOneDevice(dvcSeq);
-
-        return new ResponseEntity<>(deviceResponseDTO, HttpStatus.OK);
-    }
+//    @GetMapping("/{dvcSeq}")
+//    public ResponseEntity<Object> findOneDevice (@PathVariable Integer dvcSeq) {
+//        DeviceResponseDTO deviceResponseDTO = deviceService.findOneDevice(dvcSeq);
+//
+//        return new ResponseEntity<>(deviceResponseDTO, HttpStatus.OK);
+//    }
 
     @GetMapping("/search")
     public ResponseEntity<Object> searchDevice (@RequestParam(value = "columnName") String columnName,
-                                                @RequestParam(value = "searchString") String searchString) {
+                                                @RequestParam(value = "searchString") String searchString,
+                                                @AuthenticationPrincipal UserDetails userDetails) {
         log.info(columnName + searchString);
-        DevicePageResponseDTO devicePageResponseDTO = deviceService.searchDevice(columnName, searchString);
+        DevicePageResponseDTO devicePageResponseDTO = deviceService.searchDevice(columnName, searchString, userDetails);
         Response response = new Response(HttpStatus.OK, "기기 검색 성공", devicePageResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -74,9 +77,10 @@ public class DeviceController {
     @PostMapping("/{dvcSeq}")
     public ResponseEntity<Object> updateDevice (@RequestPart(value = "data") DeviceDTO deviceDTO,
                                                 @RequestPart(value = "image", required = false) MultipartFile image,
-                                                @PathVariable Integer dvcSeq) throws IOException {
+                                                @PathVariable Integer dvcSeq,
+                                                @AuthenticationPrincipal UserDetails userDetails) throws IOException {
 
-        DeviceResponseDTO deviceResponseDTO = deviceService.updateDevice(deviceDTO, image, dvcSeq);
+        DeviceResponseDTO deviceResponseDTO = deviceService.updateDevice(deviceDTO, image, dvcSeq, userDetails);
         Response response = new Response(HttpStatus.OK, "등록 성공", deviceResponseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -84,9 +88,10 @@ public class DeviceController {
     }
 
     @PostMapping("/del/{dvcSeq}")
-    public ResponseEntity<Object> deleteDevice(@PathVariable Integer dvcSeq) {
+    public ResponseEntity<Object> deleteDevice(@PathVariable Integer dvcSeq,
+                                               @AuthenticationPrincipal UserDetails userDetails) {
 
-        Integer result = deviceService.deleteDevice(dvcSeq);
+        Integer result = deviceService.deleteDevice(dvcSeq, userDetails);
         Response response = new Response(HttpStatus.OK, "모바일기기 삭제 성공", result);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

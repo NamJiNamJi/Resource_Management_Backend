@@ -1,7 +1,9 @@
 package com.douzone.wehago.repository;
 
-
 import com.douzone.wehago.domain.Reservation;
+import com.douzone.wehago.dto.reservation.MonthlyCountDTO;
+import com.douzone.wehago.dto.reservation.ReservationChartDTO;
+import com.douzone.wehago.dto.reservation.AvailableReservationDTO;
 import com.github.pagehelper.PageHelper;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
@@ -14,8 +16,37 @@ public class ReservationRepository {
 
     private final SqlSession sqlSession;
 
-    public List<Reservation> reservationList(Integer pageNo, Integer pageSize,String rsvId){
+    public List<Reservation> reservationList(Integer pageNo, Integer pageSize,String rsvId) {
         PageHelper.startPage(pageNo, pageSize);
         return sqlSession.selectList("com.douzone.wehago.mapper.ReservationMapper.reservationList", rsvId);
+    }
+
+
+    public void updateReservation() {
+        sqlSession.update("com.douzone.wehago.mapper.ReservationMapper.updateReservation");
+    }
+
+
+    // 이벤트 등록
+    public void registrationEvent(Reservation reservation) {
+        sqlSession.insert("com.douzone.wehago.mapper.ReservationMapper.registrationEvent", reservation);
+
+    }
+
+    // 현재 true 값인 모든 이벤트 찾기
+    public List<AvailableReservationDTO> findAllAvailableReservation(Integer copSeq) {
+        return sqlSession.selectList("com.douzone.wehago.mapper.ReservationMapper.findAllAvailableReservation", copSeq);
+    }
+    public List<MonthlyCountDTO> getMonthlyReservationCounts(Integer copSeq) {
+        return sqlSession.selectList("com.douzone.wehago.mapper.ReservationMapper.getMonthlyReservationCountsAll",copSeq);
+    }
+    public List<MonthlyCountDTO> getMonthlyReservationCountsCar(ReservationChartDTO reservationChartDTO) {
+        return sqlSession.selectList("com.douzone.wehago.mapper.ReservationMapper.getMonthlyReservationCountsCar",reservationChartDTO);
+    }
+    public List<MonthlyCountDTO> getMonthlyReservationCountsDevice(ReservationChartDTO reservationChartDTO) {
+        return sqlSession.selectList("com.douzone.wehago.mapper.ReservationMapper.getMonthlyReservationCountsDevice",reservationChartDTO);
+    }
+    public List<MonthlyCountDTO> getMonthlyReservationCountsSpace(ReservationChartDTO reservationChartDTO) {
+        return sqlSession.selectList("com.douzone.wehago.mapper.ReservationMapper.getMonthlyReservationCountsSpace",reservationChartDTO);
     }
 }

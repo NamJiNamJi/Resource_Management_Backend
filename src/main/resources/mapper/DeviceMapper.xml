@@ -21,16 +21,17 @@
                   union
                   (select rsv_detail from tb_reservations where #{rsvStart} &lt; rsv_start and rsv_start &lt; #{rsvEnd})
                   union
-                  (select rsv_detail from tb_reservations where #{rsvStart} &gt; rsv_start and rsv_end &gt; #{rsvEnd}))
+                  (select rsv_detail from tb_reservations where #{rsvStart} &gt; rsv_start and rsv_end &gt; #{rsvEnd})
+                  union
+                  (select rsv_detail from tb_reservations where #{rsvStart} = rsv_start and rsv_end = #{rsvEnd}))
 
           and cop_seq = ${copSeq} and dvc_state = true;
     </select>
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Device">
         SELECT * FROM tb_devices
-        WHERE dvc_state = true
+        WHERE dvc_state = true AND cop_seq = #{copSeq}
         ORDER BY dvc_created DESC
-        LIMIT 5 OFFSET 0
     </select>
 
     <select id="searchDevice" parameterType="hashMap" resultType="com.douzone.wehago.domain.Device">
