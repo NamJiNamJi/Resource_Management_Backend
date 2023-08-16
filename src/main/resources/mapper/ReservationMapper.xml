@@ -13,30 +13,30 @@
 
 
     <select id="getMonthlyReservationCountsCar" resultType="com.douzone.wehago.dto.reservation.MonthlyCountDTO">
-        SELECT EXTRACT(MONTH FROM rsv_created) AS month, COUNT(*) AS count
+        SELECT EXTRACT(MONTH FROM rsv_start) AS month, COUNT(*) AS count
         FROM tb_reservations
         WHERE cop_seq = #{copSeq} AND rsv_num = #{rsvNum}
-        GROUP BY EXTRACT(MONTH FROM rsv_created)
+        GROUP BY EXTRACT(MONTH FROM rsv_start)
     </select>
     <select id="getMonthlyReservationCountsDevice" resultType="com.douzone.wehago.dto.reservation.MonthlyCountDTO">
-        SELECT EXTRACT(MONTH FROM rsv_created) AS month, COUNT(*) AS count
+        SELECT EXTRACT(MONTH FROM rsv_start) AS month, COUNT(*) AS count
         FROM tb_reservations
         WHERE cop_seq = #{copSeq} AND rsv_num = #{rsvNum}
-        GROUP BY EXTRACT(MONTH FROM rsv_created)
+        GROUP BY EXTRACT(MONTH FROM rsv_start)
     </select>
     <select id="getMonthlyReservationCountsSpace" resultType="com.douzone.wehago.dto.reservation.MonthlyCountDTO">
-        SELECT EXTRACT(MONTH FROM rsv_created) AS month, COUNT(*) AS count
+        SELECT EXTRACT(MONTH FROM rsv_start) AS month, COUNT(*) AS count
         FROM tb_reservations
         WHERE cop_seq = #{copSeq} AND rsv_num = #{rsvNum}
-        GROUP BY EXTRACT(MONTH FROM rsv_created)
+        GROUP BY EXTRACT(MONTH FROM rsv_start)
     </select>
 
 
     <select id="getMonthlyReservationCountsAll" resultType="com.douzone.wehago.dto.reservation.MonthlyCountDTO">
-        SELECT EXTRACT(MONTH FROM rsv_created) AS month, COUNT(*) AS count
+        SELECT EXTRACT(MONTH FROM rsv_start) AS month, COUNT(*) AS count
         FROM tb_reservations
         WHERE cop_seq = #{copSeq}
-        GROUP BY EXTRACT(MONTH FROM rsv_created)
+        GROUP BY EXTRACT(MONTH FROM rsv_start)
     </select>
 
     <!-- 이벤트 등록 -->
