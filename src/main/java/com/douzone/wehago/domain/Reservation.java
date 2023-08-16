@@ -29,6 +29,5 @@ public class Reservation {
     private Timestamp rsvCreated;
     private Timestamp rsvUpdated;
     private Boolean rsvState; // 예약 상태
-    private Integer rsvNum; // 0. 차량, 1. 전자기기, 2. 공간
 
 }
