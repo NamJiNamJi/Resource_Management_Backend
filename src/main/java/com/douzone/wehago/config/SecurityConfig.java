@@ -78,7 +78,7 @@ public class SecurityConfig {
 
                 // session 사용 안하는 설정
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 스프링 시큐리티가 세션을 생성하지도 않고 기존것을 사용하지도 않는 방식 (jwt 토큰 방식에서 사용 (STATELESS))
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // 스프링 시큐리티가 세션을 생성하지도 않고 기존것을 사용하지도 않는 방식 (jwt 토큰 방식에서 사용 (STATELESS))
 
 
         // 아직 인증없이 사용 가능한 api 가 나오지 않아서 추가적인 http 설정을 잠시 멈춤

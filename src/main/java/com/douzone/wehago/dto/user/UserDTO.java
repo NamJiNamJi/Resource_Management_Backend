@@ -16,6 +16,7 @@ public class UserDTO {
     private String userId; // 회원 아이디
     private String userName; // 회원 이름
     private String userEmail; // 회원 이메일
+    private String userAddress; // 회원 주소
     private Boolean userState; // 회원 상태
     private String userImage; // 회원 이미지
     private String empPosition; // 사원 직책
