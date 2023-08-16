@@ -1,11 +1,10 @@
 package com.douzone.wehago.service;
 
 import com.douzone.wehago.common.S3Uploader;
-import com.douzone.wehago.domain.Car;
+import com.douzone.wehago.common.exception.BusinessException;
+import com.douzone.wehago.common.exception.ErrorCode;
 import com.douzone.wehago.domain.Space;
 import com.douzone.wehago.domain.User;
-import com.douzone.wehago.dto.car.CarPageResponseDTO;
-import com.douzone.wehago.dto.car.CarResponseDTO;
 import com.douzone.wehago.dto.reservation.ReservationDTO;
 import com.douzone.wehago.dto.space.SpaceDTO;
 import com.douzone.wehago.dto.space.SpacePageResponseDTO;
@@ -31,10 +30,15 @@ public class SpaceService {
     private final S3Uploader s3Uploader;
 
     @Transactional
-    public SpacePageResponseDTO findspaceList(ReservationDTO reservationDTO , UserDetails userDetails){
-        User user = ((UserDetailsImpl) userDetails).getUser();
-        reservationDTO.setCopSeq(user.getCopSeq());
+    public SpacePageResponseDTO findspaceList(ReservationDTO reservationDTO, UserDetails userDetails){
 
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
+        reservationDTO.setCopSeq(user.getCopSeq());
         List<Space> list = spaceRepository.findspaceList(reservationDTO);
 
         List<SpaceResponseDTO> SpaceResponseDTOList = new ArrayList<>();
@@ -50,7 +54,13 @@ public class SpaceService {
                 .build();
     }
     @Transactional
-    public SpaceResponseDTO saveSpace (SpaceDTO spaceDTO, MultipartFile image) throws IOException {
+    public SpaceResponseDTO saveSpace (SpaceDTO spaceDTO, MultipartFile image, UserDetails userDetails) throws IOException {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
 
         String iamgeUrl = s3Uploader.upload(image, "space/image");
 
@@ -68,9 +78,15 @@ public class SpaceService {
     }
 
     @Transactional
-    public SpacePageResponseDTO findAllSpace() {
+    public SpacePageResponseDTO findAllSpace(UserDetails userDetails) {
 
-        List<Space> list = spaceRepository.findAll();
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
+        List<Space> list = spaceRepository.findAll(user.getCopSeq());
 
         List<SpaceResponseDTO> spaceResponseDTOList = new ArrayList<>();
 
@@ -84,14 +100,28 @@ public class SpaceService {
     }
 
     @Transactional
-    public SpaceResponseDTO findOneSpace (Integer spcSeq) {
+    public SpaceResponseDTO findOneSpace (Integer spcSeq, UserDetails userDetails) {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
         Space space = spaceRepository.findOne(spcSeq);
 
         return getSpaceResponseDTO(space);
     }
 
     @Transactional(readOnly = true)
-    public SpacePageResponseDTO searchSpace (String columnName, String searchString) {
+    public SpacePageResponseDTO searchSpace (String columnName, String searchString, UserDetails userDetails) {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
         List<Space> list = spaceRepository.searchSpace(columnName, searchString);
         System.out.println("Service : " + columnName + searchString);
         List<SpaceResponseDTO> spaceResponseDTOList = new ArrayList<>();
@@ -106,7 +136,14 @@ public class SpaceService {
     }
 
     @Transactional
-    public SpaceResponseDTO updateSpace (SpaceDTO spaceDTO, Integer spcSeq) {
+    public SpaceResponseDTO updateSpace (SpaceDTO spaceDTO, Integer spcSeq, UserDetails userDetails) {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
+
         Space space = Space.builder()
                 .spcSeq(spcSeq)
                 .spcName(spaceDTO.getSpcName())
@@ -120,7 +157,13 @@ public class SpaceService {
     }
 
     @Transactional
-    public Integer deleteSpace (Integer spcSeq) {
+    public Integer deleteSpace (Integer spcSeq, UserDetails userDetails) {
+
+        User user = ((UserDetailsImpl) userDetails).getUser();
+
+        if (user == null) {
+            throw new BusinessException("토큰이 만료되었거나, 회원정보를 찾을 수 없습니다.", ErrorCode.JWT_INVALID_TOKEN);
+        }
 
         Space space = Space.builder()
                 .spcSeq(spcSeq)

@@ -18,31 +18,48 @@ public class DeviceRepository {
     private final SqlSession sqlSession;
 
     public void save(Device device) {
+
         sqlSession.insert("com.douzone.wehago.mapper.DeviceMapper.save", device);
+
     }
+
+    public List<Device> findAll(Integer copSeq) {
+
+        return  sqlSession.selectList("com.douzone.wehago.mapper.DeviceMapper.findAll", copSeq);
+
+    }
+
     public List<Device> finddeviceList(ReservationDTO reservationDTO){
+
         return sqlSession.selectList("com.douzone.wehago.mapper.DeviceMapper.finddeviceList",reservationDTO);
-    }
-    public List<Device> findAll() {
-        return  sqlSession.selectList("com.douzone.wehago.mapper.DeviceMapper.findAll");
+
     }
 
     public List<Device> searchDevice(String columnName, String searchString) {
+
         Map<String, String> map = new HashMap<>();
         map.put("columnName", converCamelToSnakeCase(columnName));
         map.put("searchString", searchString);
         return sqlSession.selectList("com.douzone.wehago.mapper.DeviceMapper.searchDevice", map);
-    }
-    public Device findOne(Integer dvc_seq) {
-        return sqlSession.selectOne("com.douzone.wehago.mapper.DeviceMapper.findOne", dvc_seq);
+
     }
 
+//    public Device findOne(Integer dvc_seq) {
+//
+//        return sqlSession.selectOne("com.douzone.wehago.mapper.DeviceMapper.findOne", dvc_seq);
+//
+//    }
+
     public Integer update(Device device) {
+
         return sqlSession.update("com.douzone.wehago.mapper.DeviceMapper.update", device);
+
     }
 
     public Device delete(Device device) {
+
         return sqlSession.selectOne("com.douzone.wehago.mapper.DeviceMapper.delete", device);
+
     }
 
     private String converCamelToSnakeCase(String camelCase) {

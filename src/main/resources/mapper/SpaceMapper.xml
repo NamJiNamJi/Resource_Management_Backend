@@ -43,9 +43,8 @@
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Space">
         SELECT * FROM tb_spaces
-        WHERE spc_state = true
+        WHERE spc_state = true AND cop_seq = #{copSeq}
         ORDER BY spc_created DESC
-        LIMIT 5 OFFSET 0
     </select>
 
     <select id = "findOne" resultType="com.douzone.wehago.domain.Space">
@@ -55,7 +54,8 @@
             spc_cap,
             spc_image,
             spc_explain
-        FROM tb_spaces WHERE spc_seq = #{spcSeq};
+        FROM tb_spaces
+        WHERE spc_seq = #{spcSeq};
     </select>
 
     <select id="searchSpace" parameterType="hashMap" resultType="com.douzone.wehago.domain.Space">

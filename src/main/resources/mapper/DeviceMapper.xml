@@ -30,9 +30,8 @@
 
     <select id ="findAll" resultType="com.douzone.wehago.domain.Device">
         SELECT * FROM tb_devices
-        WHERE dvc_state = true
+        WHERE dvc_state = true AND cop_seq = #{copSeq}
         ORDER BY dvc_created DESC
-        LIMIT 5 OFFSET 0
     </select>
 
     <select id="searchDevice" parameterType="hashMap" resultType="com.douzone.wehago.domain.Device">
