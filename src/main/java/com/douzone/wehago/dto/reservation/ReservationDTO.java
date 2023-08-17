@@ -28,6 +28,5 @@ public class ReservationDTO {
     private Timestamp rsvEnd; // 예약 종료 시간
     private Timestamp rsvCreated;
     private Timestamp rsvUpdated;
-
     private boolean rsvState; // 예약 상태
 }

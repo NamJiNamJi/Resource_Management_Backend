@@ -26,9 +26,9 @@
     <!-- 로그인시 데이터 가져오기 -->
     <!-- 회원테이블에만 데이터가 존재할 시 프론트 화면 회사 생성화면으로 변경 -->
     <select id="getUserData" parameterType="java.lang.Integer" resultType="com.douzone.wehago.dto.user.UserDTO">
-        select cop_seq, cop_reg_num, cop_name, uc.user_seq, user_id, user_name, user_email, user_state, user_image, emp_position, auth_level from
-            (select c.cop_seq, cop_reg_num, cop_name, user_seq, user_id, user_name, user_email, user_image, user_state from
-                (select user_seq, user_id, user_name, user_email, user_state, user_image, cop_seq
+        select cop_seq, cop_reg_num, cop_name, uc.user_seq, user_id, user_name, user_email, user_state, user_image, emp_position, auth_level, user_address from
+            (select c.cop_seq, cop_reg_num, cop_name, user_seq, user_id, user_name, user_email, user_image, user_state, user_address from
+                (select user_seq, user_id, user_name, user_email, user_state, user_image, cop_seq, user_address
                  from tb_users where user_state = true) as u
                     inner join
                 (select cop_seq, cop_reg_num, cop_name

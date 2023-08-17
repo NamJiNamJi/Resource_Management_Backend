@@ -31,7 +31,7 @@ public class EmployeeRepository {
         Map<String, String> map = new HashMap<>();
         map.put("type", converCamelToSnakeCase(type));
         map.put("keyword", keyword);
-        System.out.println(map);
+        System.out.println("EmployeeRepository map output : "+map);
         return sqlSession.selectList("com.douzone.wehago.mapper.EmployeeMapper.searchEmployee", map);
     }
 
