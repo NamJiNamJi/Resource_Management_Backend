@@ -70,7 +70,7 @@ public class DeviceService {
                 .dvcImage(imageUrl)
                 .dvcBuy(deviceDTO.getDvcBuy())
                 .dvcExplain(deviceDTO.getDvcExplain())
-                .copSeq(1)
+                .copSeq(user.getCopSeq())
                 .rscSeq(2)
                 .build();
 

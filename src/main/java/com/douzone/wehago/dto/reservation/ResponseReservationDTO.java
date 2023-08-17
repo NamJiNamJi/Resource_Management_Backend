@@ -25,8 +25,4 @@ public class ResponseReservationDTO {
     private Timestamp rsvCreated;
     private Timestamp rsvUpdated;
     private boolean rsvState; // 예약 상태
-<<<<<<< HEAD
-=======
-
->>>>>>> 5333b2057f59a0a4ae102e4e1803838f7192b7d8
 }

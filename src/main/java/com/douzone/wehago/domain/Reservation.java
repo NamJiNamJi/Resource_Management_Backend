@@ -18,6 +18,7 @@ public class Reservation {
     private Integer rsvSeq; // 예약 일련번호
     private Integer copSeq; // 회사 일련번호
     private Integer rsvDetail; //세부 일련번호
+    private Integer rsvNum;
     private String rsvId; // 예약자 아이디
     private String rsvName; // 예약자명
     private String rsvExplain; // 설명

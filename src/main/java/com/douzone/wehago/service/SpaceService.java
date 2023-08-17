@@ -69,8 +69,8 @@ public class SpaceService {
                 .spcCap(spaceDTO.getSpcCap())
                 .spcImage(iamgeUrl)
                 .spcExplain(spaceDTO.getSpcExplain())
-                .copSeq(3)
-                .rscSeq(4)
+                .copSeq(user.getCopSeq())
+                .rscSeq(3)
                 .build();
         spaceRepository.save(space);
 
